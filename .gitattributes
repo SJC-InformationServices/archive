@@ -1,0 +1,11 @@
+CodeDump export-ignore  
+images export-ignore
+js export-ignore
+lib export-ignore
+shared export-ignore
+deploy export-ignore
+css export-ignore
+.gitattributes export-ignore  
+.gitignore export-ignore
+.zip export-ignore
+vendor export-ignore
