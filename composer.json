@@ -14,7 +14,8 @@
         "aws/aws-sdk-php": "^3.52",
         "lcobucci/jwt": "^3.2",
         "twig/twig": "~2.0",
-        "monolog/monolog": "^1.23"
+        "monolog/monolog": "^1.23",
+        "react/http": "0.8.3"
     },
     "license": "GPL",
     "authors": [{
