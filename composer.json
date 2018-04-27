@@ -5,17 +5,14 @@
 
     "autoload": {
         "psr-4": {
-            "sjcArchive\\": "src/"
+            "sjcArchive\\": "src/sjcArchive"
         }
     },
     "require": {
         "gabordemooij/redbean": "^5.0",
-        "phpoffice/phpspreadsheet": "^1.1",
         "aws/aws-sdk-php": "^3.52",
         "lcobucci/jwt": "^3.2",
-        "twig/twig": "~2.0",
-        "monolog/monolog": "^1.23",
-        "react/http": "0.8.3"
+        "monolog/monolog": "^1.23"
     },
     "license": "GPL",
     "authors": [{
