@@ -1,6 +1,7 @@
 <?php 
 require_once "src/sjcArchive/bootstrap.php";
-use sjcArchive\api
+print_r(get_declared_classes());
 
-
+$api = new sjcArchive\api();
+$api->calledfnc("sdfsdf");
 ?>

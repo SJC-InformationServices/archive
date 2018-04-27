@@ -3,7 +3,7 @@
 $root = $_SERVER["DOCUMENT_ROOT"];
 require_once "$root"."/vendor/autoload.php";
 echo "$root"."/vendor/autoload.php";
-
+use sjcArchive\api;
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 
