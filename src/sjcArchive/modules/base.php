@@ -1,7 +1,7 @@
 <?php 
-namespace sjcArchive;
+namespace sjcArchive\modules;
 
-abstract class BASE
+abstract class base
 {
     /**
      * Property: method

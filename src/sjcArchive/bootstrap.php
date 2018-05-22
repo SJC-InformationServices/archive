@@ -2,19 +2,14 @@
 /** Define Root Path and Composer Autoloader */
 $root = $_SERVER["DOCUMENT_ROOT"];
 require_once "$root"."/vendor/autoload.php";
-echo "$root"."/vendor/autoload.php";
-use sjcArchive\api;
-use Monolog\Logger;
-use Monolog\Handler\StreamHandler;
 
-// create a log channel
-$log = new Logger('name');
-$log->pushHandler(new StreamHandler($root."api.log", Logger::WARNING));
-
-// add records to the log
-$log->warning('Foo');
-$log->error('Bar');
-
+define("sjcArchiveDB",array(
+    "server"=>"sjc-archive-dev.cpi3jpipzm32.us-east-1.rds.amazonaws.com",
+    "database"=>"sjcArchiveManager",
+    "user"=>"sjcArchiveAdmin",
+    "pwd"=>"5jcAdmin!",
+    "port"=>"3306"    
+));
 
 
 ?>

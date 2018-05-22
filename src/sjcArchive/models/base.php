@@ -1,6 +1,6 @@
 <?php 
 
-use \R;
+use \RedBeanPHP\R as R;
 namespace sjcArchive\models;
 
 class base{
@@ -12,7 +12,7 @@ class base{
     public $type = "";
 
         public $prop;
-        public function __construct(){
+        public function __construct(array $dbconfig){
             \R::setup("mysql:host=$this->host;dbname=$this->$dbname;",$this->$user,$this->$pass);
             \R::setAutoResolve( TRUE );        //Recommended as of version 4.2
             \R::useWriterCache(true);
