@@ -1,0 +1,47 @@
+2018-05-23T14:25:59.408Z - info:   [02272] *** FOLDER: c:\Users\kevin_000\Documents\DevWorkSpaces\archivews\archiveapi ***
+2018-05-23T14:25:59.419Z - info:   [02272] VSTSVSCode/1.133.0 (VSCode 1.23.1; Windows_NT 10.0.16299; Node 7.9.0)
+2018-05-23T14:25:59.422Z - debug:  [02272] Looking for an External Context at c:\Users\kevin_000\Documents\DevWorkSpaces\archivews\archiveapi
+2018-05-23T14:25:59.422Z - debug:  [02272] No External Context at c:\Users\kevin_000\Documents\DevWorkSpaces\archivews\archiveapi
+2018-05-23T14:25:59.477Z - debug:  [02272] Looking for TFVC repository at c:\Users\kevin_000\Documents\DevWorkSpaces\archivews\archiveapi
+2018-05-23T14:25:59.478Z - debug:  [02272] TFVC Creating Tfvc object with localPath='undefined'
+2018-05-23T14:25:59.480Z - debug:  [02272] Using TFS proxy: 
+2018-05-23T14:25:59.480Z - debug:  [02272] TFVC Retrieved from settings; localPath='C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\TF.exe'
+2018-05-23T14:25:59.481Z - debug:  [02272] TFVC Repository created with repositoryRootFolder='c:\Users\kevin_000\Documents\DevWorkSpaces\archivews\archiveapi'
+2018-05-23T14:25:59.484Z - debug:  [02272] TFVC Repository.CheckVersion
+2018-05-23T14:25:59.486Z - debug:  [02272] TFVC: tf add -noprompt -?
+2018-05-23T14:25:59.494Z - debug:  [02272] TFVC: spawned new process (duration: 6ms)
+2018-05-23T14:25:59.505Z - debug:  [02272] TFVC: spawned new process (duration: 10ms)
+2018-05-23T14:26:10.261Z - debug:  [02272] TFVC: add exit code: 0 (duration: 10773ms)
+2018-05-23T14:26:10.264Z - debug:  [02272] TFVC Minimum required version: 14.102.0
+2018-05-23T14:26:10.264Z - debug:  [02272] TFVC (TF.exe, TF.cmd) version: 14.102.25619.0
+2018-05-23T14:26:10.265Z - debug:  [02272] TFVC Repository.FindWorkspace with localPath='c:\Users\kevin_000\Documents\DevWorkSpaces\archivews\archiveapi'
+2018-05-23T14:26:10.267Z - debug:  [02272] TFVC: tf workfold -noprompt ********
+2018-05-23T14:26:10.273Z - debug:  [02272] TFVC: spawned new process (duration: 5ms)
+2018-05-23T14:26:12.271Z - debug:  [02272] TFVC: workfold exit code: 100 (duration: 2004ms)
+2018-05-23T14:26:12.274Z - debug:  [02272] TFVC errors (via stderr): Unable to determine the source control server.
+
+2018-05-23T14:26:12.275Z - error:  [02272] Could not find a workspace with mappings (e.g., not a TFVC repository, wrong version of TF is being used).
+2018-05-23T18:48:41.097Z - debug:  [02272] Reinitializing due to onDidChangeConfiguration
+2018-05-23T18:48:41.103Z - debug:  [02272] Polling interval value (minutes): 5
+2018-05-23T18:48:41.111Z - info:   [02272] *** FOLDER: c:\Users\kevin_000\Documents\DevWorkSpaces\archivews\archiveapi ***
+2018-05-23T18:48:41.111Z - info:   [02272] VSTSVSCode/1.133.0 (VSCode 1.23.1; Windows_NT 10.0.16299; Node 7.9.0)
+2018-05-23T18:48:41.113Z - debug:  [02272] Looking for an External Context at c:\Users\kevin_000\Documents\DevWorkSpaces\archivews\archiveapi
+2018-05-23T18:48:41.113Z - debug:  [02272] No External Context at c:\Users\kevin_000\Documents\DevWorkSpaces\archivews\archiveapi
+2018-05-23T18:48:41.129Z - debug:  [02272] Looking for TFVC repository at c:\Users\kevin_000\Documents\DevWorkSpaces\archivews\archiveapi
+2018-05-23T18:48:41.129Z - debug:  [02272] TFVC Creating Tfvc object with localPath='undefined'
+2018-05-23T18:48:41.131Z - debug:  [02272] Using TFS proxy: 
+2018-05-23T18:48:41.131Z - debug:  [02272] TFVC Retrieved from settings; localPath='C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\TF.exe'
+2018-05-23T18:48:41.131Z - debug:  [02272] TFVC Repository created with repositoryRootFolder='c:\Users\kevin_000\Documents\DevWorkSpaces\archivews\archiveapi'
+2018-05-23T18:48:41.133Z - debug:  [02272] TFVC Repository.CheckVersion
+2018-05-23T18:48:41.137Z - debug:  [02272] TFVC: tf add -noprompt -?
+2018-05-23T18:48:41.157Z - debug:  [02272] TFVC: spawned new process (duration: 18ms)
+2018-05-23T18:48:41.501Z - debug:  [02272] TFVC: add exit code: 0 (duration: 363ms)
+2018-05-23T18:48:41.502Z - debug:  [02272] TFVC Minimum required version: 14.102.0
+2018-05-23T18:48:41.503Z - debug:  [02272] TFVC (TF.exe, TF.cmd) version: 14.102.25619.0
+2018-05-23T18:48:41.503Z - debug:  [02272] TFVC Repository.FindWorkspace with localPath='c:\Users\kevin_000\Documents\DevWorkSpaces\archivews\archiveapi'
+2018-05-23T18:48:41.504Z - debug:  [02272] TFVC: tf workfold -noprompt ********
+2018-05-23T18:48:41.544Z - debug:  [02272] TFVC: spawned new process (duration: 39ms)
+2018-05-23T18:48:42.200Z - debug:  [02272] TFVC: workfold exit code: 100 (duration: 696ms)
+2018-05-23T18:48:42.201Z - debug:  [02272] TFVC errors (via stderr): Unable to determine the source control server.
+
+2018-05-23T18:48:42.202Z - error:  [02272] Could not find a workspace with mappings (e.g., not a TFVC repository, wrong version of TF is being used).
