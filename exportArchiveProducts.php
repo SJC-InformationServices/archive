@@ -20,7 +20,7 @@ $dev->set_charset('utf-8');
  
 
 echo "Start<br>";
-$productSql  = "select * from (select * from `offers` where `status` <> 'delete' and (`featured_item_number` is not null or `item_name`) is not null order by `featured_item_number`,`updatedon` desc limit 100) qry1
+$productSql  = "select * from (select * from `offers` where `status` <> 'delete' and (`featured_item_number` is not null or `item_name`) is not null order by `featured_item_number`,`updatedon` desc) qry1
 group by `featured_item_number`,`item_name_hash`";
 
 if( $pqry = $prod->query($productSql))
@@ -29,20 +29,26 @@ if( $pqry = $prod->query($productSql))
  {
     
     $product['name'] = $product['item_name'];
+
+    array_walk($product,function(&$v,$k){
+        $v = utf8_encode($v);
+    });
     
     if($data = json_encode($product)){
-        $data = $dev->real_escape_string(JSON_ENCODE($product));
-        echo "Good<br>";
+        $data = $dev->real_escape_string($data);
+        $insert_product_sql = "insert into `products` (`rawdata`) values ('$data')";
+    $insert_product_qry = $dev->query($insert_product_sql);
+    if(!$insert_product_qry){
+        file_put_contents("importrecords/".$product['item_name_hash'].".json",JSON_ENCODE($product));
+    }
+        
     }else{
+
         echo json_last_error();
         echo json_last_error_msg();
     }
     
-    /*$insert_product_sql = "insert into `products` (`rawdata`) values ('$data')";
-    $insert_product_qry = $dev->query($insert_product_sql);
-    if(!$insert_product_qry){
-        file_put_contents("importrecords/".$product['item_name_hash'].".json",JSON_ENCODE($product));
-    }*/
+    
  }
 }else{
     echo "errror";
