@@ -6,16 +6,7 @@ header('Content-type: Text/HTML; Charset=UTF-8');
 ini_set('memory_limit','512M');
 ini_set('default_charset', 'utf-8');
 ini_set('max_execution_time', 0);
-/*use \RedBeanPHP\R as R;
 
- R::setup("mysql:host=sjc-content-archive-dev.cpi3jpipzm32.us-east-1.rds.amazonaws.com;dbname=sjcWalmartArchive;",'sjcArchiveAdmin','5jcAdmin');
- R::freeze(TRUE);
- R::addDatabase("prod","mysql:host=10.2.1.142;dbname=archive",'kevin.noseworthy','Knoseworthy0808!',TRUE);
-
- 
-/**
- * Select Each Season From Current Archive
- */
 ?>
 <html>
 <head>
@@ -25,15 +16,15 @@ ini_set('max_execution_time', 0);
 <div>Start</div>
 <?php
 try {
-    $prod = new MySqli("10.2.1.142", "kevin.noseworthy", 'Knoseworthy0808!', 'archive', '3306');
-    $dev = new MySqli("sjc-archive-dev.cpi3jpipzm32.us-east-1.rds.amazonaws.com", "sjcArchiveAdmin", "5jcAdmin!", "sjcWalmartArchive", '3306');
+    $prod = new MySqli("sjcthearchive.cb1qb4plxjpf.us-east-1.rds.amazonaws.com", "SJCarchiveAdmin", '5jcAdmin!', 'alphabrodermaster', '3306');
+    $dev = new MySqli("sjc-archive-prod.cluster-cpi3jpipzm32.us-east-1.rds.amazonaws.com", "sjcArchiveAdmin", "5jcAdmin!", "sjcAlphaBroderArchive", '3306');
     $prod->set_charset("utf8mb4");
     $dev->set_charset("utf8mb4");
     $prod->query("SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci");
     $dev->query("SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci");
-    
+    $prodTable = "`masterdataview`";
     echo "<table class='table'><thead><tr><td>year</td><td>project</td><td>page</td><td>adblock</td></tr></thead><tbody>";
-    $years_sql = 'select `year` from `offers` where `year` is not null and `year` <> "" group by `year`';
+    $years_sql = 'select `season` from `offers` where `season` is not null and `year` <> "" group by `year`';
     $years_qry = $prod->query($years_sql);
     while($year = $years_qry->fetch_assoc())
     {
