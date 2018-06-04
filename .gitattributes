@@ -3,3 +3,4 @@ deploy export-ignore
 .gitignore export-ignore
 .zip export-ignore
 vendor export-ignore
+src/alphabroderold/lib export-ignore
