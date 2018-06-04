@@ -57,6 +57,51 @@ function Disconnect-MySQL($conn) {
 function Is-Numeric ($Value) {
   return $Value -match "^[\d\.]+$"
 }
+function Format-Json([Parameter(Mandatory, ValueFromPipeline)][String] $json) {
+  $indent = 0;
+  ($json -Split '\n' |
+    % {
+      if ($_ -match '[\}\]]') {
+        # This line contains  ] or }, decrement the indentation level
+        $indent--
+      }
+      $line = (' ' * $indent * 2) + $_.TrimStart().Replace(':  ', ': ')
+      if ($_ -match '[\{\[]') {
+        # This line contains [ or {, increment the indentation level
+        $indent++
+      }
+      $line
+  }) -Join "`n"
+}
+
+function insertAlphaRow($conn,$row,$tbl,$logfile)
+{
+  $obj = @{}
+  $row.PSObject.Properties | ForEach-Object {
+    $ka = $_.Name.ToLower() -replace '[^\w]',''
+    $k = $ka.Trim() -replace '[^a-z]','_'
+    $v = $_.Value
+    if($v -ne $null){
+      $obj[$k] = $v.ToString().Replace("`n","<br>").Trim()
+    }
+  }
+  $ins = $obj | ConvertTo-Json -Depth 50 | % { [System.Text.RegularExpressions.Regex]::Unescape($_) } | Format-Json
+  $insObject = $ins -replace '\\','\\\\' -replace "'", "\'" -replace '"', '\"'
+  $inObj = $insObject.Replace("`n","") -Replace '\n','';
+  $qry = "insert into ``$tbl`` (``rawdata``) values ('" + $inObj + "')"
+
+  try{
+    $exqry = Execute-MySQLNonQuery $db $qry
+    return $exqry;
+  }catch{
+          $ErrorMessage = $_.Exception.Message
+          $of = $logfile + ".log"
+          $str = "<div>" +$ErrorMessage + "</div><div>"+ $inObj + '</div><div>' + $qry + '</div><div>'         
+          $str | Out-File $of -Encoding utf8    
+          return $false
+  }
+
+}
 
 #db credentials
 $dbHost = "sjc-archive-prod.cluster-cpi3jpipzm32.us-east-1.rds.amazonaws.com"
@@ -72,27 +117,28 @@ ForEach($f in $files)
     
     $styles = Import-Excel -Path $f.fullName -WorksheetName "Styles" -DataOnly
     $colors = Import-Excel -Path $f.fullName -WorksheetName "Colors" -DataOnly
-
-    foreach($row in $styles){
-        $obj = ConvertTo-Json($row) -Depth 50 | % { [System.Text.RegularExpressions.Regex]::Unescape($_) }
-        $insObj = $obj -replace "null" -replace "`r`n","`n" -replace '\\','\\\\' -replace "'", "\'" -replace '"', '\"'
-        $qry = "insert into ``products`` (``rawdata``) values ('" + $insObj + "')"
-        #write-host $qry
-        Execute-MySQLNonQuery $db $qry
-        $of = "jsonfiles\" + $row."AB Style #" + ".json"
-        ConvertTo-Json($row) -Depth 50 | % { [System.Text.RegularExpressions.Regex]::Unescape($_) } | Out-File  $of -Encoding utf8
+    
+    foreach($srow in $styles)
+    {      
+        write-host $srow."AB Style #"
+        $tbl = "products"
+        $style = $srow."AB Style #"
+        $log = "jsonfiles\styles\" + $style
+        $ins = insertAlphaRow $db $srow $tbl $log
+        $ins
     }
-    foreach($row in $colors){
-        $obj = ConvertTo-Json($row) -Depth 50 | % { [System.Text.RegularExpressions.Regex]::Unescape($_) } 
-        $insObj = $obj -replace "`r`n","`n" -replace '\\','\\\\' -replace "'", "\'" -replace '"', '\"'
-        $qry = "insert into ``products`` (``rawdata``) values ('" + $insObj + "')"
-        #write-host $qry
-        #$of = "jsonfiles\" + $row."AB Style #" + $row."Color Name" +".json"
-        ConvertTo-Json($row) -Depth 50 | % { [System.Text.RegularExpressions.Regex]::Unescape($_) } | Out-File  $of -Encoding utf8
-        Execute-MySQLNonQuery $db $qry
+    foreach($crow in $colors){
+        write-host $crow."AB Style #" + $crow."Color Name"
+        $tbl = "colors"
+        $style = $crow."AB Style #"
+        $color = $crow."Color Name".toString() -replace '[^a-z]',''
+        $log = "jsonfiles\colors\" + $style + "-" + $color
+        $ins = insertAlphaRow $db $crow $tbl $log
+        $ins      
     }
-
 }
+
+
 
 
 
