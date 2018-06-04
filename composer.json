@@ -1,0 +1,9 @@
+{
+    
+    "require": {
+        "aws/aws-sdk-php": "^3.60",
+        "monolog/monolog": "^1.23",
+        "lcobucci/jwt": "^3.2",
+        "gabordemooij/redbean": "^5.1"
+    }
+}

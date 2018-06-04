@@ -1,0 +1,4 @@
+{
+    "phpserver.browser": "firefox",
+    "phpserver.port":3300
+}
