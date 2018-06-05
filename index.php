@@ -2,11 +2,11 @@
 
 session_start();
 header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Credentials: true");	
+header("Access-Control-Allow-Credentials: true");     
 header('Last-Modified: ' . gmdate('D, d M Y H:i:s', filemtime($url)) . ' GMT');
 header("Cache-Control: public");
 header("Pragma: public");
-	if (!isset($_SESSION['SESSION'])){
+     if (!isset($_SESSION['SESSION'])){
 
 if(isset($_SESSION['loggedin'])){
 
@@ -15,31 +15,31 @@ if(isset($_SESSION['loggedin'])){
 }
 
    }
-	
-	if ($_SESSION['LOGGEDIN'] == true) 
+     
+     if ($_SESSION['LOGGEDIN'] == true) 
   {
-		  header("Location: work.php");
-			
-	}
-	if (isset($HTTP_GET_VARS["flg"])) {$flg = $HTTP_GET_VARS["flg"];};
-	
-	switch ($flg) {
-		
-		case "red":
-			$error = "That username/password combination is not in our database.Please Try Again.";
-			break;
-		case "blue":
-			$error = "Your Session has Expired.<br>Please Login Again.";
-			break;
-		case "black":
-			$error = "Your Security Key Failed!";
-			break;
-		case "purple":
-			$error = "Password Reset Complete Please Login!";
-		default:
-			$error = "   <br>";
-	}
-	
+            header("Location: work.php");
+               
+     }
+     if (isset($HTTP_GET_VARS["flg"])) {$flg = $HTTP_GET_VARS["flg"];};
+     
+     switch ($flg) {
+          
+          case "red":
+               $error = "That username/password combination is not in our database.Please Try Again.";
+               break;
+          case "blue":
+               $error = "Your Session has Expired.<br>Please Login Again.";
+               break;
+          case "black":
+               $error = "Your Security Key Failed!";
+               break;
+          case "purple":
+               $error = "Password Reset Complete Please Login!";
+          default:
+               $error = "   <br>";
+     }
+     
 ?>
 <!DOCTYPE HTML>
 <html>
@@ -49,15 +49,14 @@ if(isset($_SESSION['loggedin'])){
 <meta http-equiv="content-type" content="text/html;charset=utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="" rel="shortcut icon">
-		<title>SJC Web Archive</title>
-		
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-		<style>
-		:root {
+          <title>SJC Web Archive</title>
+          
+          <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+          <style>
+          :root {
   --input-padding-x: .75rem;
   --input-padding-y: .75rem;
 }
->>>>>>> 1bb1590782b42826ffbb4d5a6204d04512b9e229
 
 html,
 body {
@@ -142,7 +141,7 @@ body {
   color: #777;
 }
 
-		</style>
+          </style>
 </head>
 <body>
 
@@ -160,16 +159,16 @@ body {
         <input id="inputPassword" class="form-control" placeholder="Password" required="" type="password" name="passwd">
         <label for="inputPassword">Password</label>
       </div>
-	  
-	  <div class="form-label-group">
+       
+       <div class="form-label-group">
         <input id="inputSecurityCode" class="form-control" placeholder="Security Code" required="" type="text" name="security_code" >
         <label for="inputSecurityCode">Security Code</label>
-		<p><div class="text-center mb-4"><img src="includes/CaptchaSecurityImages.php?width=100&height=40&characters=5&datetime=<?php echo time();?>" /></div></p>
+          <p><div class="text-center mb-4"><img src="includes/CaptchaSecurityImages.php?width=100&height=40&characters=5&datetime=<?php echo time();?>" /></div></p>
       </div>
-	  
+       
       <button class="btn btn-lg btn-secondary btn-block" type="submit">Sign in</button>
       <p class="mt-5 mb-3 text-muted text-center">© 2017-2018</p>
     </form>
 
-	</body>
+     </body>
 </html>
