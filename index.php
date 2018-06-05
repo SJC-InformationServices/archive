@@ -1,5 +1,9 @@
 <?php
-
+/**
+ * This File Starts the login and validation process
+ * @version 1.0.0
+ * @author Kevin Noseworthy <kevin.noseworthy@stjoseph.com>
+ */
 session_start();
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Credentials: true");     
