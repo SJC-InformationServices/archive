@@ -32,7 +32,7 @@ echo "tables are connected!";
 $query = "SELECT categoryname FROM $hlcategorytable ORDER BY categoryname";
 $results = mysql_query($query);
 
-echo "<select name = "categoryfield">";
+echo "<select name = 'categoryfield'>";
 foreach($results as $value)
 { echo "<option value=\"$value=\">$value</option>\n";
 }
