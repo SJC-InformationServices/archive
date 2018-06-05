@@ -1,0 +1,62 @@
+.layoutbox
+{
+border: thin solid black;
+position: absolute;
+text-align: left;
+background-color: rgb(255,255,128);
+
+z-index: 1000;
+}
+
+.layoutwindow
+{
+border: 1px solid grey;
+position: absolute;
+top: 0px;
+width: 100%;
+height: 1700px;
+font-family: Trebuchet MS, Lucida Sans Unicode, Arial, sans-serif;
+font-size: 9pt;
+overflow-y: auto;
+}
+
+.layoutbutton
+{
+}
+
+.layoutwhitewall
+{
+position: absolute;
+top: 75px;
+width: 100%;
+height: 1701px;
+background-color: rgb(255,255,255);
+}
+
+.posnum
+{
+position: relative;
+width: 90%;
+margin: 1px;
+padding: 1px;
+height: 15px;
+font-weight: bold;
+}
+
+.elelayout
+{
+position: relative;
+width: 100%;
+margin: 1px;
+padding: 1px;
+}
+.artlayout
+{
+position: relative;
+width: 100%;
+margin: 1px;
+padding: 1px;
+
+font-size: 8pt;
+font-weight: bold;
+}
