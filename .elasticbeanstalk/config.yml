@@ -3,7 +3,7 @@ branch-defaults:
     environment: sjcarchiveold
 environment-defaults:
   sjcarchiveold:
-    branch: null
+    branch: origin
     repository: null
 global:
   application_name: SJC_Archive
