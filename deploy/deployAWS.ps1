@@ -17,5 +17,5 @@ git commit -m "sjcArchiveDeploy $name"
 #aws s3 cp "C:\Users\kevin_000\Documents\DevWorkSpaces\sdmArchive\lib\apps\" s3://sjcarchiveassets/lib/apps/ --recursive
 
 #aws s3 cp "C:\Users\kevin_000\Documents\DevWorkSpaces\sdmArchive\lib\images\" s3://sjcarchiveassets/lib/images/ --recursive
-ebdeploy
+eb deploy
 #New-EBApplicationVersion -ApplicationName SJC_Archive -VersionLabel $name -SourceBuildInformation_SourceType Zip -SourceBuildInformation_SourceRepository S3 -SourceBuildInformation_SourceLocation sjcarchivefiles-dev/$name
