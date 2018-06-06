@@ -13,10 +13,9 @@
  * the PHP License and are unable to obtain it through the web, please
  * send a note to license@php.net so we can mail you a copy immediately.
  *
- * @category   CategoryName
- * @package    PackageName
- * @author     Original Author <author@example.com>
- * @author     Another Author <another@example.com>
+ * @category   Tool
+ * @package    ExportingAlphaArchive
+ * @author     Kevin Noseworthy <kevin.noseworthy@stjoseph.com>
  * @copyright  1997-2005 The PHP Group
  * @license    http://www.php.net/license/3_01.txt  PHP License 3.01
  * @version    SVN: $Id$
@@ -51,11 +50,36 @@ try {
     $cqry = $prod->query($colorSql);
 
     while( $s = $sqry->fetch_assoc() ){
-        echo JSON_ENCODE($s);
-    }
-    while( $c = $cqry->fetch_assoc() ){
+        $ss = JSON_ENCODE($s);
+        $sr = $dev->real_escape_string($ss);
+        $siSql = "insert ignore into `products` (`rawdata`) values ('$sr')";
+        echo $s['abstyle']."<br>";
+        try{
+            $dev->query($siSql);
+        }catch(exception $e){
+            $style = $s['abstyle'];
+            $msg = $e->message;
+            $filename = "exportfiles/styles/$style.json";
+            $contents = "$msg\n$ss";
+            file_put_contents($filename, $contents);
+        }
         
-        echo JSON_ENCODE($c);
+    }
+    while( $c = $cqry->fetch_assoc() ){        
+        $cs = JSON_ENCODE($c);
+        $cr = $dev->real_escape_string($cs);
+        $ciSql = "insert ignore into `colors` (`rawdata`) values ('$cr')";
+        echo $cs['abstyle']."-".$cs['abcolor']."<br>";
+        try{
+            $dev->query($ciSql);
+        }catch(exception $e){
+            $style = $c['abstyle'];
+            $color = $c['color_name'];
+            $msg = $e->message;
+            $filename = "exportfiles/colors/$style-$color.json";
+            $contents = "$msg\n$cs";
+            file_put_contents($filename, $contents);
+        }
     
     }
 
