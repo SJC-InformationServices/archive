@@ -1,5 +1,15 @@
 <?php
-/** Define Root Path and Composer Autoloader */
+
+/**
+ * BOOTSTRAP.PHP
+ * 
+ * @author    Kevin.Noseworthy <kevin.noseworthy@stjoseph.com>
+ * @copyright 2015 St.Joseph
+ * @license   Licence Name
+ * @see       Link to project website
+ * @package
+ */
+
 $root = $_SERVER["DOCUMENT_ROOT"];
 require_once "$root"."/vendor/autoload.php";
 
