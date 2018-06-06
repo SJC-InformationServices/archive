@@ -74,7 +74,7 @@ try {
             $dev->query($ciSql);
         }catch(exception $e){
             $style = $c['abstyle'];
-            $color = $c['color_name'];
+            $color = $c['colorname'];
             $msg = $e->message;
             echo $msg;
             $filename = __DIR__."/exportfiles/colors/$style-$color.json";
