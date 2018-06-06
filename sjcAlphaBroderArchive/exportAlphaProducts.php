@@ -46,10 +46,10 @@ try {
     $styleSql = "select * from `abstyles`";
     $colorSql = "select * from `abcolors`";
 
-    $sqry = $prod->query($styleSql);
+    //$sqry = $prod->query($styleSql);
     $cqry = $prod->query($colorSql);
 
-    while( $s = $sqry->fetch_assoc() ){
+    /*while( $s = $sqry->fetch_assoc() ){
         $ss = JSON_ENCODE($s);
         $sr = $dev->real_escape_string($ss);
         $siSql = "insert ignore into `products` (`rawdata`) values ('$sr')";
@@ -59,24 +59,25 @@ try {
         }catch(exception $e){
             $style = $s['abstyle'];
             $msg = $e->message;
-            $filename = "exportfiles/styles/$style.json";
+            $filename = __DIR__."/exportfiles/styles/$style.json";
             $contents = "$msg\n$ss";
             file_put_contents($filename, $contents);
         }
         
-    }
+    }*/
     while( $c = $cqry->fetch_assoc() ){        
         $cs = JSON_ENCODE($c);
         $cr = $dev->real_escape_string($cs);
         $ciSql = "insert ignore into `colors` (`rawdata`) values ('$cr')";
-        echo $cs['abstyle']."-".$cs['abcolor']."<br>";
+        echo $c['abstyle']."-".$c['abcolor']."<br>";
         try{
             $dev->query($ciSql);
         }catch(exception $e){
             $style = $c['abstyle'];
             $color = $c['color_name'];
             $msg = $e->message;
-            $filename = "exportfiles/colors/$style-$color.json";
+            echo $msg;
+            $filename = __DIR__."/exportfiles/colors/$style-$color.json";
             $contents = "$msg\n$cs";
             file_put_contents($filename, $contents);
         }
