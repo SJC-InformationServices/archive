@@ -6,26 +6,22 @@
  */
 session_start();
 header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Credentials: true");     
+header("Access-Control-Allow-Credentials: true");
 header('Last-Modified: ' . gmdate('D, d M Y H:i:s', filemtime($url)) . ' GMT');
 header("Cache-Control: public");
 header("Pragma: public");
-     if (!isset($_SESSION['SESSION'])){
-
-if(isset($_SESSION['loggedin'])){
-
-}else{
-    
-}
-
-   }
-     
-     if ($_SESSION['LOGGEDIN'] == true) 
-  {
-            header("Location: work.php");
-               
+     if (!isset($_SESSION['SESSION'])) {
+         if (isset($_SESSION['loggedin'])) {
+         } else {
+         }
      }
-     if (isset($HTTP_GET_VARS["flg"])) {$flg = $HTTP_GET_VARS["flg"];};
+     
+     if ($_SESSION['LOGGEDIN'] == true) {
+         header("Location: work.php");
+     }
+     if (isset($HTTP_GET_VARS["flg"])) {
+         $flg = $HTTP_GET_VARS["flg"];
+     };
      
      switch ($flg) {
           
@@ -40,6 +36,7 @@ if(isset($_SESSION['loggedin'])){
                break;
           case "purple":
                $error = "Password Reset Complete Please Login!";
+               // no break
           default:
                $error = "   <br>";
      }
