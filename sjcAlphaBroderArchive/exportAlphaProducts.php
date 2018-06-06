@@ -65,7 +65,7 @@ try {
         }
         
     }*/
-    while( $c = $cqry->fetch_assoc() ){        
+    while ( $c = $cqry->fetch_assoc() ) {        
         $cs = JSON_ENCODE($c);
         $cr = $dev->real_escape_string($cs);
         $ciSql = "insert ignore into `colors` (`rawdata`) values ('$cr')";
