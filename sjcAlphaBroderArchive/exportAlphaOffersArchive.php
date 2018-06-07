@@ -37,7 +37,7 @@ try {
         '3306'
     );
     $dev = new MySqli(
-        "sjc-archive-dev.cluster-cpi3jpipzm32.us-east-1.rds.amazonaws.com",
+        "sjc-archive-prod.cluster-cpi3jpipzm32.us-east-1.rds.amazonaws.com",
         "sjcArchiveAdmin",
         "5jcAdmin!",
         "sjcAlphaBroderArchive",
@@ -209,7 +209,7 @@ try {
     `page` is not null and 
     `page` <> 'delete' 
     group by `season`, `catalog_name`, `page`, `style` 
-    order by `season`, `catalog_name` limit 100";
+    order by `season`, `catalog_name`";
     $getQry = $prod->query($getSql);
     while ($d = $getQry->fetch_assoc()) {
         //array_push($output, json_encode($d));
@@ -222,6 +222,7 @@ try {
         $d['category'] = $d['b2b_category'];
         $d['sizegroup'] = $d['size_group'];
         $d['sizerange'] = $d['b2b_size_group'];
+        $d['earthfriendly'] = $d['earth_friendly'];
 
         $sobj = array("name"=>$d['season']);
         $sid = createSeason(['name'=>$d['season']]);
