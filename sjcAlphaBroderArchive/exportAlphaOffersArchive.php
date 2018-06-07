@@ -223,6 +223,7 @@ try {
         $d['sizegroup'] = $d['size_group'];
         $d['sizerange'] = $d['b2b_size_group'];
         $d['earthfriendly'] = $d['earth_friendly'];
+        $d['icons'] = $d['iconlist'];
 
         $sobj = array("name"=>$d['season']);
         $sid = createSeason(['name'=>$d['season']]);
