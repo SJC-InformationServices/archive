@@ -14,14 +14,22 @@ CREATE TABLE `attachments` (
   KEY `idx_attachements_types` (`type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`sjcArchiveAdmin`@`%`*/ /*!50003 TRIGGER `sjcAlphaBroderArchive`.`attachments_BEFORE_INSERT` BEFORE INSERT ON `attachments` FOR EACH ROW
+/*!50003 CREATE*/ /*!50017 DEFINER=`sjcArchiveAdmin`@`%`*/ /*!50003 TRIGGER `sjcWalmartArchive`.`attachments_BEFORE_INSERT` BEFORE INSERT ON `attachments` FOR EACH ROW
 BEGIN
 if JSON_EXTRACT(new.rawdata,'$.UUID') is null then
 	set NEW.rawdata = JSON_SET(NEW.rawdata,"$.uuid",uuid());
 END IF;
 
 END */;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`sjcArchiveAdmin`@`%`*/ /*!50003 TRIGGER `sjcAlphaBroderArchive`.`attachments_BEFORE_UPDATE` BEFORE UPDATE ON `attachments` FOR EACH ROW
+/*!50003 CREATE*/ /*!50017 DEFINER=`sjcArchiveAdmin`@`%`*/ /*!50003 TRIGGER `sjcWalmartArchive`.`attachments_BEFORE_UPDATE` BEFORE UPDATE ON `attachments` FOR EACH ROW
+BEGIN
+
+insert into `entity_history` (`rawdata`) values (json_set(old.rawdata,'$.entity_type','colors','$.entity_id',old.id));
+
+END */;;
+DELIMITER ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`sjcArchiveAdmin`@`%`*/ /*!50003 TRIGGER `sjcWalmartArchive`.`attachments_BEFORE_DELETE` BEFORE DELETE ON `attachments` FOR EACH ROW
 BEGIN
 
 insert into `entity_history` (`rawdata`) values (json_set(old.rawdata,'$.entity_type','colors','$.entity_id',old.id));
