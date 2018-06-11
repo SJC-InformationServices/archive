@@ -6,7 +6,7 @@
         {
             "label": "DeployAWS",
             "type": "shell",
-            "command": "powershell -File ${cwd}\\deploy\\deployAWS.ps1 -ExecutionPolicy Unrestricted -NoProfile",
+            "command": "git add --all;git commit -m \"sjcArchiveDeploy\";eb deploy;",
             "isShellCommand": true,
             "showOutPut": "always ",
             "group": {

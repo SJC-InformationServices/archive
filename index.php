@@ -7,7 +7,7 @@
 session_start();
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Credentials: true");
-header('Last-Modified: ' . gmdate('D, d M Y H:i:s', filemtime($url)) . ' GMT');
+header('Last-Modified: ' . gmdate('D, d M Y H:i:s', filemtime(__FILE__)) . ' GMT');
 header("Cache-Control: public");
 header("Pragma: public");
        
