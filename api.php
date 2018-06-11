@@ -25,7 +25,7 @@
  */ 
 echo "Start";
 try {
-    $api = new \sjcArchive\Api();
+    $api = new sjcArchive\Api();
     var_dump($api);
 }
 catch(exception $e){
