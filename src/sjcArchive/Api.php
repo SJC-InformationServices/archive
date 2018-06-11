@@ -17,14 +17,14 @@
  * @author     Kevin Noseworthy <kevin.noseworthy@stjoseph.com>
  * @copyright  1997-2018 St.Joseph Communication
  * @license    http://www.php.net/license/3_01.txt  PHP License 3.01
- * @version    SVN: Id$
+ * @version    SVN: $Id$
  * @link       http://pear.php.net/package/PackageName
  * @see        NetOther, Net_Sample::Net_Sample()
  * @since      File available since Release 1.2.0
  * @deprecated File deprecated in Release 2.0.0
- */ 
+ */
 
-namespace sjcArchive{
+namespace sjcArchive {
     /**
      * This is MainClass for All Requests
      * 
@@ -34,10 +34,16 @@ namespace sjcArchive{
      * @license  http://www.php.net/license/3_01.txt  PHP License 3.01
      * @link     http://pear.php.net/package/PackageName
      */
-    class Router 
+
+    class Api extends sjcArchive\Modules\Base
     {
-         
+        /**
+         * Construction function for API CLASS
+         */
+        public function __construct() 
+        {
+
+        }
     }
 }
-
 ?>
