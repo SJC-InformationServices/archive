@@ -155,16 +155,21 @@ autocomplete="off">
         <div id='error' class='error'></div>
       </div>
       <div class="form-label-group">
-        <input id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="" type="email" name="username">
+        <input id="inputEmail" class="form-control" 
+        placeholder="Email address" 
+        required="" autofocus="" type="email" name="username">
         <label for="inputEmail">Email address</label>
       </div>
 
       <div class="form-label-group">
-        <input id="inputPassword" class="form-control" placeholder="Password" required="" type="password" name="passwd">
+        <input id="inputPassword" class="form-control" 
+        placeholder="Password" required="" type="password" name="passwd">
         <label for="inputPassword">Password</label>
       </div>
               
-      <button class="btn btn-lg btn-secondary btn-block" type="submit">Sign in</button>
+      <button class="btn btn-lg btn-secondary btn-block" type="submit">
+      Sign in
+      </button>
       <p class="mt-5 mb-3 text-muted text-center">© 2017-2018</p>
     </form>
 
