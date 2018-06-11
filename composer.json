@@ -1,9 +1,15 @@
 {
-    
+    "name":"SJC Archive UI and Api",
+    "description": "A Simple GUI base ORM, backend as a service",
     "require": {
         "aws/aws-sdk-php": "^3.60",
         "monolog/monolog": "^1.23",
         "lcobucci/jwt": "^3.2",
         "gabordemooij/redbean": "^5.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "sjcArchive":["src/sjcArchive"]
+        }
     }
 }
