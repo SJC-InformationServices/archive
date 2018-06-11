@@ -23,6 +23,7 @@
  * @since      File available since Release 1.2.0
  * @deprecated File deprecated in Release 2.0.0
  */ 
+require_once "vendor/autoload.php";
 echo "Start";
 try {
     $api = new sjcArchive\Api();

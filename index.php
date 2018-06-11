@@ -1,9 +1,29 @@
 <?php
 /**
- * This File Starts the login and validation process
- * @version 1.0.0
- * @author Kevin Noseworthy <kevin.noseworthy@stjoseph.com>
- */
+ * API.PHP
+ *
+ * For Any Archive Request Start Here
+ *
+ * PHP version 7
+ *
+ * LICENSE: This source file is subject to version 3.01 of the PHP license
+ * that is available through the world-wide-web at the following URI:
+ * http://www.php.net/license/3_01.txt.  If you did not receive a copy of
+ * the PHP License and are unable to obtain it through the web, please
+ * send a note to license@php.net so we can mail you a copy immediately.
+ *
+ * @category   Application
+ * @package    Request
+ * @author     Kevin Noseworthy <kevin.noseworthy@stjoseph.com>
+ * @copyright  1997-2018 St.Joseph Communication
+ * @license    http://www.php.net/license/3_01.txt  PHP License 3.01
+ * @version    SVN: Id$
+ * @link       http://pear.php.net/package/PackageName
+ * @see        NetOther, Net_Sample::Net_Sample()
+ * @since      File available since Release 1.2.0
+ * @deprecated File deprecated in Release 2.0.0
+ */ 
+
 session_start();
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Credentials: true");
@@ -18,11 +38,15 @@ header("Pragma: public");
 <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
 <META HTTP-EQUIV="Expires" CONTENT="-1">
 <meta http-equiv="content-type" content="text/html;charset=utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="viewport" 
+content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="" rel="shortcut icon">
           <title>SJC Web Archive</title>
           
-          <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet" 
+href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
+integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" 
+crossorigin="anonymous">
           <style>
           :root {
   --input-padding-x: .75rem;
@@ -116,9 +140,18 @@ body {
 </head>
 <body>
 
-<form class="form-signin" action="includes/loggedin.php" method="post" name="form1" id="form1" ENCTYPE = "multipart/form-data"  | "application/x-www-form-urlencoded" | "text/plain" autocomplete="off">
+<form 
+class="form-signin" 
+action="includes/loggedin.php" 
+method="post" name="form1" id="form1" 
+ENCTYPE = 
+"multipart/form-data"  | "application/x-www-form-urlencoded" | "text/plain" 
+autocomplete="off">
       <div class="mb-4">
-        <img src="https://s3.amazonaws.com/sjcarchiveassets/lib/images/logo.jpg" alt="Logo" height="72px">
+        <img 
+        src="/sjcarchiveassets/lib/images/logo.jpg" 
+        alt="Logo" 
+        height="72px">
         <div id='error' class='error'></div>
       </div>
       <div class="form-label-group">

@@ -1,6 +1,7 @@
 RewriteEngine On
 
 RewriteRule ^api/.*$ api.php [L]
+RewriteRule ^/sjcarchiveassets/(.*)$ https://s3.amazonaws.com/sjcarchiveassets/$1 [P]
 
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
