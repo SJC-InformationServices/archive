@@ -10,37 +10,7 @@ header("Access-Control-Allow-Credentials: true");
 header('Last-Modified: ' . gmdate('D, d M Y H:i:s', filemtime($url)) . ' GMT');
 header("Cache-Control: public");
 header("Pragma: public");
-     if (!isset($_SESSION['SESSION'])) {
-         if (isset($_SESSION['loggedin'])) {
-         } else {
-         }
-     }
-     
-     if ($_SESSION['LOGGEDIN'] == true) {
-         header("Location: work.php");
-     }
-     if (isset($HTTP_GET_VARS["flg"])) {
-         $flg = $HTTP_GET_VARS["flg"];
-     };
-     
-     switch ($flg) {
-          
-          case "red":
-               $error = "That username/password combination is not in our database.Please Try Again.";
-               break;
-          case "blue":
-               $error = "Your Session has Expired.<br>Please Login Again.";
-               break;
-          case "black":
-               $error = "Your Security Key Failed!";
-               break;
-          case "purple":
-               $error = "Password Reset Complete Please Login!";
-               // no break
-          default:
-               $error = "   <br>";
-     }
-     
+       
 ?>
 <!DOCTYPE HTML>
 <html>

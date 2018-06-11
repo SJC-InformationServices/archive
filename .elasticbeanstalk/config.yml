@@ -1,13 +1,18 @@
 branch-defaults:
   cdntire:
     environment: sjcarchiveold
+  master:
+    environment: sjcarchiveadmin
 environment-defaults:
+  sjcarchiveadmin:
+    branch: null
+    repository: null
   sjcarchiveold:
     branch: origin
     repository: null
 global:
   application_name: SJC_Archive
-  default_ec2_keyname: SJC_Archive
+  default_ec2_keyname: sjcArchivePrivate
   default_platform: arn:aws:elasticbeanstalk:us-east-1::platform/PHP 7.1 running on
     64bit Amazon Linux/2.6.5
   default_region: us-east-1
