@@ -119,7 +119,7 @@ body {
 <form class="form-signin" action="includes/loggedin.php" method="post" name="form1" id="form1" ENCTYPE = "multipart/form-data"  | "application/x-www-form-urlencoded" | "text/plain" autocomplete="off">
       <div class="mb-4">
         <img src="https://s3.amazonaws.com/sjcarchiveassets/lib/images/logo.jpg" alt="Logo" height="72px">
-        <div id='error' class='error'><?php echo $error; ?></div>
+        <div id='error' class='error'></div>
       </div>
       <div class="form-label-group">
         <input id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="" type="email" name="username">
