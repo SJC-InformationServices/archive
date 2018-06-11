@@ -23,6 +23,6 @@
  * @since      File available since Release 1.2.0
  * @deprecated File deprecated in Release 2.0.0
  */ 
-$api = new sjcArchive\api();
+$api = new sjcArchive\Api();
 var_dump($api);
 ?>
