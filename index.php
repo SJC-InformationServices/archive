@@ -130,13 +130,7 @@ body {
         <input id="inputPassword" class="form-control" placeholder="Password" required="" type="password" name="passwd">
         <label for="inputPassword">Password</label>
       </div>
-       
-       <div class="form-label-group">
-        <input id="inputSecurityCode" class="form-control" placeholder="Security Code" required="" type="text" name="security_code" >
-        <label for="inputSecurityCode">Security Code</label>
-          <p><div class="text-center mb-4"><img src="includes/CaptchaSecurityImages.php?width=100&height=40&characters=5&datetime=<?php echo time();?>" /></div></p>
-      </div>
-       
+              
       <button class="btn btn-lg btn-secondary btn-block" type="submit">Sign in</button>
       <p class="mt-5 mb-3 text-muted text-center">© 2017-2018</p>
     </form>
