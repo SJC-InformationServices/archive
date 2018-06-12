@@ -7,8 +7,6 @@
             "label": "DeployAWS",
             "type": "shell",
             "command": "git add --all;git commit -m \"sjcArchiveDeploy\";eb deploy --staged;",
-            "isShellCommand": true,
-            "showOutPut": "always ",
             "group": {
                 "kind": "build",
                 "isDefault": true
