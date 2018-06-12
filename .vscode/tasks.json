@@ -6,7 +6,7 @@
         {
             "label": "DeployAWS",
             "type": "shell",
-            "command": "git add --all;git commit -m \"sjcArchiveDeploy\";eb deploy --staged;",
+            "command": "git add --all;git commit -m \"sjcArchiveDeploy\";eb deploy;",
             "group": {
                 "kind": "build",
                 "isDefault": true
