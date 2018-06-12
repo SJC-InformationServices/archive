@@ -2,3 +2,5 @@ vendor
 src/alphabroderold
 src/hlfarchiveold
 *.zip
+.elasticbeanstalk\*.crt
+.elasticbeanstalk\*.key
