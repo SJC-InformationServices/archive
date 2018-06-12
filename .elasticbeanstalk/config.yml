@@ -12,7 +12,7 @@ environment-defaults:
     repository: null
 global:
   application_name: SJC_Archive
-  default_ec2_keyname: sjcArchivePrivate
+  default_ec2_keyname: sjc_archive_eb
   default_platform: arn:aws:elasticbeanstalk:us-east-1::platform/PHP 7.1 running on
     64bit Amazon Linux/2.6.5
   default_region: us-east-1
