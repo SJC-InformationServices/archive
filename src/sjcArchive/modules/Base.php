@@ -40,7 +40,8 @@ namespace sjcArchive
     {
         /**
          * Property: method
-         * The HTTP method this request was made in, either GET, POST, PUT, PATCH or DELETE
+         * The HTTP method this request was made in, 
+         * either GET, POST, PUT, PATCH or DELETE
          */
         protected $method = '';
         /**
@@ -50,13 +51,15 @@ namespace sjcArchive
         protected $endpoint = '';
         /**
          * Property: verb
-         * An optional additional descriptor about the endpoint, used for things that can
+         * An optional additional descriptor about the endpoint, 
+         * used for things that can
          * not be handled by the basic methods. eg: /files/process
          */
         protected $verb = '';
         /**
          * Property: args
-         * Any additional URI components after the endpoint and verb have been removed, in our
+         * Any additional URI components after the endpoint 
+         * and verb have been removed, in our
          * case, an integer ID for the resource. eg: /<endpoint>/<verb>/<arg0>/<arg1>
          * or /<endpoint>/<arg0>
          */
@@ -67,10 +70,13 @@ namespace sjcArchive
          */
         protected $file = null;
         /**
-         * Constructor: __construct
-         * Allow for CORS, assemble and pre-process the data
+         * Undocumented function
+         *
+         * @param [string] $request url parameters seperated after 
+         *                          "API" into slashed values and 
+         *                          get get query params
          */
-        public function __construct($request)
+        public function __construct(string $request)
         {
             header("Access-Control-Allow-Orgin: *");
             header("Access-Control-Allow-Methods: *");
@@ -83,7 +89,9 @@ namespace sjcArchive
             }
 
             $this->method = $_SERVER['REQUEST_METHOD'];
-            if ($this->method == 'POST' && array_key_exists('HTTP_X_HTTP_METHOD', $_SERVER)) {
+            if ($this->method == 'POST' 
+                && array_key_exists('HTTP_X_HTTP_METHOD', $_SERVER) 
+            ) {
                 if ($_SERVER['HTTP_X_HTTP_METHOD'] == 'DELETE') {
                     $this->method = 'DELETE';
                 } elseif ($_SERVER['HTTP_X_HTTP_METHOD'] == 'PUT') {
@@ -94,23 +102,27 @@ namespace sjcArchive
             }
 
             switch ($this->method) {
-        case 'DELETE':
-        case 'POST':
-            $this->request = $this->_cleanInputs($_POST);
-            break;
-        case 'GET':
-            $this->request = $this->_cleanInputs($_GET);
-            break;
-        case 'PUT':
-            $this->request = $this->_cleanInputs($_GET);
-            $this->file = file_get_contents("php://input");
-            break;
-        default:
-            $this->_response('Invalid Method', 405);
-            break;
+            case 'DELETE':
+            case 'POST':
+                $this->request = $this->_cleanInputs($_POST);
+                break;
+            case 'GET':
+                $this->request = $this->_cleanInputs($_GET);
+                break;
+            case 'PUT':
+                $this->request = $this->_cleanInputs($_GET);
+                $this->file = file_get_contents("php://input");
+                break;
+            default:
+                $this->_response('Invalid Method', 405);
+                break;
+            }
         }
-        }
-    
+        /**
+         * Undocumented function
+         *
+         * @return void
+         */
         public function processAPI()
         {
             if (method_exists($this, $this->endpoint)) {
@@ -118,13 +130,25 @@ namespace sjcArchive
             }
             return $this->_response("No Endpoint: $this->endpoint", 404);
         }
-
-        private function _response($data, $status = 200)
+        /**
+         * _Response Process the requested responses
+         *
+         * @param  [array] $data   current response data turn
+         * @param  integer $status status code for the response
+         * @return array resulting array from the responses
+         */
+        private function _response(array $data, $status = 200)
         {
             header("HTTP/1.1 " . $status . " " . $this->_requestStatus($status));
             return json_encode($data);
         }
-
+        /**
+         * CleanInputs Returns the filtered version of url 
+         * encoded data removing html tags etc
+         *
+         * @param  [type] $data cleans up the input values and removes html tags etc
+         * @return string 
+         */
         private function _cleanInputs($data)
         {
             $clean_input = array();
@@ -137,18 +161,23 @@ namespace sjcArchive
             }
             return $clean_input;
         }
-
-        private function _requestStatus($code)
+        /**
+         * Undocumented function
+         *
+         * @param  [type] $code response for each of the codes
+         * @return void
+         */
+        private function _requestStatus($code) 
         {
             $status = array(
             200 => 'OK',
             404 => 'Not Found',
             405 => 'Method Not Allowed',
-            500 => 'Internal Server Error',
-        );
+            500 => 'Internal Server Error');
+
             return ($status[$code])?$status[$code]:$status[500];
         }
     }
- }
+}
 
 ?>
