@@ -24,7 +24,7 @@
  * @deprecated File deprecated in Release 2.0.0
  */ 
 
-namespace sjcArchive{
+namespace sjcArchive\Modules{
     /**
      * This is MainClass for All Requests
      * 
