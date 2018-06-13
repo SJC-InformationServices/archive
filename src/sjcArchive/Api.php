@@ -35,7 +35,7 @@ namespace sjcArchive {
      * @link     http://pear.php.net/package/PackageName
      */
 
-    class Api extends sjcArchive\Modules\Base
+    class Api extends Base
     {
         /**
          * Construction function for API CLASS

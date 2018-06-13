@@ -25,7 +25,7 @@
  * @deprecated File deprecated in Release 2.0.0
  */
 
-namespace sjcArchive\modules
+namespace sjcArchive
 {
     /**
      * Abstract base class for API requests

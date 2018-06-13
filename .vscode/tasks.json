@@ -6,7 +6,7 @@
         {
             "label": "DeployAWS",
             "type": "shell",
-            "command": "git add --all;git commit -m \"sjcArchiveDeploy\";eb deploy;",
+            "command": "composer update;composer dumpautoloader;git add --all;git commit -m \"sjcArchiveDeploy\";eb deploy;",
             "group": {
                 "kind": "build",
                 "isDefault": true
