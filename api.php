@@ -31,5 +31,6 @@ try {
 }
 catch(exception $e){
     echo $e->message();
+    print_r(get_declared_classes());
 }
 echo "end";
