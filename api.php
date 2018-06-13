@@ -24,9 +24,11 @@
  * @deprecated File deprecated in Release 2.0.0
  */ 
 require_once __DIR__.'/vendor/autoload.php';
+print_r(get_declared_classes());
 echo "Start";
 try {
-    $api = new sjcArchive\Api();
+
+    $api = new \sjcArchive\Api();
     var_dump($api);
 }
 catch(exception $e){
