@@ -9,7 +9,7 @@
     },
     "autoload": {
         "psr-4": {
-            "sjcArchive\\":"/src/sjcArchive"
+            "sjcArchive\\":"/src/sjcArchive/"
         }
     }
 }
