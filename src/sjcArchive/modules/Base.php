@@ -27,6 +27,7 @@
 
 namespace sjcArchive\Modules
 {
+    use archiveDB;
     /**
      * Abstract base class for API requests
      * 
@@ -133,8 +134,9 @@ namespace sjcArchive\Modules
         /**
          * _Response Process the requested responses
          *
-         * @param  [array] $data   current response data turn
-         * @param  integer $status status code for the response
+         * @param [array] $data   current response data turn
+         * @param integer $status status code for the response
+         * 
          * @return array resulting array from the responses
          */
         private function _response(array $data, $status = 200)
@@ -146,7 +148,8 @@ namespace sjcArchive\Modules
          * CleanInputs Returns the filtered version of url 
          * encoded data removing html tags etc
          *
-         * @param  [type] $data cleans up the input values and removes html tags etc
+         * @param [type] $data cleans up the input values and removes html tags etc
+         * 
          * @return string 
          */
         private function _cleanInputs($data)
@@ -164,7 +167,8 @@ namespace sjcArchive\Modules
         /**
          * Undocumented function
          *
-         * @param  [type] $code response for each of the codes
+         * @param [type] $code response for each of the codes
+         * 
          * @return void
          */
         private function _requestStatus($code) 

@@ -25,6 +25,7 @@
  */ 
 
 namespace sjcArchive\Modules{
+    use \RedBeanPHP\R as R;
      /**
       * This is MainClass for All DB Configs
       * 
@@ -34,15 +35,21 @@ namespace sjcArchive\Modules{
       * @license  http://www.php.net/license/3_01.txt  PHP License 3.01
       * @link     http://pear.php.net/package/PackageName
       */
-    class ARCHIVEDB
+    class Archivedb
     {
+        public $frozen = true;
+        public $dbString = null;
+        private 
         /**
-         * Construction Function For DB Class
+         * Init database for Redbean ORM
+         *
+         * @return void
          */
-        public function __construct() 
+        public function __CONSTRUCT(string $archivedb) 
         {
 
         }
+        
     }
 }
 ?>

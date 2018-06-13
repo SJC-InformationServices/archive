@@ -15,37 +15,15 @@
  * @category   Application
  * @package    Request
  * @author     Kevin Noseworthy <kevin.noseworthy@stjoseph.com>
- * @copyright  1997-2018 St.Joseph Cormmunication
+ * @copyright  1997-2018 St.Joseph Communication
  * @license    http://www.php.net/license/3_01.txt  PHP License 3.01
- * @version    SVN: $Id$
+ * @version    SVN: Id$
  * @link       http://pear.php.net/package/PackageName
  * @see        NetOther, Net_Sample::Net_Sample()
  * @since      File available since Release 1.2.0
  * @deprecated File deprecated in Release 2.0.0
- */
-
-namespace sjcArchive {
-    /**
-     * This is MainClass for All Requests
-     * 
-     * @category Application
-     * @package  Request
-     * @author   Kevin Noseworthy <kevin.noseworthy@stjoseph.com>
-     * @license  http://www.php.net/license/3_01.txt  PHP License 3.01
-     * @link     http://pear.php.net/package/PackageName
-     */
-
-    class Api extends Modules\Base 
-    {
-        /**
-         * Construction function for API CLASS
-         */
-        public function __construct() 
-        {  
-            $uri = $_SERVER['REQUEST_URI'];
-            $request = substr($uri, strpos($uri, ARCHIVEAPIURL), strlen($uri));
-            parent::__construct($request);
-        }
-    }
-}
+ */ 
+require_once __DIR__.'/vendor/autoload.php';
+define("ARCHIVEDB", JSON_DECODE(file_get_contents("archivedb.json"), true));
+define("ARCHIVEAPIURL", "/api/");
 ?>
