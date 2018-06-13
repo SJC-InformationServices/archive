@@ -24,16 +24,25 @@
  * @deprecated File deprecated in Release 2.0.0
  */ 
 
- namespace sjcArchive\Modules{
+namespace sjcArchive\Modules{
      /**
-     * This is MainClass for All DB Configs
-     * 
-     * @category Application
-     * @package  Request
-     * @author   Kevin Noseworthy <kevin.noseworthy@stjoseph.com>
-     * @license  http://www.php.net/license/3_01.txt  PHP License 3.01
-     * @link     http://pear.php.net/package/PackageName
-     */
-    class 
- }
+      * This is MainClass for All DB Configs
+      * 
+      * @category Application
+      * @package  Request
+      * @author   Kevin Noseworthy <kevin.noseworthy@stjoseph.com>
+      * @license  http://www.php.net/license/3_01.txt  PHP License 3.01
+      * @link     http://pear.php.net/package/PackageName
+      */
+    class ARCHIVEDB
+    {
+        /**
+         * Construction Function For DB Class
+         */
+        public function __construct() 
+        {
+
+        }
+    }
+}
 ?>

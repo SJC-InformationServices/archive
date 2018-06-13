@@ -35,14 +35,14 @@ namespace sjcArchive {
      * @link     http://pear.php.net/package/PackageName
      */
 
-    class Api
+    class Api extends Modules\Base
     {
         /**
          * Construction function for API CLASS
          */
         public function __construct() 
         {  
-            echo "Start";
+            
         }
     }
 }
