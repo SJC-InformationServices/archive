@@ -149,7 +149,7 @@ ENCTYPE =
 autocomplete="off">
       <div class="mb-4">
         <img 
-        src="/sjcarchiveassets/lib/images/logo.jpg" 
+        src="https://s3.amazonaws.com/sjcarchiveassets/lib/images/logo.jpg" 
         alt="Logo" 
         height="72px">
         <div id='error' class='error'></div>
