@@ -23,7 +23,7 @@
  * @since      File available since Release 1.2.0
  * @deprecated File deprecated in Release 2.0.0
  */ 
-require __DIR__.'/vendor/autoload.php';
+require __DIR__ . '/vendor/autoload.php';
 echo "Start";
 try {
     $api = new sjcArchive\Api();
@@ -31,6 +31,5 @@ try {
 }
 catch(exception $e){
     echo $e->message();
-    print_r(get_declared_classes());
 }
 echo "end";
