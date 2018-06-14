@@ -24,8 +24,39 @@
  * @deprecated File deprecated in Release 2.0.0
  */ 
 namespace sjcArchive\Models{
-    class EntityDefinitions{
-        
+
+     /**
+      * This is MainClass for All Requests
+      * 
+      * @category Application
+      * @package  Request
+      * @author   Kevin Noseworthy <kevin.noseworthy@stjoseph.com>
+      * @license  http://www.php.net/license/3_01.txt  PHP License 3.01
+      * @link     http://pear.php.net/package/Pa$ckageName
+      */
+    class EntityDefinitions 
+    {
+        private $_rawdata;
+        private $_name;
+        private $_attribs;
+        private $_configs;
+        private $_type;
+        /**
+         * Construction function for Entity Definitions
+         *
+         * @param string $name Name of entity type unique
+         */
+        public function __construct(string $name=null)
+        {
+            if(!is_null($rawdata))
+            {
+                 $this->rawdata = $rawdata;
+                 $this->name = $rawdata['name'];
+                 $this->attribs = $rawdata['attribs'];
+                 $this->configs = isset($rawdata['configs'])?$rawdata['configs']:$this->configs;
+                 $this->type = isset($rawdata['type'])?$rawdata['type']:$this->type;
+            }
+        }
     }
 }
 ?>
