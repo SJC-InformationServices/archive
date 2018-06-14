@@ -25,12 +25,11 @@
  */ 
 require_once __DIR__.'\archive_cfg.php';
 
-echo "Start";
+
 try {
     $api = new \sjcArchive\Api();
-    var_dump($api);
+    echo json_encode([$api,var_dump($api)]);
 }
 catch(exception $e){
     echo $e->message();
 }
-echo "end";

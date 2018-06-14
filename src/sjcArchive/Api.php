@@ -43,8 +43,13 @@ namespace sjcArchive {
         public function __construct() 
         {  
             $uri = $_SERVER['REQUEST_URI'];
-            $request = substr($uri, strpos($uri, ARCHIVEAPIURL), strlen($uri));
+            $request = substr(
+                $uri, 
+                strpos($uri, ARCHIVEAPIURL)+strlen(ARCHIVEAPIURL), 
+                strlen($uri)
+            );
             parent::__construct($request);
+            return [$_REQUEST,$this];
         }
     }
 }
