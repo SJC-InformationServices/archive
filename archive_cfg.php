@@ -24,6 +24,5 @@
  * @deprecated File deprecated in Release 2.0.0
  */ 
 require_once __DIR__.'/vendor/autoload.php';
-define("ARCHIVEDB", JSON_DECODE(file_get_contents("archivedb.json"), true));
-define("ARCHIVEAPIURL", "/api/");
+
 ?>

@@ -23,8 +23,7 @@
  * @since      File available since Release 1.2.0
  * @deprecated File deprecated in Release 2.0.0
  */ 
-require_once __DIR__.'\archive_cfg.php';
-
+require_once "bootstrap.php";
 
 try {
     $api = new \sjcArchive\Api();
