@@ -48,15 +48,12 @@ namespace sjcArchive\Models{
          */
         public function __construct(string $name=null)
         {
-            if(!is_null($rawdata))
-            {
-                 $this->rawdata = $rawdata;
-                 $this->name = $rawdata['name'];
-                 $this->attribs = $rawdata['attribs'];
-                 $this->configs = isset($rawdata['configs'])?$rawdata['configs']:$this->configs;
-                 $this->type = isset($rawdata['type'])?$rawdata['type']:$this->type;
+            if (!is_null($name)) {
+                 $this->_rawdata = ['name'=>$name];
+                 $this->_name = $name;
             }
         }
+        
     }
 }
 ?>

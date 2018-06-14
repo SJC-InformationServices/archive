@@ -47,7 +47,7 @@ namespace sjcArchive\Modules{
          */
         public function __CONSTRUCT(string $archivedb) 
         {
-
+            
         }
         
     }

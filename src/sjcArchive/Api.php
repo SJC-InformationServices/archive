@@ -49,7 +49,17 @@ namespace sjcArchive {
                 strlen($uri)
             );
             parent::__construct($request);
+            
             return [$_REQUEST,$this];
+        }
+        /**
+         * Undocumented function
+         *
+         * @return void
+         */
+        public function manage()
+        {
+
         }
     }
 }
