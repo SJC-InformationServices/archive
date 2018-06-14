@@ -23,11 +23,9 @@
  * @since      File available since Release 1.2.0
  * @deprecated File deprecated in Release 2.0.0
  */ 
-
 namespace sjcArchive\Modules{
-    use \RedBeanPHP\R as R;
      /**
-      * This is MainClass for All DB Configs
+      * This is MainClass for All Requests
       * 
       * @category Application
       * @package  Request
@@ -35,23 +33,29 @@ namespace sjcArchive\Modules{
       * @license  http://www.php.net/license/3_01.txt  PHP License 3.01
       * @link     http://pear.php.net/package/PackageName
       */
-    class Archivedb
+    class Formatter
     {
-        public $frozen = true;
-        public $dbString = null;
+        public $type="json";
         
         /**
-         * Init database for Redbean ORM
-         * 
-         * @param string $archivedb which db to use from selection
+         * Undocumented function
+         *
+         * @param string $type type of formatter
          * 
          * @return void
          */
-        public function __CONSTRUCT(string $archivedb) 
+        public function __construct(string $type)
         {
 
         }
-        
+
+        public function format(){
+            
+        }
+
+
     }
 }
+
+
 ?>

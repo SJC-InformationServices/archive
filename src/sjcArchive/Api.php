@@ -25,6 +25,9 @@
  */
 
 namespace sjcArchive {
+    use Models\EntityDefinitions;
+    use Models\Entities;
+    
     /**
      * This is MainClass for All Requests
      * 
@@ -37,6 +40,7 @@ namespace sjcArchive {
 
     class Api extends  \sjcArchive\Modules\Base 
     {
+       
         /**
          * Construction function for API CLASS
          */
@@ -57,7 +61,16 @@ namespace sjcArchive {
          *
          * @return void
          */
-        public function manage()
+        private function manage()
+        {
+
+        }
+        /**
+         * Undocumented function
+         *
+         * @return void
+         */
+        private function entity()
         {
 
         }

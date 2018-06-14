@@ -28,8 +28,7 @@
 namespace sjcArchive\Modules
 {
     use archiveDB;
-    use Models\EntityDefinitions;
-    use Models\Entities;
+
     /**
      * Abstract base class for API requests
      * 
