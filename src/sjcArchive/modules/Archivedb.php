@@ -35,11 +35,11 @@ namespace sjcArchive\Modules{
       * @license  http://www.php.net/license/3_01.txt  PHP License 3.01
       * @link     http://pear.php.net/package/PackageName
       */
-    class Archivedb
-    {
-        public $frozen = true;
-        public $dbString = null;
-        
+class Archivedb 
+{      
+    private $_cfgconn;
+    private $_dataconn;
+
         /**
          * Init database for Redbean ORM
          * 
@@ -47,14 +47,40 @@ namespace sjcArchive\Modules{
          * 
          * @return void
          */
-        public function __CONSTRUCT(string $archivedb) 
-        {
-            $db = ARCHIVEDB['sjcAlphaBroderArchive'];
+    public function __CONSTRUCT(string $cfgdb, string $datadb, int $cfgfrozen=1, int $datafrozen=1) 
+    {
+            
+        try {
+            $db = ARCHIVEDB[$cfgdb];
             $h = $db['server'];
             $d = $db['db'];
             $u = $db['uid'];
             $p = $db['pwd'];
-            R::setup("mysql:host=$h;dbname=$d", $u, $p);
+            R::setup(
+                "mysql:host=$h;dbname=$d",
+                $u,
+                $p,
+                $cfgfrozen
+            );
+
+            $db2 = ARCHIVEDB[$datadb];
+            $h2 = $db2['server'];
+            $d2 = $db2['db'];
+            $u2 = $db2['uid'];
+            $p2 = $db2['pwd'];
+            R::addDatabase(
+                "datadb",
+                "mysql:host=$h2;dbname=$d2",
+                $u2,
+                $p2,
+                true,
+                $datafrozen
+            );
+            return true;
+        }catch(exception $e)
+        {
+            return $e->message();
+        }
             
         }
         
