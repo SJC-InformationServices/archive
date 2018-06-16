@@ -24,7 +24,7 @@
  * @deprecated File deprecated in Release 2.0.0
  */ 
 namespace sjcArchive\Models{
-    use \sjcArchive\Modules\Archivedb;
+    use \sjcArchive\Modules\Archivedb as db;
     use \RedBeanPHP\R;
 
      /**
@@ -53,6 +53,7 @@ namespace sjcArchive\Models{
          */
         public function __construct(string $name=null)
         {
+            $db = new db();
             if (!is_null($name)) {
                  $this->_rawdata = ['name'=>$name];
                  $this->_name = $name;

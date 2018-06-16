@@ -26,8 +26,12 @@
 require_once "bootstrap.php";
 
 try {
+    $db = new \sjcArchive\Modules\Archivedb("sjcAlphaBroderArchive");
+    /*
     $api = new \sjcArchive\Api();
-    echo json_encode([$api,var_dump($api)]);
+    
+    */
+    echo json_encode([$db,var_dump($db)]);
 }
 catch(exception $e){
     echo $e->message();
