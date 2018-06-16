@@ -24,6 +24,7 @@
  * @deprecated File deprecated in Release 2.0.0
  */ 
 namespace sjcArchive\Models{
+    use \RedBeanPHP\R;
 
      /**
       * This is MainClass for All Requests
@@ -36,11 +37,14 @@ namespace sjcArchive\Models{
       */
     class EntityDefinitions 
     {
+        private $_id;
+        private $_tbl;
         private $_rawdata;
         private $_name;
         private $_attribs;
         private $_configs;
         private $_type;
+        private $_relations;
         /**
          * Construction function for Entity Definitions
          *
@@ -51,8 +55,55 @@ namespace sjcArchive\Models{
             if (!is_null($name)) {
                  $this->_rawdata = ['name'=>$name];
                  $this->_name = $name;
+                 $this->_load();
             }
         }
+        /**
+         * Loads Values if EntityDefinition Already Exists
+         *
+         * @return void
+         */
+        private function _load()
+        {
+            $data = \R::findOne(
+                $this->_tbl, 
+                'name = ?', 
+                [$this->_name]
+            );
+            if (count($data) == 1) {
+                $this->_rawdata= $data['rawdata'];
+                $this->_name= $data['name'];
+                $this->_attribs= $data['attribs'];
+                $this->_configs= $data['configs'];
+                $this->_type= $data['type'];
+                $this->_relations= $data['relations'];
+            }
+        }
+        /**
+         * Getrecord returns current value
+         *
+         * @return array
+         */
+        public function getRecord()
+        {
+            return $this->_rawdata;
+        }
+        /**
+         * Sets Current Records into the database 
+         *
+         * @return void
+         */
+        public function setRecord()
+        {
+            $t = $this->_tbl;
+            $et = R::dispense($t);
+            $et->rawdata = $this->_rawdata;
+            $id = R::store($et); 
+            $this->_id = $id;
+            return $id;
+        }
+        
+        
         
     }
 }
