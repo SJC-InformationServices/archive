@@ -49,7 +49,13 @@ namespace sjcArchive\Modules{
          */
         public function __CONSTRUCT(string $archivedb) 
         {
-
+            $db = ARCHIVEDB['sjcAlphaBroderArchive'];
+            $h = $db['server'];
+            $d = $db['db'];
+            $u = $db['uid'];
+            $p = $db['pwd'];
+            R::setup("mysql:host=$h;dbname=$d", $u, $p);
+            
         }
         
     }

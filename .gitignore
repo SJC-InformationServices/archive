@@ -1,6 +1,7 @@
 vendor
 src/alphabroderold
 src/hlfarchiveold
+archivedb.json
 *.zip
 .elasticbeanstalk\*.crt
 .elasticbeanstalk\*.key

@@ -24,6 +24,7 @@
  * @deprecated File deprecated in Release 2.0.0
  */ 
 namespace sjcArchive\Models{
+    use \sjcArchive\Modules\Archivedb;
     use \RedBeanPHP\R;
 
      /**
@@ -102,7 +103,7 @@ namespace sjcArchive\Models{
             $this->_id = $id;
             return $id;
         }
-        
+
         
         
     }
