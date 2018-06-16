@@ -40,9 +40,7 @@ namespace sjcArchive\Modules{
     class Archivedb
     {
 
-        private $_cfgconn;
-        private $_dataconn;
-
+ 
         /**
          * Init database for Redbean ORM
          *
@@ -54,8 +52,7 @@ namespace sjcArchive\Modules{
         public function __CONSTRUCT(int $cfgfrozen=1, int $datafrozen=1)
         {
             try {
-                $this->_cfgconn = $cfgconn;
-                $this->_dataconn = $datadb;
+              
                 $db = ARCHIVEDB;
                 $h = $db['server'];
                 $d = $db['db'];
@@ -78,7 +75,6 @@ namespace sjcArchive\Modules{
                     "mysql:host=$h2;dbname=$d2",
                     $u2,
                     $p2,
-                    true,
                     $datafrozen
                 );
                 return true;
