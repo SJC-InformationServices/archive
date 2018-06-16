@@ -45,6 +45,7 @@ namespace sjcArchive\Models{
         private $_configs;
         private $_type;
         private $_relations;
+        private $_db;
         /**
          * Construction function for Entity Definitions
          *
@@ -52,7 +53,7 @@ namespace sjcArchive\Models{
          */
         public function __construct(string $name=null)
         {
-            $db = new db();
+            $this->_db = new db();
             if (!is_null($name)) {
                  $this->_rawdata = ['name'=>$name];
                  $this->_name = $name;
