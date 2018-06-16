@@ -27,7 +27,7 @@
 
 namespace sjcArchive\Modules
 {
-    use archiveDB;
+    use Archivedb;
 
     /**
      * Abstract base class for API requests

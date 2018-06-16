@@ -26,12 +26,7 @@
 require_once "bootstrap.php";
 
 try {
-    $db = new \sjcArchive\Modules\Archivedb(
-        "sjcAlphaBroderArchive", 
-        "sjcAlphaBroderArchive", 
-        0, 
-        0
-    );
+    $db = new \sjcArchive\Modules\Archivedb();
     /*
     $api = new \sjcArchive\Api();
     *

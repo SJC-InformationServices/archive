@@ -27,7 +27,8 @@
 
 $root = $_SERVER["DOCUMENT_ROOT"];
 require_once "$root"."/vendor/autoload.php";
-define("ARCHIVEDB", JSON_DECODE(file_get_contents("archivedb.json"), true));
+define("ARCHIVEDBS", JSON_DECODE(file_get_contents("archivedb.json"), true));
+define("ARCHIVEDB", ARCHIVEDBS['sjcAlphaBroderArchive']);
 define("ARCHIVEAPIURL", "/api/");
 
 

@@ -38,9 +38,8 @@ namespace sjcArchive {
      * @link     http://pear.php.net/package/PackageName
      */
 
-    class Api extends  \sjcArchive\Modules\Base 
+    class Api extends Modules\Base 
     {
-       
         /**
          * Construction function for API CLASS
          */
@@ -54,7 +53,7 @@ namespace sjcArchive {
             );
             parent::__construct($request);
             
-            $et = new et('frogs');
+            //$et = new et('frogs');
         }
         /**
          * Undocumented function

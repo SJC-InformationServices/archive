@@ -25,8 +25,7 @@
  */ 
 namespace sjcArchive\Models{
     use \sjcArchive\Modules\Archivedb as db;
-    use \RedBeanPHP\R;
-
+   
      /**
       * This is MainClass for All Requests
       * 
@@ -57,7 +56,6 @@ namespace sjcArchive\Models{
             if (!is_null($name)) {
                  $this->_rawdata = ['name'=>$name];
                  $this->_name = $name;
-                 $this->_load();
             }
         }
         /**
