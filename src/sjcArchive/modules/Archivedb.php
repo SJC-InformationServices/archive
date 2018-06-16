@@ -52,7 +52,8 @@ namespace sjcArchive\Modules{
         public function __CONSTRUCT(int $cfgfrozen=1, int $datafrozen=1)
         {
             try {
-              
+                R::setAutoResolve(true);
+                R::useJSONFeatures(true);
                 $db = ARCHIVEDB;
                 $h = $db['server'];
                 $d = $db['db'];
@@ -77,6 +78,9 @@ namespace sjcArchive\Modules{
                     $p2,
                     $datafrozen
                 );
+                if (DEBUG) {
+                    \RedBeanPHP\R::fancyDebug(true);
+                }
                 return true;
             } catch (exception $e) {
                 return $e->message();

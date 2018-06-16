@@ -31,7 +31,15 @@ define("ARCHIVEDBS", JSON_DECODE(file_get_contents("archivedb.json"), true));
 define("ARCHIVEDB", ARCHIVEDBS['sjcAlphaBroderArchive']);
 define("DATADB", ARCHIVEDBS['sjcAlphaBroderArchive']);
 define("ARCHIVEAPIURL", "/api/");
+define("DEBUG", true);
 
+
+if (DEBUG) {
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
+    
+}
 
 
 ?>

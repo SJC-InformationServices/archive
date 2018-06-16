@@ -24,15 +24,17 @@
  * @deprecated File deprecated in Release 2.0.0
  */ 
 require_once "bootstrap.php";
-
+echo "Start";
 try {
     $db = new \sjcArchive\Modules\Archivedb();
     /*
     $api = new \sjcArchive\Api();
     *
     */
-    echo json_encode([$db,var_dump($db)]);
+    //echo json_encode([$db,var_dump($db)]);
 }
 catch(exception $e){
     echo $e->message();
 }
+
+echo "end";
