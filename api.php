@@ -26,12 +26,9 @@
 require_once "bootstrap.php";
 echo "Start";
 try {
-    $db = new \sjcArchive\Modules\Archivedb();
-    /*
+    
     $api = new \sjcArchive\Api();
-    *
-    */
-    //echo json_encode([$db,var_dump($db)]);
+    echo json_encode([$api,var_dump($api)]);
 }
 catch(exception $e){
     echo $e->message();
