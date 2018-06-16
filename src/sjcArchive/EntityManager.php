@@ -15,64 +15,27 @@
  * @category   Application
  * @package    Request
  * @author     Kevin Noseworthy <kevin.noseworthy@stjoseph.com>
- * @copyright  1997-2018 St.Joseph Cormmunication
+ * @copyright  1997-2018 St.Joseph Communication
  * @license    http://www.php.net/license/3_01.txt  PHP License 3.01
- * @version    SVN: $Id$
+ * @version    SVN: Id$
  * @link       http://pear.php.net/package/PackageName
  * @see        NetOther, Net_Sample::Net_Sample()
  * @since      File available since Release 1.2.0
  * @deprecated File deprecated in Release 2.0.0
- */
-
+ */ 
 namespace sjcArchive {
-    use Models\EntityDefinitions as et;
-    use Models\Entities as e;
-    
     /**
-     * This is MainClass for All Requests
+     * Abstract base class for API requests
      * 
      * @category Application
-     * @package  Request
+     * @package  API
      * @author   Kevin Noseworthy <kevin.noseworthy@stjoseph.com>
      * @license  http://www.php.net/license/3_01.txt  PHP License 3.01
-     * @link     http://pear.php.net/package/PackageName
+     * @link     http://url.com
      */
-
-    class Api extends Modules\Base 
+    class EntityManager extends Modules\Base 
     {
-        /**
-         * Construction function for API CLASS
-         */
-        public function __construct() 
-        {  
-            $uri = $_SERVER['REQUEST_URI'];
-            $request = substr(
-                $uri, 
-                strpos($uri, ARCHIVEAPIURL)+strlen(ARCHIVEAPIURL), 
-                strlen($uri)
-            );
-            parent::__construct($request);
-            
-            //$et = new et('frogs');
-        }
-        /**
-         * Undocumented function
-         *
-         * @return void
-         */
-        private function _manage()
-        {
-
-        }
-        /**
-         * Undocumented function
-         *
-         * @return void
-         */
-        private function _entity()
-        {
-
-        }
+        
     }
 }
 ?>

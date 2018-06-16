@@ -24,14 +24,13 @@
  * @deprecated File deprecated in Release 2.0.0
  */ 
 require_once "bootstrap.php";
-echo "Start";
 try {
     
-    $api = new \sjcArchive\Api();
-    echo json_encode([$api,var_dump($api)]);
+    $api = new \sjcArchive\Router();
+    $r = $api->processApi();
+    echo $r;
 }
 catch(exception $e){
     echo $e->message();
 }
 
-echo "end";
