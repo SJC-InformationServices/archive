@@ -24,8 +24,6 @@
  * @deprecated File deprecated in Release 2.0.0
  */ 
 namespace sjcArchive\Models{
-    use \sjcArchive\Modules\Archivedb as db;
-   
      /**
       * This is MainClass for All Requests
       * 
@@ -37,15 +35,13 @@ namespace sjcArchive\Models{
       */
     class EntityDefinitions 
     {
-        private $_id;
-        private $_tbl;
-        private $_rawdata;
-        private $_name;
-        private $_attribs;
-        private $_configs;
-        private $_type;
-        private $_relations;
-        private $_db;
+        use \sjcArchive\Modules\Archivedb;
+
+        public $id;
+        public $rawdata = [];
+        private $_createdon;
+        private $_updatedon;
+        private $_tbl = "sjcarchiveentitymanager";
         /**
          * Construction function for Entity Definitions
          *
@@ -53,18 +49,39 @@ namespace sjcArchive\Models{
          */
         public function __construct(string $name=null)
         {
-            $this->_db = new db();
+            $this->initdb(1, 1);
             if (!is_null($name)) {
                  $this->_rawdata = ['name'=>$name];
                  $this->_name = $name;
+                 $this->loadByName();
             }
         }
         /**
-         * Loads Values if EntityDefinition Already Exists
+         * GETTER function
          *
+         * @param [string] $attrib attributed assigned to entity type
+         * 
          * @return void
          */
-        public function _load()
+        public function __get($attrib)
+        {
+            if (property_exists($this, $attrib)) {
+                return $this->$attrib;
+            }
+            if (isset($this->_rawdata[$attrib])) {
+                return $this->_rawdata[$attrib];
+            }
+                return false;
+        }
+       
+        /**
+         * Loads Values if EntityDefinition Already Exists
+         *
+         * @param string $name
+         * 
+         * @return void
+         */
+        public function loadByName($name=null)
         {
             $data = \R::findOne(
                 $this->_tbl, 
@@ -74,37 +91,13 @@ namespace sjcArchive\Models{
             if (count($data) == 1) {
                 $this->_id = $data['id'];
                 $this->_rawdata= $data['rawdata'];
-                $this->_name= $data['name'];
-                $this->_attribs= $data['attribs'];
-                $this->_configs= $data['configs'];
-                $this->_type= $data['type'];
-                $this->_relations= $data['relations'];
+                $this->_createdon = $data['createdon'];
+                $this->_updatedon = $data['updatedon'];
             }
             return $this->getRecord();
         }
-        /**
-         * Getrecord returns current value
-         *
-         * @return array
-         */
-        public function getRecord()
-        {
-            return $this->_rawdata;
-        }
-        /**
-         * Sets Current Records into the database 
-         *
-         * @return void
-         */
-        public function setRecord()
-        {
-            $t = $this->_tbl;
-            $et = R::dispense($t);
-            $et->rawdata = $this->_rawdata;
-            $id = R::store($et); 
-            $this->_id = $id;
-            return $id;
-        }
+        public function loadById($id)
+        
 
         
         

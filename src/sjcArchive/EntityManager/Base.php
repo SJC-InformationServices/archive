@@ -23,40 +23,23 @@
  * @since      File available since Release 1.2.0
  * @deprecated File deprecated in Release 2.0.0
  */ 
-namespace sjcArchive {
-    use \sjcArchive\Models\EntityDefinitions as ED;
-    /**
-     * Abstract base class for API requests
-     * 
-     * @category Application
-     * @package  API
-     * @author   Kevin Noseworthy <kevin.noseworthy@stjoseph.com>
-     * @license  http://www.php.net/license/3_01.txt  PHP License 3.01
-     * @link     http://url.com
-     */
-    class EntityManager extends Modules\Base 
+namespace sjcArchive\EntityManager{
+    
+    class Base implements Control
     {
-        private $_def;
-        /**
-         * EntityManage Constructor Function
-         *
-         * @param [type] $request request url sepearted by /
-         */
-        public function __construct(string $request)
-        {
-            parent::__construct($request);
-            $this->_def = new ED($this->verb);
+        public function create(\sjcArchive\Modes\EntityDefinition $et,array $rawdata){
+
         }
-        /**
-         * Undocumented function
-         *
-         * @return void
-         */
-        public function manage()
+        public function read(\sjcArchive\Modes\EntityDefinition $et)
         {
-            return $this->_def;
+            return $et->getRecord();
+        }    
+        public function update(\sjcArchive\Modes\EntityDefinition $et, array $rawdata){
+
         }
-        
-    }
+        public function delete(\sjcArchive\Modes\EntityDefinition $et){
+            
+        }
+    }   
 }
 ?>

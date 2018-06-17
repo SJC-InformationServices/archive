@@ -23,62 +23,50 @@
  * @since      File available since Release 1.2.0
  * @deprecated File deprecated in Release 2.0.0
  */ 
-namespace sjcArchive {
-    /**
-     * Abstract base class for API requests
-     * 
-     * @category Application
-     * @package  API
-     * @author   Kevin Noseworthy <kevin.noseworthy@stjoseph.com>
-     * @license  http://www.php.net/license/3_01.txt  PHP License 3.01
-     * @link     http://url.com
-     */
-    class Entity extends Modules\Base 
+namespace sjcArchive\EntityManager{
+     /**
+      * Abstract base class for API requests
+      * 
+      * @category Application
+      * @package  API
+      * @author   Kevin Noseworthy <kevin.noseworthy@stjoseph.com>
+      * @license  http://www.php.net/license/3_01.txt  PHP License 3.01
+      * @link     http://url.com
+      */
+    Interface Control 
     {
-        private $_entityDefinition;
-        
         /**
-         * Entity __constructor function 
+         * Create
          *
-         * @param string $request 
-         */
-        public function __construct($request)
-        {
-
-            parent::__construct($request);
-        }
-        /**
-         * Undocumented function
-         *
-         * @param [type] $attrib fetchign which attribute
+         * @param object $et archive entity type
+         * 
          * @return void
          */
-        function __get($attrib) 
-        {
-            echo "get $attrib";
-        }
+        public function create(\sjcArchive\Modes\EntityDefinition $et);
         /**
-         * Undocumented function
+         * Read
          *
-         * @param [type] $attrib
-         * @param [type] $value
-         */
-        public function __set($attrib, $value)
-        {
-            echo "set $attrib";
-        }
-        /**
-         * Undocumented function
-         *
+         * @param object $et archive entity type
+         * 
          * @return void
          */
-        function __call($method,$arguments)
-        {
-            echo "$method called";
-            return [$method,$arguments];
-        }
-
-
+        public function read(\sjcArchive\Modes\EntityDefinition $et);
+        /**
+         * Undocumented function
+         * 
+         * @param object $et archive entity type
+         * 
+         * @return void
+         */
+        public function update(\sjcArchive\Modes\EntityDefinition $et);
+        /**
+         * Undocumented function
+         *
+         * @param object $et archive entity type
+         * 
+         * @return void
+         */
+        public function delete(\sjcArchive\Modes\EntityDefinition $et);    
     }
 }
 ?>

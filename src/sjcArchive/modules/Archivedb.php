@@ -37,10 +37,10 @@ namespace sjcArchive\Modules{
      * @link     http://pear.php.net/package/PackageName
      */
 
-    class Archivedb
+    trait Archivedb
     {
 
- 
+        public $rb;
         /**
          * Init database for Redbean ORM
          *
@@ -49,12 +49,13 @@ namespace sjcArchive\Modules{
          *
          * @return void
          */
-        public function __CONSTRUCT(int $cfgfrozen=1, int $datafrozen=1)
+        public function initdb(int $cfgfrozen=1, int $datafrozen=1)
         {
             try {
                 R::setAutoResolve(true);
                 R::useJSONFeatures(true);
                 $db = ARCHIVEDB;
+                
                 $h = $db['server'];
                 $d = $db['db'];
                 $u = $db['uid'];
@@ -83,9 +84,9 @@ namespace sjcArchive\Modules{
                 }
                 return true;
             } catch (exception $e) {
-                return $e->message();
+                return [$e->message()];
             }
-            return R;
+            $this->rb = R;
         }
     }
 }
