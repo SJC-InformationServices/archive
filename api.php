@@ -32,6 +32,6 @@ try {
     echo $r;
 }
 catch(exception $e){
-    echo $e->message();
+    print_r($e);
 }
 

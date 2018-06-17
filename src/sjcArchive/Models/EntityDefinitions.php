@@ -64,7 +64,7 @@ namespace sjcArchive\Models{
          *
          * @return void
          */
-        private function _load()
+        public function _load()
         {
             $data = \R::findOne(
                 $this->_tbl, 
@@ -72,6 +72,7 @@ namespace sjcArchive\Models{
                 [$this->_name]
             );
             if (count($data) == 1) {
+                $this->_id = $data['id'];
                 $this->_rawdata= $data['rawdata'];
                 $this->_name= $data['name'];
                 $this->_attribs= $data['attribs'];
@@ -79,6 +80,7 @@ namespace sjcArchive\Models{
                 $this->_type= $data['type'];
                 $this->_relations= $data['relations'];
             }
+            return $this->getRecord();
         }
         /**
          * Getrecord returns current value

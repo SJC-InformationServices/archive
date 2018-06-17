@@ -24,7 +24,7 @@
  * @deprecated File deprecated in Release 2.0.0
  */ 
 namespace sjcArchive {
-    use Models\EntityDefinitions;
+    use \sjcArchive\Models\EntityDefinitions as ED;
     /**
      * Abstract base class for API requests
      * 
@@ -36,8 +36,7 @@ namespace sjcArchive {
      */
     class EntityManager extends Modules\Base 
     {
-        private $_methods=[];
-        private $_properties=[];
+        private $_def;
         /**
          * EntityManage Constructor Function
          *
@@ -45,9 +44,8 @@ namespace sjcArchive {
          */
         public function __construct(string $request)
         {
-            echo $request;
             parent::__construct($request);
-            
+            $this->_def = new ED($this->verb);
         }
         /**
          * Undocumented function
@@ -56,7 +54,7 @@ namespace sjcArchive {
          */
         public function manage()
         {
-            $
+            return $this->_def;
         }
         
     }
