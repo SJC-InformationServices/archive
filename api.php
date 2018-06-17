@@ -26,8 +26,9 @@
 require_once "bootstrap.php";
 try {
     
-    $api = new \sjcArchive\Router();
-    $r = $api->processApi();
+    $api = new sjcArchive\Router();
+    
+    $r = $api->processRoute();
     echo $r;
 }
 catch(exception $e){

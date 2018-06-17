@@ -35,6 +35,49 @@ namespace sjcArchive {
      */
     class Entity extends Modules\Base 
     {
+        private $_entityDefinition;
+        
+        /**
+         * Entity __constructor function 
+         *
+         * @param string $request 
+         */
+        public function __construct($request)
+        {
+
+            parent::__construct($request);
+        }
+        /**
+         * Undocumented function
+         *
+         * @param [type] $attrib fetchign which attribute
+         * @return void
+         */
+        function __get($attrib) 
+        {
+            echo "get $attrib";
+        }
+        /**
+         * Undocumented function
+         *
+         * @param [type] $attrib
+         * @param [type] $value
+         */
+        public function __set($attrib, $value)
+        {
+            echo "set $attrib";
+        }
+        /**
+         * Undocumented function
+         *
+         * @return void
+         */
+        function __call($method,$arguments)
+        {
+            echo "$method called";
+            return [$method,$arguments];
+        }
+
 
     }
 }

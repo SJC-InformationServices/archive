@@ -35,7 +35,27 @@ namespace sjcArchive {
      */
     class EntityManager extends Modules\Base 
     {
-        
+        private $_methods=[];
+        private $_properties=[];
+        /**
+         * EntityManage Constructor Function
+         *
+         * @param [type] $request request url sepearted by /
+         */
+        public function __construct(string $request)
+        {
+            echo $request;
+            parent::__construct($request);
+            
+        }
+        /**
+         * Undocumented function
+         *
+         * @return void
+         */
+        public function manage(){
+            return ['manage'];
+        }
     }
 }
 ?>

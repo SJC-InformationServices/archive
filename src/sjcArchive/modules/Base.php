@@ -121,6 +121,7 @@ namespace sjcArchive\Modules
                 $this->_response('Invalid Method', 405);
                 break;
             }
+            print_r($this);
         }
         /**
          * Undocumented function
@@ -132,7 +133,7 @@ namespace sjcArchive\Modules
             if (method_exists($this, $this->endpoint)) {
                 return $this->_response($this->{$this->endpoint}($this->args));
             }
-            return $this->_response("No Endpoint: $this->endpoint", 404);
+            return $this->_response(["No Endpoint"=>$this->endpoint], 404);
         }
         /**
          * _Response Process the requested responses

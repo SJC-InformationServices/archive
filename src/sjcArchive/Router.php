@@ -25,8 +25,8 @@
  */
 
 namespace sjcArchive {
-    use EntityManager as M;
-    use Entity as W;    
+    use \sjcArchive\EntityManager as M;
+    use \sjcArchive\Entity as W;    
     /**
      * This is MainClass for All Requests
      * 
@@ -40,6 +40,7 @@ namespace sjcArchive {
     class Router
     {
         public $request;
+        protected $requestObject;
         /**
          * Construction function for API CLASS
          */
@@ -58,12 +59,22 @@ namespace sjcArchive {
             $requests = explode("/", $request);
             switch($requests['0']){
             case 'manage':
-                return new M($request);
+                unset($requests[0]);
+                $this->requestObject = new M($request);
                 break;
             default:
-                return new W($request);
-            break;
+                $this->requestObject = new W($request);
+                break;
             }
+        }
+        /**
+         * Processing Route
+         *
+         * @return void
+         */
+        public function processRoute() 
+        {
+            return $this->requestObject->processAPI();
         }
     }
 }
