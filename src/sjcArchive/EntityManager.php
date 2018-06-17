@@ -24,6 +24,7 @@
  * @deprecated File deprecated in Release 2.0.0
  */ 
 namespace sjcArchive {
+    use Models\EntityDefinitions;
     /**
      * Abstract base class for API requests
      * 
@@ -53,9 +54,11 @@ namespace sjcArchive {
          *
          * @return void
          */
-        public function manage(){
-            return ['manage'];
+        public function manage()
+        {
+            $
         }
+        
     }
 }
 ?>
