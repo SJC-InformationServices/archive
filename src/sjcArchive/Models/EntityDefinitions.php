@@ -33,7 +33,7 @@ namespace sjcArchive\Models{
       * @license  http://www.php.net/license/3_01.txt  PHP License 3.01
       * @link     http://pear.php.net/package/Pa$ckageName
       */
-    class EntityDefinitions 
+    class EntityDefinitions extends \RedBeanPHP\SimpleModel
     {
         use \sjcArchive\Modules\Archivedb;
 
@@ -47,60 +47,11 @@ namespace sjcArchive\Models{
          *
          * @param string $name Name of entity type unique
          */
-        public function __construct(string $name=null)
+        public function __construct()
         {
             $this->initdb(1, 1);
-            if (!is_null($name)) {
-                 $this->_rawdata = ['name'=>$name];
-                 $this->_name = $name;
-                 $this->loadByName();
-            }
         }
-        /**
-         * GETTER function
-         *
-         * @param [string] $attrib attributed assigned to entity type
-         * 
-         * @return void
-         */
-        public function __get($attrib)
-        {
-            if (property_exists($this, $attrib)) {
-                return $this->$attrib;
-            }
-            if (isset($this->_rawdata[$attrib])) {
-                return $this->_rawdata[$attrib];
-            }
-                return false;
-        }
-       
-        /**
-         * Loads Values if EntityDefinition Already Exists
-         *
-         * @param string $name
-         * 
-         * @return void
-         */
-        public function loadByName($name=null)
-        {
-            $data = \R::findOne(
-                $this->_tbl, 
-                'name = ?', 
-                [$this->_name]
-            );
-            if (count($data) == 1) {
-                $this->_id = $data['id'];
-                $this->_rawdata= $data['rawdata'];
-                $this->_createdon = $data['createdon'];
-                $this->_updatedon = $data['updatedon'];
-            }
-            return $this->getRecord();
-        }
-        public function loadById($id)
-        
-
-        
-        
+              
     }
 }
 ?>

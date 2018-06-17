@@ -56,7 +56,7 @@ namespace sjcArchive\EntityManager {
          * @return void
          */
         public function manage()
-        {
+        {print_r($this->_def);
             if (!isset($this->args[0]) ) {
                 $r = New Base($this->_def);
             } else {
@@ -79,19 +79,20 @@ namespace sjcArchive\EntityManager {
                     break;
                 }
             }
+            $record=[$this->method];
             switch($this->method)
             {
-            case 'get':
+            case 'GET':
                 $record = $r->read();
                 break;
-            case 'put':
+            case 'PUT':
                 $record = $r->create();
                 break;
-            case 'post':
-            case 'patch':
+            case 'POST':
+            case 'PATCH':
                 $record = $r->update();
                 break;
-            case 'delete':
+            case 'DELETE':
                 $record = $r->delete();
                 break;
             }   

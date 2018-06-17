@@ -38,11 +38,15 @@ namespace sjcArchive\EntityManager{
         /**
          * Create
          *
-         * @param object $et archive entity type
+         * @param object $et      archive entity type
+         * @param array  $rawdata json records of entitytypes
          * 
          * @return void
          */
-        public function create(\sjcArchive\Modes\EntityDefinition $et);
+        public function create(
+            \sjcArchive\Modes\EntityDefinition $et, 
+            array $rawdata
+        );
         /**
          * Read
          *
@@ -50,15 +54,21 @@ namespace sjcArchive\EntityManager{
          * 
          * @return void
          */
-        public function read(\sjcArchive\Modes\EntityDefinition $et);
+        public function read(
+            \sjcArchive\Modes\EntityDefinition $et
+        );
         /**
          * Undocumented function
          * 
-         * @param object $et archive entity type
+         * @param object $et      archive entity type
+         * @param array  $rawdata a array of attributes about entitytypes
          * 
          * @return void
          */
-        public function update(\sjcArchive\Modes\EntityDefinition $et);
+        public function update(
+            \sjcArchive\Modes\EntityDefinition $et, 
+            array $rawdata
+        );
         /**
          * Undocumented function
          *

@@ -86,7 +86,6 @@ namespace sjcArchive\Modules{
             } catch (exception $e) {
                 return [$e->message()];
             }
-            $this->rb = R;
         }
     }
 }

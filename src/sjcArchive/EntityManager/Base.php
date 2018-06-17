@@ -27,18 +27,53 @@ namespace sjcArchive\EntityManager{
     
     class Base implements Control
     {
-        public function create(\sjcArchive\Modes\EntityDefinition $et,array $rawdata){
-
+        /**
+         * Undocumented function
+         *
+         * @param \sjcArchive\Modes\EntityDefinition $et      current type model 
+         * @param array                              $rawdata array of values for current model
+         * 
+         * @return void
+         */
+        public function create(\sjcArchive\Modes\EntityDefinition $et, array $rawdata)
+        {
+            
         }
+        /**
+         * Undocumented function
+         *
+         * @param \sjcArchive\Modes\EntityDefinition $et current type model
+         * 
+         * @return void
+         */
         public function read(\sjcArchive\Modes\EntityDefinition $et)
         {
-            return $et->getRecord();
-        }    
-        public function update(\sjcArchive\Modes\EntityDefinition $et, array $rawdata){
+            return $et;
+        }
+        /**
+         * Undocumented function
+         *
+         * @param \sjcArchive\Modes\EntityDefinition $et      current type model
+         * @param array                              $rawdata array of values
+         * 
+         * @return void
+         */   
+        public function update(
+            \sjcArchive\Modes\EntityDefinition $et, 
+            array $rawdata
+        ) {
 
         }
-        public function delete(\sjcArchive\Modes\EntityDefinition $et){
-            
+        /**
+         * Undocumented function
+         *
+         * @param \sjcArchive\Modes\EntityDefinition $et
+         * 
+         * @return void
+         */
+        public function delete(\sjcArchive\Modes\EntityDefinition $et)
+        {
+
         }
     }   
 }
