@@ -82,7 +82,7 @@ namespace sjcArchive\Modules{
                 if (DEBUG) {
                     \RedBeanPHP\R::fancyDebug(true);
                 }
-                return true;
+               
             } catch (exception $e) {
                 return [$e->message()];
             }

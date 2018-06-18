@@ -26,6 +26,7 @@
 namespace sjcArchive\EntityManager {
     use \sjcArchive\Modules as Modules; 
     use \sjcArchive\Models as Models;
+    use \RedBeanPHP\R as R;
 
     /**
      * Abstract base class for API requests
@@ -49,7 +50,39 @@ namespace sjcArchive\EntityManager {
         {
             parent::__construct($request);
             $this->_def = new Models\EntityManager();
-            $this->RR::dispense('entitydefinitions');            
+            R::setAutoResolve(true);
+            R::useJSONFeatures(true);
+            $db = ARCHIVEDB;
+                
+            $h = $db['server'];
+            $d = $db['db'];
+            $u = $db['uid'];
+            $p = $db['pwd'];
+            R::setup(
+                "mysql:host=$h;dbname=$d",
+                $u,
+                $p,
+                0
+            );
+                
+            $db2 = DATADB;
+            $h2 = $db2['server'];
+            $d2 = $db2['db'];
+            $u2 = $db2['uid'];
+            $p2 = $db2['pwd'];
+              
+            R::addDatabase(
+                "datadb",
+                "mysql:host=$h2;dbname=$d2",
+                $u2,
+                $p2,
+                1
+            );
+            if (DEBUG) {
+                R::fancyDebug(true);
+            }           
+                       
+                       
         }
         /**
          * Undocumented function

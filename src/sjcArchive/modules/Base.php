@@ -27,10 +27,6 @@
 
 namespace sjcArchive\Modules
 {
-    use Archivedb;
-    use sjcArchive\Models\EntityDefinitions as et;
-    use sjcARchive\Models\Entities as e;
-
     /**
      * Abstract base class for API requests
      * 
@@ -121,7 +117,6 @@ namespace sjcArchive\Modules
                 $this->_response('Invalid Method', 405);
                 break;
             }
-            print_r($this);
         }
         /**
          * Undocumented function
