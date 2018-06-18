@@ -23,9 +23,9 @@
  * @since      File available since Release 1.2.0
  * @deprecated File deprecated in Release 2.0.0
  */ 
-namespace sjcArchive\EntityManager {
-    use \sjcArchive\Modules as Modules; 
-    use \sjcArchive\Models as Models;
+namespace sjcArchive\EntityManager 
+{
+    use \sjcArchive\{Modules,Modles}; 
     use \RedBeanPHP\R as R;
 
     /**
@@ -49,7 +49,7 @@ namespace sjcArchive\EntityManager {
         public function __construct(string $request)
         {
             parent::__construct($request);
-            $this->_def = new Models\EntityManager();
+            $this->_def = new \sjcArchive\Models\EntityManager();
             R::setAutoResolve(true);
             R::useJSONFeatures(true);
             $db = ARCHIVEDB;
