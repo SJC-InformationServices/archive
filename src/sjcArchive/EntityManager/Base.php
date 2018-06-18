@@ -28,38 +28,42 @@ namespace sjcArchive\EntityManager{
     class Base implements Control
     {
         /**
-         * Undocumented function
+         * Create
          *
-         * @param \sjcArchive\Modes\EntityDefinition $et      current type model 
-         * @param array                              $rawdata array of values for current model
+         * @param object $et      archive entity type
+         * @param array  $rawdata json records of entitytypes
          * 
          * @return void
          */
-        public function create(\sjcArchive\Modes\EntityDefinition $et, array $rawdata)
+        public function create(
+            \sjcArchive\Models\EntityDefinition $et, 
+            array $rawdata
+        )
         {
+
+        }
+        /**
+         * Read
+         *
+         * @param object $et archive entity type
+         * 
+         * @return void
+         */
+        public function read(
+            \sjcArchive\Models\EntityDefinition $et
+        ) {
             
         }
         /**
          * Undocumented function
-         *
-         * @param \sjcArchive\Modes\EntityDefinition $et current type model
+         * 
+         * @param object $et      archive entity type
+         * @param array  $rawdata a array of attributes about entitytypes
          * 
          * @return void
          */
-        public function read(\sjcArchive\Modes\EntityDefinition $et)
-        {
-            return $et;
-        }
-        /**
-         * Undocumented function
-         *
-         * @param \sjcArchive\Modes\EntityDefinition $et      current type model
-         * @param array                              $rawdata array of values
-         * 
-         * @return void
-         */   
         public function update(
-            \sjcArchive\Modes\EntityDefinition $et, 
+            \sjcArchive\Models\EntityDefinition $et, 
             array $rawdata
         ) {
 
@@ -67,14 +71,15 @@ namespace sjcArchive\EntityManager{
         /**
          * Undocumented function
          *
-         * @param \sjcArchive\Modes\EntityDefinition $et
+         * @param object $et archive entity type
          * 
          * @return void
          */
-        public function delete(\sjcArchive\Modes\EntityDefinition $et)
-        {
-
-        }
+        public function delete(
+            \sjcArchive\Models\EntityDefinition $et
+        ) {
+            
+        } 
     }   
 }
 ?>

@@ -40,7 +40,7 @@ namespace sjcArchive\EntityManager
     class Manager extends Modules\Base 
     {
         use Modules\Archivedb;
-        private $_def;
+        public $em;
         /**
          * EntityManage Constructor Function
          *
@@ -49,7 +49,8 @@ namespace sjcArchive\EntityManager
         public function __construct(string $request)
         {
             parent::__construct($request);
-            $this->_def = new \sjcArchive\Models\EntityManager();
+            
+            $this->em = new \sjcArchive\Models\EntityDefinition();
             R::setAutoResolve(true);
             R::useJSONFeatures(true);
             $db = ARCHIVEDB;
@@ -81,8 +82,15 @@ namespace sjcArchive\EntityManager
             if (DEBUG) {
                 R::fancyDebug(true);
             }           
-                       
-                       
+            $name = $this->verb;
+            $data = R::findOne(
+                'entitydefinition', 
+                ' `name` ',
+                'seasons'
+            );           
+            print_r($data);
+            print_r($this);
+                     
         }
         /**
          * Undocumented function
@@ -91,25 +99,27 @@ namespace sjcArchive\EntityManager
          */
         public function manage()
         {
+            
             if (!isset($this->args[0]) ) {
-                $r = New Base($this->_def);
+                $em = $this->em;
+                $r = New Base();
             } else {
                 switch($this->args[0]) 
                 {
                 case 'parents':
-                    $r = new Parents($this->_def);
+                    $r = new Parents();
                     break; 
                 case 'children':
-                    $r = new Children($this->_def);
+                    $r = new Children();
                     break;
                 case 'sibling':
-                    $r = new Siblings($this->_def);
+                    $r = new Siblings();
                     break;
                 case 'attributes':
-                    $r = new Attributes($this->_def);
+                    $r = new Attributes();
                     break;
                 default:
-                    $r = New Base($this->_def);
+                    $r = New Base();
                     break;
                 }
             }
@@ -117,17 +127,17 @@ namespace sjcArchive\EntityManager
             switch($this->method)
             {
             case 'GET':
-                $record = $r->read();
+                $record = $r->read($this->em);
                 break;
             case 'PUT':
-                $record = $r->create();
+                $record = $r->create($this->em);
                 break;
             case 'POST':
             case 'PATCH':
-                $record = $r->update();
+                $record = $r->update($this->em);
                 break;
             case 'DELETE':
-                $record = $r->delete();
+                $record = $r->delete($this->em);
                 break;
             }   
             return $record;

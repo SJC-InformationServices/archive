@@ -44,7 +44,7 @@ namespace sjcArchive\EntityManager{
          * @return void
          */
         public function create(
-            \sjcArchive\Modes\EntityDefinition $et, 
+            \sjcArchive\Models\EntityDefinition $et, 
             array $rawdata
         );
         /**
@@ -55,7 +55,7 @@ namespace sjcArchive\EntityManager{
          * @return void
          */
         public function read(
-            \sjcArchive\Modes\EntityDefinition $et
+            \sjcArchive\Models\EntityDefinition $et
         );
         /**
          * Undocumented function
@@ -66,7 +66,7 @@ namespace sjcArchive\EntityManager{
          * @return void
          */
         public function update(
-            \sjcArchive\Modes\EntityDefinition $et, 
+            \sjcArchive\Models\EntityDefinition $et, 
             array $rawdata
         );
         /**
@@ -76,7 +76,7 @@ namespace sjcArchive\EntityManager{
          * 
          * @return void
          */
-        public function delete(\sjcArchive\Modes\EntityDefinition $et);    
+        public function delete(\sjcArchive\Models\EntityDefinition $et);    
     }
 }
 ?>
