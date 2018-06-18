@@ -36,7 +36,7 @@ namespace sjcArchive\EntityManager{
          * @return void
          */
         public function create(
-            \sjcArchive\Models\EntityDefinition $et, 
+            \sjcArchive\Models\Entitydefinition $et, 
             array $rawdata
         )
         {
@@ -50,7 +50,7 @@ namespace sjcArchive\EntityManager{
          * @return void
          */
         public function read(
-            \sjcArchive\Models\EntityDefinition $et
+            \sjcArchive\Models\Entitydefinition $et
         ) {
             
         }
@@ -63,7 +63,7 @@ namespace sjcArchive\EntityManager{
          * @return void
          */
         public function update(
-            \sjcArchive\Models\EntityDefinition $et, 
+            \sjcArchive\Models\Entitydefinition $et, 
             array $rawdata
         ) {
 
@@ -76,7 +76,7 @@ namespace sjcArchive\EntityManager{
          * @return void
          */
         public function delete(
-            \sjcArchive\Models\EntityDefinition $et
+            \sjcArchive\Models\Entitydefinition $et
         ) {
             
         } 
