@@ -1,4 +1,4 @@
-vendor
+vendor/
 src/alphabroderold
 src/hlfarchiveold
 archivedb.json
