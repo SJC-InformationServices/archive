@@ -26,7 +26,7 @@
 
 namespace sjcArchive {
     use \sjcArchive\EntityManager\Manager as M;
-    use \sjcArchive\Entity as W;    
+    use \sjcArchive\Entities\Entity as E;    
     /**
      * This is MainClass for All Requests
      * 
@@ -63,7 +63,7 @@ namespace sjcArchive {
                 $this->requestObject = new M($request);
                 break;
             default:
-                $this->requestObject = new W($request);
+                $this->requestObject = new E($request);
                 break;
             }
         }

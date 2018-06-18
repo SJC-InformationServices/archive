@@ -40,7 +40,6 @@ namespace sjcArchive\Modules{
     trait Archivedb
     {
 
-        public $rb;
         /**
          * Init database for Redbean ORM
          *
@@ -51,6 +50,7 @@ namespace sjcArchive\Modules{
          */
         public function initdb(int $cfgfrozen=1, int $datafrozen=1)
         {
+            
             try {
                 R::setAutoResolve(true);
                 R::useJSONFeatures(true);

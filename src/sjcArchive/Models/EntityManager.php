@@ -25,33 +25,60 @@
  */ 
 namespace sjcArchive\Models{
      /**
-      * This is MainClass for All Requests
+      * Abstract base class for API requests
       * 
       * @category Application
-      * @package  Request
+      * @package  APIE
       * @author   Kevin Noseworthy <kevin.noseworthy@stjoseph.com>
       * @license  http://www.php.net/license/3_01.txt  PHP License 3.01
-      * @link     http://pear.php.net/package/Pa$ckageName
+      * @link     http://url.com
       */
-    class EntityDefinitions extends \RedBeanPHP\SimpleModel
+    class EntityManager
     {
-        use \sjcArchive\Modules\Archivedb;
-
         public $id;
-        public $rawdata = [];
-        private $_createdon;
-        private $_updatedon;
-        private $_tbl = "sjcarchiveentitymanager";
+        public $rawdata;
+        public $createdon;
+        public $updatedon;
+        public $defition;
+        
         /**
-         * Construction function for Entity Definitions
+         * Undocumented function
          *
-         * @param string $name Name of entity type unique
+         * @param [type] $a attributes to fetch
+         * 
+         * @return void
          */
-        public function __construct()
+        public function __get($a) 
         {
-            $this->initdb(1, 1);
+            if (property_exists($this, $a)) {
+                return $this->$a;
+            } elseif (isset($this->rawdata[$a])) {
+                return $this->rawdata[$a];
+            } else {
+                return null;
+            }
         }
-              
+        /**
+         * Undocumented function
+         *
+         * @param mixed $a attributes to fetch
+         * @param mixed $v value of attribute
+         * 
+         * @return void
+         */
+        public function __set($a,$v) 
+        {
+            if (property_exists($this, $a)) {
+                $this->$a=$v;
+            } else {
+                $this->rawdata[$a] = $v;
+            }
+        }
+        
+
+        
     }
 }
+
+
 ?>

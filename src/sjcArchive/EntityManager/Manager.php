@@ -24,21 +24,21 @@
  * @deprecated File deprecated in Release 2.0.0
  */ 
 namespace sjcArchive\EntityManager {
+    use \sjcArchive\Modules as Modules; 
     use \sjcArchive\Models as Models;
-    use \sjcArchive\Modules as Modules;
-    use \sjcArchive\Models\EntityDefinitions as ED;
 
     /**
      * Abstract base class for API requests
      * 
      * @category Application
-     * @package  API
+     * @package  APIE
      * @author   Kevin Noseworthy <kevin.noseworthy@stjoseph.com>
      * @license  http://www.php.net/license/3_01.txt  PHP License 3.01
      * @link     http://url.com
      */
     class Manager extends Modules\Base 
     {
+        use Modules\Archivedb;
         private $_def;
         /**
          * EntityManage Constructor Function
@@ -48,7 +48,8 @@ namespace sjcArchive\EntityManager {
         public function __construct(string $request)
         {
             parent::__construct($request);
-            $this->_def = new ED($this->verb);
+            $this->_def = new Models\EntityManager();
+            $this->RR::dispense('entitydefinitions');            
         }
         /**
          * Undocumented function
@@ -56,7 +57,7 @@ namespace sjcArchive\EntityManager {
          * @return void
          */
         public function manage()
-        {print_r($this->_def);
+        {
             if (!isset($this->args[0]) ) {
                 $r = New Base($this->_def);
             } else {
@@ -97,8 +98,7 @@ namespace sjcArchive\EntityManager {
                 break;
             }   
             return $record;
-        }
-        
+        }    
         
     }
 }
