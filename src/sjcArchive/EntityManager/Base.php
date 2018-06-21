@@ -45,9 +45,18 @@ namespace sjcArchive\EntityManager{
          * 
          * @return void
          */
-        public function create($rawdata) 
-        {
-            
+        public function create(array $rawdata) 
+        {            
+            try {
+                $raw = json_encode($rawdata);
+                $b = R::dispense(`entitydefinitions`);
+                $b->rawdata = $rawdata;
+                $id = R::store($b);
+                $rawdata['id'] = $id;
+                $this->ed = $raw;
+            } catch(exception $e){
+                return $e;
+            }
         }
         /**
          * Read

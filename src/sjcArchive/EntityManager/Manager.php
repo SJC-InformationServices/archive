@@ -141,33 +141,34 @@ namespace sjcArchive\EntityManager
                         array_push($records, $v);
                     }
                 }
-                foreach ($records as $r) {                                       
-                    switch($this->args[0]) {
-                    case 'parents':
-                                           
-                        break;
-                    case 'children':
-                       
-                        break;
-                    case 'siblings':
-                       
-                        break;
-                    case 'attributes':
-                        
-                        break;
-                    default:
+                foreach ($records as $r) {    
+                    if (!isset($this->args[0])) {
                         $em = New Base();
                         $em->read($r['name']);
-                        if (is_null($em->eb)) {
-                            $em->eb = $r;
+                        if (is_null($em->ed)) {
+                            $em->ed = $r;
                             $em->create($r);
                         } else {
-                            array_push($results,$em->$eb);
+                            array_push($results, $em->ed);
                         }
-                        break;
-                    }   
-                }
-                
+                        array_push($results, $r);
+                    } else {
+                        switch ($this->args[0]) {
+                        case 'parents':
+                                           
+                            break;
+                        case 'children':
+                       
+                            break;
+                        case 'siblings':
+                       
+                            break;
+                        case 'attributes':
+                        
+                            break;
+                        }
+                    }
+                }             
                 break;
             case 'POST':
             case 'PATCH':
