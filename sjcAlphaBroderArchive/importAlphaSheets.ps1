@@ -60,7 +60,7 @@ function Is-Numeric ($Value) {
 function Format-Json([Parameter(Mandatory, ValueFromPipeline)][String] $json) {
   $indent = 0;
   ($json -Split '\n' |
-    % {
+    ForEach-Object {
       if ($_ -match '[\}\]]') {
         # This line contains  ] or }, decrement the indentation level
         $indent--
@@ -82,13 +82,14 @@ function insertAlphaRow($conn,$row,$tbl,$logfile)
     $k = $ka.Trim() -replace '[^a-z]','_'
     $v = $_.Value
     if($v -ne $null){
-      $obj[$k] = $v.ToString().Replace("`n","<br>").Trim()
+      $obj[$k] = $v.ToString().Trim() -replace '"','\"' -Replace "`n",'\\n' -Replace "'","\'"
     }
   }
-  $ins = $obj | ConvertTo-Json -Depth 50 | % { [System.Text.RegularExpressions.Regex]::Unescape($_) } | Format-Json
-  $insObject = $ins -replace '\\','\\\\' -replace "'", "\'" -replace '"', '\"'
-  $inObj = $insObject.Replace("`n","") -Replace '\n','';
-  $qry = "insert into ``$tbl`` (``rawdata``) values ('" + $inObj + "')"
+  $ins = $obj | ConvertTo-Json -Depth 50 | ForEach-Object { [System.Text.RegularExpressions.Regex]::Unescape($_) } 
+   
+  $insObj = $ins -replace '"','\"'
+  
+  $qry = "insert into ``$tbl`` (``rawdata``) values ('" + $insObj + "') on duplicate key update ``rawdata``=archiveJsonMerge(``rawdata``, '" + $insObj + "')"
 
   try{
     $exqry = Execute-MySQLNonQuery $db $qry
@@ -96,8 +97,10 @@ function insertAlphaRow($conn,$row,$tbl,$logfile)
   }catch{
           $ErrorMessage = $_.Exception.Message
           $of = $logfile + ".log"
-          $str = "<div>" +$ErrorMessage + "</div><div>"+ $inObj + '</div><div>' + $qry + '</div><div>'         
+          $oj = $logfile + ".json"
+          $str = "<div>" +$ErrorMessage + "</div><div>"+ $insObj + '</div><div>' + $qry + '</div><div>'         
           $str | Out-File $of -Encoding utf8    
+          $insObj | Out-File $oj -Encoding utf8
           return $false
   }
 

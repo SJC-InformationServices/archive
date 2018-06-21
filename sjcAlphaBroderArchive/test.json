@@ -1,0 +1,45 @@
+{
+    \"subattributes\": \"• DIMENSIONS: 18\" X 14\" X 2\"\",
+    \"usstatus\": \"ACTIVE\",
+    \"earthfriendly\": \"N\",
+    \"millstyle\": \"1240539\",
+    \"garmentfit\": \"N/A\",
+    \"subcategory\": \"CINCH SACKS\",
+    \"mainstyleattributes\": \"• 420-DENIER 50% POLYESTER, 50% NYLON<br>• DURABLE MATERIAL WITHSTANDS DAILY WEAR AND TEAR<br>• STERNUM CLIP SO IT STAYS ON YOUR SHOULDERS<br>• EASY-CINCH DRAWCORD<br>• CUBIC VOLUME: 1,000\",
+    \"brand\": \"UNDER ARMOUR\",
+    \"cdnstatus\": \"ACTIVE\",
+    \"styledescription\": \"UA OZSEE SACKPACK\",
+    \"abstyle\": \"1240539\",
+    \"descriptionofchangefrompreviouspublishdate\": \"INITIAL LAUNCH - FALL 2015\",
+    \"category\": \"BAGS\"
+  }
+  insert into `products` (`rawdata`) values ('{
+    \"subattributes\": \"• DIMENSIONS: 18\" X 14\" X 2\"\",
+    \"usstatus\": \"ACTIVE\",
+    \"earthfriendly\": \"N\",
+    \"millstyle\": \"1240539\",
+    \"garmentfit\": \"N/A\",
+    \"subcategory\": \"CINCH SACKS\",
+    \"mainstyleattributes\": \"• 420-DENIER 50% POLYESTER, 50% NYLON<br>• DURABLE MATERIAL WITHSTANDS DAILY WEAR AND TEAR<br>• STERNUM CLIP SO IT STAYS ON YOUR SHOULDERS<br>• EASY-CINCH DRAWCORD<br>• CUBIC VOLUME: 1,000\",
+    \"brand\": \"UNDER ARMOUR\",
+    \"cdnstatus\": \"ACTIVE\",
+    \"styledescription\": \"UA OZSEE SACKPACK\",
+    \"abstyle\": \"1240539\",
+    \"descriptionofchangefrompreviouspublishdate\": \"INITIAL LAUNCH - FALL 2015\",
+    \"category\": \"BAGS\"
+  }') on duplicate key update `rawdata`='{
+    \"subattributes\": \"• DIMENSIONS: 18\" X 14\" X 2\"\",
+    \"usstatus\": \"ACTIVE\",
+    \"earthfriendly\": \"N\",
+    \"millstyle\": \"1240539\",
+    \"garmentfit\": \"N/A\",
+    \"subcategory\": \"CINCH SACKS\",
+    \"mainstyleattributes\": \"• 420-DENIER 50% POLYESTER, 50% NYLON<br>• DURABLE MATERIAL WITHSTANDS DAILY WEAR AND TEAR<br>• STERNUM CLIP SO IT STAYS ON YOUR SHOULDERS<br>• EASY-CINCH DRAWCORD<br>• CUBIC VOLUME: 1,000\",
+    \"brand\": \"UNDER ARMOUR\",
+    \"cdnstatus\": \"ACTIVE\",
+    \"styledescription\": \"UA OZSEE SACKPACK\",
+    \"abstyle\": \"1240539\",
+    \"descriptionofchangefrompreviouspublishdate\": \"INITIAL LAUNCH - FALL 2015\",
+    \"category\": \"BAGS\"
+  }'
+  

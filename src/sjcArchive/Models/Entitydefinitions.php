@@ -33,13 +33,12 @@ namespace sjcArchive\Models{
       * @license  http://www.php.net/license/3_01.txt  PHP License 3.01
       * @link     http://url.com
       */
-    class Entitydefinition
+    class Entitydefinitions extends \RedBeanPHP\SimpleModel
     {
         public $id;
         public $rawdata;
         public $createdon;
         public $updatedon;
-        public $defition;
         
         /**
          * Undocumented function
@@ -48,7 +47,7 @@ namespace sjcArchive\Models{
          * 
          * @return void
          */
-        public function __get($a) 
+        /*public function __get($a) 
         {
             if (property_exists($this, $a)) {
                 return $this->$a;
@@ -57,7 +56,7 @@ namespace sjcArchive\Models{
             } else {
                 return null;
             }
-        }
+        }*/
         /**
          * Undocumented function
          *
@@ -66,15 +65,28 @@ namespace sjcArchive\Models{
          * 
          * @return void
          */
-        public function __set($a,$v) 
+        /*public function __set($a,$v) 
         {
             if (property_exists($this, $a)) {
                 $this->$a=$v;
             } else {
                 $this->rawdata[$a] = $v;
             }
-        }
-        
+        }*/
+        /**
+         * TOARRAY converts current object into an array
+         *
+         * @return void
+         */
+        /* public function toArray()
+        {
+            $d = $this->rawdata;
+            $d['id']=$this->id;
+            $d['createdon']=$this->createdon;
+            $d['updatedon']=$this->updatedon;
+            return $d;
+        }*/
+       
 
         
     }

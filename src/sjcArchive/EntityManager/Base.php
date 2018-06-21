@@ -24,60 +24,84 @@
  * @deprecated File deprecated in Release 2.0.0
  */ 
 namespace sjcArchive\EntityManager{
-    
-    class Base implements Control
+    use \RedBeanPHP\R as R;
+     /**
+      * Base class for EntityManage requests
+      * 
+      * @category Application
+      * @package  API
+      * @author   Kevin Noseworthy <kevin.noseworthy@stjoseph.com>
+      * @license  http://www.php.net/license/3_01.txt  PHP License 3.01
+      * @link     http://url.com
+      */ 
+    class Base implements Control 
     {
+        
+        public $ed;
         /**
          * Create
          *
-         * @param object $et      archive entity type
-         * @param array  $rawdata json records of entitytypes
+         * @param array $rawdata json records of entitytypes
          * 
          * @return void
          */
-        public function create(
-            \sjcArchive\Models\Entitydefinition $et, 
-            array $rawdata
-        )
+        public function create($rawdata) 
         {
-
+            
         }
         /**
          * Read
          *
-         * @param object $et archive entity type
+         * @param string $name archive entity type
          * 
          * @return void
          */
-        public function read(
-            \sjcArchive\Models\Entitydefinition $et
-        ) {
-            
-        }
-        /**
-         * Undocumented function
-         * 
-         * @param object $et      archive entity type
-         * @param array  $rawdata a array of attributes about entitytypes
-         * 
-         * @return void
-         */
-        public function update(
-            \sjcArchive\Models\Entitydefinition $et, 
-            array $rawdata
-        ) {
-
+        public function read(string $name=null) 
+        {  
+            if ($name === null || $name=="") {
+                $results = R::getAll(
+                    'select `id`,`rawdata`,`createdon`,`updatedon` 
+                    from `entitydefinitions`'
+                );
+            } else {                
+                $results = R::getAll(
+                    'select `id`,`rawdata`,`createdon`,`updatedon` 
+                    from `entitydefinitions` where name = :name', 
+                    [':name'=>$name]
+                );
+            }
+            if (!is_null($results)) {
+                $tmp = [];
+                foreach ($results as $r) {
+                    $obj = array_merge($r, json_decode($r['rawdata'], true));
+                    unset($obj['rawdata']);
+                    array_push($tmp, $obj);
+                }
+                $this->ed =$tmp;
+            } else {
+                $this->ed = null;
+            }
         }
         /**
          * Undocumented function
          *
-         * @param object $et archive entity type
+         * @param array $rawdata a array of attributes about entitytypes
          * 
          * @return void
          */
-        public function delete(
-            \sjcArchive\Models\Entitydefinition $et
-        ) {
+        public function update(array $rawdata)
+        {
+
+        }
+        /**
+         * Delete Functions
+         * 
+         * @param array $rawdata objects to delete and update
+         * 
+         * @return void
+         */
+        public function delete(array $rawdata) 
+        {
             
         } 
     }   

@@ -50,7 +50,8 @@ namespace sjcArchive\EntityManager
         {
             parent::__construct($request);
             
-            $this->em = new \sjcArchive\Models\EntityDefinition();
+            //$em = new \sjcArchive\Models\Entitydefinitions();
+            
             R::setAutoResolve(true);
             R::useJSONFeatures(true);
             $db = ARCHIVEDB;
@@ -71,26 +72,14 @@ namespace sjcArchive\EntityManager
             $d2 = $db2['db'];
             $u2 = $db2['uid'];
             $p2 = $db2['pwd'];
-              
+          
             R::addDatabase(
                 "datadb",
                 "mysql:host=$h2;dbname=$d2",
                 $u2,
                 $p2,
                 1
-            );
-            if (DEBUG) {
-                R::fancyDebug(true);
-            }           
-            $name = $this->verb;
-            $data = R::findOne(
-                'entitydefinition', 
-                ' `name` ',
-                'seasons'
             );           
-            print_r($data);
-            print_r($this);
-                     
         }
         /**
          * Undocumented function
@@ -98,49 +87,101 @@ namespace sjcArchive\EntityManager
          * @return void
          */
         public function manage()
-        {
-            
-            if (!isset($this->args[0]) ) {
-                $em = $this->em;
-                $r = New Base();
-            } else {
-                switch($this->args[0]) 
-                {
-                case 'parents':
-                    $r = new Parents();
-                    break; 
-                case 'children':
-                    $r = new Children();
-                    break;
-                case 'sibling':
-                    $r = new Siblings();
-                    break;
-                case 'attributes':
-                    $r = new Attributes();
-                    break;
-                default:
-                    $r = New Base();
-                    break;
-                }
-            }
-            $record=[$this->method];
+        {            
+                       
+            $results = [];
+
             switch($this->method)
             {
             case 'GET':
-                $record = $r->read($this->em);
+                $em = New Base();
+                $em->read($this->verb);
+                $emObj = $em->ed;
+                if (isset($this->args[0])) {                    
+                    switch($this->args[0])
+                    {
+                    case 'parents':
+                        if (isset($emObj[0]['relations']['parents'])) {
+                            $results = $emObj[0]['relations']['parents']; 
+                        }                       
+                        break;
+                    case 'children':
+                        if (isset($emObj[0]['relations']['children'])) {
+                            $results = $emObj[0]['relations']['children'];
+                        }
+                        break;
+                    case 'siblings':
+                        if (isset($emObj[0]['relations']['siblings'])) {
+                            $results = $emObj[0]['relations']['siblings'];
+                        }
+                        break;
+                    case 'attributes':
+                        if (isset($emObj[0]['attributes'])) {
+                            $results = $emObj[0]['attributes'];
+                        }
+                        break;
+                    }
+                } else {
+                    $results=$emObj;
+                }    
                 break;
             case 'PUT':
-                $record = $r->create($this->em);
+                $records =[];
+                if (!is_null($this->verb) && $this->verb !== '') {
+                        $data = json_decode($this->file) 
+                        ? json_decode($this->file, true) : [[]];
+                        $rec = $data['0'];
+                        $rec['name'] = $this->verb;
+                        $records = $rec;
+                } else {
+                    $data = json_decode($this->file) 
+                        ? json_decode($this->file, true) : [[]];
+                    foreach ($data as $k=>$v) {
+                        $v['name']=$k;
+                        array_push($records, $v);
+                    }
+                }
+                foreach ($records as $r) {                                       
+                    switch($this->args[0]) {
+                    case 'parents':
+                                           
+                        break;
+                    case 'children':
+                       
+                        break;
+                    case 'siblings':
+                       
+                        break;
+                    case 'attributes':
+                        
+                        break;
+                    default:
+                        $em = New Base();
+                        $em->read($r['name']);
+                        if (is_null($em->eb)) {
+                            $em->eb = $r;
+                            $em->create($r);
+                        } else {
+                            array_push($results,$em->$eb);
+                        }
+                        break;
+                    }   
+                }
+                
                 break;
             case 'POST':
             case 'PATCH':
-                $record = $r->update($this->em);
+                
                 break;
             case 'DELETE':
-                $record = $r->delete($this->em);
+                
                 break;
-            }   
-            return $record;
+            } 
+            
+            return $results; 
+                 
+           
+            
         }    
         
     }
