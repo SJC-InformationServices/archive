@@ -78,7 +78,7 @@ namespace sjcArchive\EntityManager
                 "mysql:host=$h2;dbname=$d2",
                 $u2,
                 $p2,
-                1
+                0
             );           
         }
         /**
@@ -144,14 +144,8 @@ namespace sjcArchive\EntityManager
                 foreach ($records as $r) {    
                     if (!isset($this->args[0])) {
                         $em = New Base();
-                        $em->read($r['name']);
-                        if (is_null($em->ed)) {
-                            $em->ed = $r;
-                            $em->create($r);
-                        } else {
-                            array_push($results, $em->ed);
-                        }
-                        array_push($results, $r);
+                        $em->create($r);
+                        array_push($results, $em->ed);
                     } else {
                         switch ($this->args[0]) {
                         case 'parents':
