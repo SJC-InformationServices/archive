@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.61.10",
+            "version": "3.62.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "6c6aaaede232d559b5f8b2d8af2b6fd13e490473"
+                "reference": "2c9b27be62dce8a2b84918229d98f4eeb7f75056"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/6c6aaaede232d559b5f8b2d8af2b6fd13e490473",
-                "reference": "6c6aaaede232d559b5f8b2d8af2b6fd13e490473",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/2c9b27be62dce8a2b84918229d98f4eeb7f75056",
+                "reference": "2c9b27be62dce8a2b84918229d98f4eeb7f75056",
                 "shasum": ""
             },
             "require": {
@@ -84,7 +84,7 @@
                 "s3",
                 "sdk"
             ],
-            "time": "2018-06-20T20:08:58+00:00"
+            "time": "2018-06-21T23:31:06+00:00"
         },
         {
             "name": "gabordemooij/redbean",

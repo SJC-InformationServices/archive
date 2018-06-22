@@ -101,11 +101,18 @@ namespace sjcArchive\EntityManager{
             
             if (is_null($this->ed) || count($this->ed) == 0) {
                 $raw = json_encode($rawdata);
-                $b = R::exec(
-                    'insert into `entitydefinitions` 
-                    (`rawdata`) values (:raw)', [':raw'=>$raw]
-                );
-                $this->_createTable($rawdata['name']);
+                R::begin();               
+                try {
+                    $b = R::exec(
+                        'insert into `entitydefinitions` 
+                        (`rawdata`) values (:raw)', [':raw'=>$raw]
+                    );
+                    $this->_createTable($rawdata['name']);
+                    R::commit();
+                }
+                catch(Exception $e){
+                    R::rollback();
+                }
                 $this->read($rawdata['name']);
             }
             
@@ -136,7 +143,7 @@ namespace sjcArchive\EntityManager{
                 foreach ($results as $r) {
                     $obj = array_merge($r, json_decode($r['rawdata'], true));
                     unset($obj['rawdata']);
-                    array_push($tmp, $obj);
+                    $tmp[$obj['name']]=$obj;
                 }
                 $this->ed =$tmp;
             } else {
@@ -174,21 +181,31 @@ namespace sjcArchive\EntityManager{
         {
             $name =strtolower($name);
             R::selectDatabase('datadb');
-            
-            R::exec(
-                str_ireplace($this->_createTableSql, ':name', $name)
-            );
-            R::exec(
-                str_ireplace($this->_createBeforeInsert, ':name', $name)
-            );
-            R::exec(
-                str_ireplace($this->_createBeforeUpdate, ':name', $name)
-            );
-            R::exec(
-                str_ireplace($this->_createBeforeDelete, ':name', $name) 
-            );
-           
-        } 
+            R::begin();
+            try{
+                R::exec(
+                    str_ireplace(':name', $name, $this->_createTableSql)
+                );
+                R::exec(
+                    str_ireplace(':name', $name, $this->_createBeforeInsert)
+                );
+                R::exec(
+                    str_ireplace(':name', $name, $this->_createBeforeUpdate)
+                );
+                R::exec(
+                    str_ireplace(':name', $name, $this->_createBeforeDelete) 
+                );
+                R::commit();
+            }
+            catch(Exception $e)
+            {
+                //TODO: LOG
+                R::rollback();
+                return false;
+            }
+            R::selectDatabase('default');
+        }
+        
     }   
 }
 ?>

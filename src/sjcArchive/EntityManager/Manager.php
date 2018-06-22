@@ -40,7 +40,7 @@ namespace sjcArchive\EntityManager
     class Manager extends Modules\Base 
     {
         use Modules\Archivedb;
-        public $em;
+        public $results = [];
         /**
          * EntityManage Constructor Function
          *
@@ -88,81 +88,13 @@ namespace sjcArchive\EntityManager
          */
         public function manage()
         {            
-                       
-            $results = [];
-
             switch($this->method)
             {
             case 'GET':
-                $em = New Base();
-                $em->read($this->verb);
-                $emObj = $em->ed;
-                if (isset($this->args[0])) {                    
-                    switch($this->args[0])
-                    {
-                    case 'parents':
-                        if (isset($emObj[0]['relations']['parents'])) {
-                            $results = $emObj[0]['relations']['parents']; 
-                        }                       
-                        break;
-                    case 'children':
-                        if (isset($emObj[0]['relations']['children'])) {
-                            $results = $emObj[0]['relations']['children'];
-                        }
-                        break;
-                    case 'siblings':
-                        if (isset($emObj[0]['relations']['siblings'])) {
-                            $results = $emObj[0]['relations']['siblings'];
-                        }
-                        break;
-                    case 'attributes':
-                        if (isset($emObj[0]['attributes'])) {
-                            $results = $emObj[0]['attributes'];
-                        }
-                        break;
-                    }
-                } else {
-                    $results=$emObj;
-                }    
+                $this->_handleGetRequest();
                 break;
             case 'PUT':
-                $records =[];
-                if (!is_null($this->verb) && $this->verb !== '') {
-                        $data = json_decode($this->file) 
-                        ? json_decode($this->file, true) : [[]];
-                        $rec = $data['0'];
-                        $rec['name'] = $this->verb;
-                        $records = $rec;
-                } else {
-                    $data = json_decode($this->file) 
-                        ? json_decode($this->file, true) : [[]];
-                    foreach ($data as $k=>$v) {
-                        $v['name']=$k;
-                        array_push($records, $v);
-                    }
-                }
-                foreach ($records as $r) {    
-                    if (!isset($this->args[0])) {
-                        $em = New Base();
-                        $em->create($r);
-                        array_push($results, $em->ed);
-                    } else {
-                        switch ($this->args[0]) {
-                        case 'parents':
-                                           
-                            break;
-                        case 'children':
-                       
-                            break;
-                        case 'siblings':
-                       
-                            break;
-                        case 'attributes':
-                        
-                            break;
-                        }
-                    }
-                }             
+                $this->_handlePutRequest();           
                 break;
             case 'POST':
             case 'PATCH':
@@ -173,12 +105,163 @@ namespace sjcArchive\EntityManager
                 break;
             } 
             
-            return $results; 
-                 
+            return $this->results;                
            
             
-        }    
-        
+        }
+        /**
+         * Undocumented function
+         *
+         * @return void
+         */
+        private function _handleGetRequest()
+        {
+
+                $em = New Base();
+                $em->read($this->verb);
+                $emObj = $em->ed;
+            if (isset($this->args[0])) {                    
+                switch($this->args[0])
+                {
+                case 'parents':
+                    if (isset($emObj[0]['relations']['parents'])) {
+                        $this->results= $emObj[0]['relations']['parents']; 
+                    }                       
+                    break;
+                case 'children':
+                    if (isset($emObj[0]['relations']['children'])) {
+                            $this->results= $emObj[0]['relations']['children'];
+                    }
+                    break;
+                case 'siblings':
+                    if (isset($emObj[0]['relations']['siblings'])) {
+                        $this->results = $emObj[0]['relations']['siblings'];
+                    }
+                    break;
+                case 'attributes':
+                    if (isset($emObj[0]['attributes'])) {
+                            $this->results= $emObj[0]['attributes'];
+                    }
+                    break;
+                }
+            } else {
+                    $this->results=$emObj;
+            }
+        }
+        /**
+         * Undocumented function
+         *
+         * @return void
+         */
+        private function _handlePutRequest()
+        {
+            $records =[];
+            if (!is_null($this->verb) && $this->verb !== '') {
+                    $data = json_decode($this->file) 
+                    ? json_decode($this->file, true) : [[]];
+                    $rec = $data['0'];
+                    $rec['name'] = $this->verb;
+                    $records = $rec;
+            } else {
+                $data = json_decode($this->file) 
+                    ? json_decode($this->file, true) : [[]];
+                foreach ($data as $k=>$v) {
+                    $v['name']=$k;
+                    array_push($records, $v);
+                }
+            }
+            foreach ($records as $r) {    
+                if (!isset($this->args[0])) {
+                    $em = New Base();
+                    $em->create($r);
+                    
+                    $parents = isset($em->ed['parents']) ? 
+                    $this->_handleParents($em) : [];
+
+                    $children = isset($em->ed['children']) ? 
+                    $this->_handleChildren($em) : [];
+
+                    $attribs = isset($em->ed['attribs']) ? 
+                    $this->_handleAttribs($em) : [];
+
+                    $attribs = isset($em->ed['attribs']) ? 
+                    $this->_handleAttribs($em) : [];
+                   
+                    array_push($results, $em->ed);
+                    
+                } else {
+                    switch ($this->args[0]) {
+                    case 'parents':
+                                       
+                        break;
+                    case 'children':
+                   
+                        break;
+                    case 'siblings':
+                   
+                        break;
+                    case 'attributes':
+                    
+                        break;
+                    }
+                }
+            }       
+        }
+        /**
+         * Undocumented function
+         *
+         * @param [object]  $ed entity definition to assign parents
+         * 
+         * @return void
+         */
+        private function _handleParents($ed) 
+        {
+
+        }   
+        /**
+         * Undocumented function
+         *
+         * @param [object]  $ed entity definition to assign parents
+         * 
+         * @return void
+         */
+        private function _handleChildren($ed) 
+        {
+
+        }
+        /**
+         * Undocumented function
+         *
+         * @param [object]  $ed entity definition to assign parents
+         * 
+         * @return void
+         */
+        private function _handleSiblings($ed) 
+        {
+
+        }
+        /**
+         * Undocumented function
+         *
+         * @param [object]  $ed entity definition to assign parents
+         * 
+         * @return void
+         */
+        private function _handleAttributes($ed, array $parents) 
+        {
+
+        }
+        /**
+         * Undocumented function
+         *
+         * @param [object]  $ed entity definition to assign parents
+         * 
+         * @return void
+         */
+        private function _handleIndexes($ed, array $parents) 
+        {
+
+        }
     }
 }
 ?>
