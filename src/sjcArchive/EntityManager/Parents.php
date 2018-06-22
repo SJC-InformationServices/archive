@@ -36,67 +36,176 @@ namespace sjcArchive\EntityManager{
       */ 
     class Parents implements Control 
     {
+        
+        public $ed;
+
+        private $_createTableSql = "CREATE TABLE `:name` (
+            `id` int(11) NOT NULL AUTO_INCREMENT,
+            `rawdata` json DEFAULT NULL,
+            `createdon` datetime DEFAULT CURRENT_TIMESTAMP,
+            `updatedon` datetime DEFAULT 
+            CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+            `uuid` varchar(36) COLLATE utf8mb4_unicode_ci 
+            GENERATED ALWAYS AS 
+            (json_unquote(json_extract(`rawdata`,'$.uuid'))) STORED,
+            PRIMARY KEY (`id`),
+            UNIQUE KEY `uuid_UNIQUE` (`uuid`)
+          ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 
+          COLLATE=utf8mb4_unicode_ci";
+        
+        private $_createBeforeInsert = "CREATE TRIGGER 
+        `:name_uuid_BEFORE_INSERT` BEFORE INSERT ON `:name` FOR EACH ROW
+        BEGIN            
+        if JSON_EXTRACT(new.rawdata,'$.UUID') is null then
+            set NEW.rawdata = JSON_SET(NEW.rawdata,'$.uuid',uuid());
+        END IF;
+        END";
+        
+        private $_createBeforeUpdate =  "CREATE TRIGGER 
+        `:name_BEFORE_UPDATE` BEFORE UPDATE ON `:name` FOR EACH ROW
+        BEGIN
+        insert into `entity_history` 
+        (`rawdata`) values 
+        (json_set(old.rawdata,'$.entity_type',':name','$.entity_id',old.id));
+        if JSON_EXTRACT(new.rawdata,'$.UUID') is null then
+            set NEW.rawdata = JSON_SET(NEW.rawdata,'$.uuid',
+            JSON_UNQUOTE(JSON_EXTRACT(OLD.rawdata,'$.UUID'))
+            );
+        END IF;
+        END";
+        private $_createBeforeDelete = "CREATE TRIGGER `:name_BEFORE_DELETE` 
+        BEFORE DELETE ON `:name` FOR EACH ROW
+        BEGIN insert into `entity_history` (`rawdata`) 
+        values (json_set(old.rawdata,'$.entity_type',
+        ':name','$.entity_id',old.id));
+        END";
+        
+        /**
+         * Undocumented function
+         */
+        public function __construct()
+        {
+            R::selectDatabase('default');
+        }
         /**
          * Create
          *
-         * @param object $et      archive entity type
-         * @param array  $rawdata json records of entitytypes
+         * @param array $rawdata json records of entitytypes
          * 
          * @return void
          */
-        public function create(
-            \sjcArchive\Models\Entitydefinition $et, 
-            array $rawdata
-        ) {
-
+        public function create(array $rawdata) 
+        {            
+            //R::fancyDebug(true);
+            $this->read($rawdata['name']);
+            
+            if (is_null($this->ed) || count($this->ed) == 0) {
+                $raw = json_encode($rawdata);
+                R::begin();               
+                try {
+                    $b = R::exec(
+                        'insert into `entitydefinitions` 
+                        (`rawdata`) values (:raw)', [':raw'=>$raw]
+                    );
+                    $this->_createTable($rawdata['name']);
+                    R::commit();
+                }
+                catch(Exception $e){
+                    R::rollback();
+                }
+                $this->read($rawdata['name']);
+            }
+            
         }
         /**
          * Read
          *
-         * @param object $et archive entity type
+         * @param string $name archive entity type
          * 
          * @return void
          */
-        public function read(
-            \sjcArchive\Models\Entitydefinition $et
-        ) {  
-            $data = R::findOne(
-                'entitydefinitions',
-                " name  = ? ",
-                [ $et->name ]
-            );           
-            if (!is_null($data) and isset($data->rawdata['relations']['parents'])) {
-                return $et->rawdata['relations']['parents'];
+        public function read(string $name=null) 
+        {  
+            if ($name === null || $name=="") {
+                $results = R::getAll(
+                    'select `id`,`rawdata`,`createdon`,`updatedon` 
+                    from `entitydefinitions`'
+                );
+            } else {                
+                $results = R::getAll(
+                    'select `id`,`rawdata`,`createdon`,`updatedon` 
+                    from `entitydefinitions` where name = :name', 
+                    [':name'=>$name]
+                );
+            }
+            if (!is_null($results)) {
+                $tmp = [];
+                foreach ($results as $r) {
+                    $obj = array_merge($r, json_decode($r['rawdata'], true));
+                    unset($obj['rawdata']);
+                    $tmp[$obj['name']]=$obj;
+                }
+                $this->ed =$tmp;
             } else {
-                return [];
+                $this->ed = null;
             }
         }
         /**
          * Undocumented function
-         * 
-         * @param object $et      archive entity type
-         * @param array  $rawdata a array of attributes about entitytypes
+         *
+         * @param array $rawdata a array of attributes about entitytypes
          * 
          * @return void
          */
-        public function update(
-            \sjcArchive\Models\Entitydefinition $et, 
-            array $rawdata
-        ) {
+        public function update(array $rawdata)
+        {
 
         }
         /**
-         * Undocumented function
-         *
-         * @param object $et archive entity type
+         * Delete Functions
+         * 
+         * @param array $rawdata objects to delete and update
          * 
          * @return void
          */
-        public function delete(
-            \sjcArchive\Models\Entitydefinition $et
-        ) {
+        public function delete(array $rawdata) 
+        {
             
-        } 
+        }
+        /**
+         * _CREATETABLE Corresponding Tables
+         *
+         * @return void
+         */
+        private function _createTable($name)
+        {
+            $name =strtolower($name);
+            R::selectDatabase('datadb');
+            R::begin();
+            try{
+                R::exec(
+                    str_ireplace(':name', $name, $this->_createTableSql)
+                );
+                R::exec(
+                    str_ireplace(':name', $name, $this->_createBeforeInsert)
+                );
+                R::exec(
+                    str_ireplace(':name', $name, $this->_createBeforeUpdate)
+                );
+                R::exec(
+                    str_ireplace(':name', $name, $this->_createBeforeDelete) 
+                );
+                R::commit();
+            }
+            catch(Exception $e)
+            {
+                //TODO: LOG
+                R::rollback();
+                return false;
+            }
+            R::selectDatabase('default');
+        }
+        
     }   
 }
 ?>

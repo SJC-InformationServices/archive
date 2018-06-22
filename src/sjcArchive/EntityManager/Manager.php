@@ -116,7 +116,6 @@ namespace sjcArchive\EntityManager
          */
         private function _handleGetRequest()
         {
-
                 $em = New Base();
                 $em->read($this->verb);
                 $emObj = $em->ed;
@@ -181,12 +180,15 @@ namespace sjcArchive\EntityManager
                     $children = isset($em->ed['children']) ? 
                     $this->_handleChildren($em) : [];
 
-                    $attribs = isset($em->ed['attribs']) ? 
+                    $siblings = isset($em->ed['siblings']) ? 
                     $this->_handleAttribs($em) : [];
 
                     $attribs = isset($em->ed['attribs']) ? 
                     $this->_handleAttribs($em) : [];
                    
+                    $indexes = isset($em->ed['indexes']) ? 
+                    $this->_handleAttribs($em) : [];
+
                     array_push($results, $em->ed);
                     
                 } else {
@@ -216,7 +218,13 @@ namespace sjcArchive\EntityManager
          */
         private function _handleParents($ed) 
         {
-
+            foreach($ed['parents'] as $k=>$p)
+            {
+                $parents = New Parents();
+                $parents->ed = $ed;
+                $p['name'] = $k;
+                $parents->create($p);
+            }
         }   
         /**
          * Undocumented function
