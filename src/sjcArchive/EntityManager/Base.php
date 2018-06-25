@@ -25,6 +25,7 @@
  */ 
 namespace sjcArchive\EntityManager{
     use \RedBeanPHP\R as R;
+    use \sjcArchive\EntityManager\Repositories as Repo;
      /**
       * Base class for EntityManage requests
       * 
@@ -34,52 +35,11 @@ namespace sjcArchive\EntityManager{
       * @license  http://www.php.net/license/3_01.txt  PHP License 3.01
       * @link     http://url.com
       */ 
-    class Base implements Control 
+    class Base extends Repo\EntityManagement implements Contracts\Control
     {
         
         public $ed;
-
-        private $_createTableSql = "CREATE TABLE `:name` (
-            `id` int(11) NOT NULL AUTO_INCREMENT,
-            `rawdata` json DEFAULT NULL,
-            `createdon` datetime DEFAULT CURRENT_TIMESTAMP,
-            `updatedon` datetime DEFAULT 
-            CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-            `uuid` varchar(36) COLLATE utf8mb4_unicode_ci 
-            GENERATED ALWAYS AS 
-            (json_unquote(json_extract(`rawdata`,'$.uuid'))) STORED,
-            PRIMARY KEY (`id`),
-            UNIQUE KEY `uuid_UNIQUE` (`uuid`)
-          ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 
-          COLLATE=utf8mb4_unicode_ci";
-        
-        private $_createBeforeInsert = "CREATE TRIGGER 
-        `:name_uuid_BEFORE_INSERT` BEFORE INSERT ON `:name` FOR EACH ROW
-        BEGIN            
-        if JSON_EXTRACT(new.rawdata,'$.UUID') is null then
-            set NEW.rawdata = JSON_SET(NEW.rawdata,'$.uuid',uuid());
-        END IF;
-        END";
-        
-        private $_createBeforeUpdate =  "CREATE TRIGGER 
-        `:name_BEFORE_UPDATE` BEFORE UPDATE ON `:name` FOR EACH ROW
-        BEGIN
-        insert into `entity_history` 
-        (`rawdata`) values 
-        (json_set(old.rawdata,'$.entity_type',':name','$.entity_id',old.id));
-        if JSON_EXTRACT(new.rawdata,'$.UUID') is null then
-            set NEW.rawdata = JSON_SET(NEW.rawdata,'$.uuid',
-            JSON_UNQUOTE(JSON_EXTRACT(OLD.rawdata,'$.UUID'))
-            );
-        END IF;
-        END";
-        private $_createBeforeDelete = "CREATE TRIGGER `:name_BEFORE_DELETE` 
-        BEFORE DELETE ON `:name` FOR EACH ROW
-        BEGIN insert into `entity_history` (`rawdata`) 
-        values (json_set(old.rawdata,'$.entity_type',
-        ':name','$.entity_id',old.id));
-        END";
-        
+                
         /**
          * Undocumented function
          */
@@ -107,7 +67,7 @@ namespace sjcArchive\EntityManager{
                         'insert into `entitydefinitions` 
                         (`rawdata`) values (:raw)', [':raw'=>$raw]
                     );
-                    $this->_createTable($rawdata['name']);
+                    $this->createTable($rawdata['name']);
                     R::commit();
                 }
                 catch(Exception $e){
@@ -172,39 +132,7 @@ namespace sjcArchive\EntityManager{
         {
             
         }
-        /**
-         * _CREATETABLE Corresponding Tables
-         *
-         * @return void
-         */
-        private function _createTable($name)
-        {
-            $name =strtolower($name);
-            R::selectDatabase('datadb');
-            R::begin();
-            try{
-                R::exec(
-                    str_ireplace(':name', $name, $this->_createTableSql)
-                );
-                R::exec(
-                    str_ireplace(':name', $name, $this->_createBeforeInsert)
-                );
-                R::exec(
-                    str_ireplace(':name', $name, $this->_createBeforeUpdate)
-                );
-                R::exec(
-                    str_ireplace(':name', $name, $this->_createBeforeDelete) 
-                );
-                R::commit();
-            }
-            catch(Exception $e)
-            {
-                //TODO: LOG
-                R::rollback();
-                return false;
-            }
-            R::selectDatabase('default');
-        }
+        
         
     }   
 }

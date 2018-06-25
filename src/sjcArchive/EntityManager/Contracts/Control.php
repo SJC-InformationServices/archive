@@ -23,7 +23,7 @@
  * @since      File available since Release 1.2.0
  * @deprecated File deprecated in Release 2.0.0
  */ 
-namespace sjcArchive\EntityManager{
+namespace sjcArchive\EntityManager\Contracts{
      /**
       * Abstract base class for API requests
       * 
@@ -54,8 +54,7 @@ namespace sjcArchive\EntityManager{
         /**
          * Read Function
          * 
-         * @param object $et      archive entity type
-         * @param array  $rawdata a array of attributes about entitytypes
+         * @param object $rawdata archive entity type
          * 
          * @return void
          */

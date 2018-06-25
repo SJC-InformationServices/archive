@@ -116,36 +116,46 @@ namespace sjcArchive\EntityManager
          */
         private function _handleGetRequest()
         {
-                $em = New Base();
-                $em->read($this->verb);
-                $emObj = $em->ed;
-            if (isset($this->args[0])) {                    
-                switch($this->args[0])
+            $emName = is_null($this->verb) ? null:$this->verb;
+            $emAttrib = isset($this->args[0]) ? $this->args[0] : null;
+                
+            $em = New Base();
+            $em->read($emName);
+            $emObj = $em->ed;
+
+            if (!is_null($emAttrib)) {                    
+                switch($emAttrib)
                 {
+                case 'relations':
+                    if (isset($emObj[$emName]['relations'])) {
+                            $this->results= $emObj[$emName]['relations'];
+                    }
+                    break;
                 case 'parents':
-                    if (isset($emObj[0]['relations']['parents'])) {
-                        $this->results= $emObj[0]['relations']['parents']; 
+                    if (isset($emObj[$emName]['relations']['parents'])) {
+                        $this->results= $emObj[$emName]['relations']['parents']; 
                     }                       
                     break;
                 case 'children':
-                    if (isset($emObj[0]['relations']['children'])) {
-                            $this->results= $emObj[0]['relations']['children'];
+                    if (isset($emObj[$emName]['relations']['children'])) {
+                            $this->results= $emObj[$emName]['relations']['children'];
                     }
                     break;
                 case 'siblings':
-                    if (isset($emObj[0]['relations']['siblings'])) {
-                        $this->results = $emObj[0]['relations']['siblings'];
+                    if (isset($emObj[$emName]['relations']['siblings'])) {
+                        $this->results = $emObj[$emName]['relations']['siblings'];
                     }
                     break;
                 case 'attributes':
-                    if (isset($emObj[0]['attributes'])) {
-                            $this->results= $emObj[0]['attributes'];
+                    if (isset($emObj[$emName]['attributes'])) {
+                            $this->results= $emObj[$emName]['attributes'];
                     }
                     break;
                 }
             } else {
                     $this->results=$emObj;
             }
+            
         }
         /**
          * Undocumented function
@@ -212,14 +222,13 @@ namespace sjcArchive\EntityManager
         /**
          * Undocumented function
          *
-         * @param [object]  $ed entity definition to assign parents
+         * @param [object] $ed entity definition to assign parents
          * 
          * @return void
          */
         private function _handleParents($ed) 
         {
-            foreach($ed['parents'] as $k=>$p)
-            {
+            foreach ($ed['parents'] as $k=>$p) {
                 $parents = New Parents();
                 $parents->ed = $ed;
                 $p['name'] = $k;
@@ -229,7 +238,7 @@ namespace sjcArchive\EntityManager
         /**
          * Undocumented function
          *
-         * @param [object]  $ed entity definition to assign parents
+         * @param [object] $ed entity definition to assign parents
          * 
          * @return void
          */
@@ -240,7 +249,7 @@ namespace sjcArchive\EntityManager
         /**
          * Undocumented function
          *
-         * @param [object]  $ed entity definition to assign parents
+         * @param [object] $ed entity definition to assign parents
          * 
          * @return void
          */
@@ -251,22 +260,22 @@ namespace sjcArchive\EntityManager
         /**
          * Undocumented function
          *
-         * @param [object]  $ed entity definition to assign parents
+         * @param [object] $ed entity definition to assign parents
          * 
          * @return void
          */
-        private function _handleAttributes($ed, array $parents) 
+        private function _handleAttributes($ed) 
         {
 
         }
         /**
          * Undocumented function
          *
-         * @param [object]  $ed entity definition to assign parents
+         * @param [object] $ed entity definition to assign parents
          * 
          * @return void
          */
-        private function _handleIndexes($ed, array $parents) 
+        private function _handleIndexes($ed) 
         {
 
         }
