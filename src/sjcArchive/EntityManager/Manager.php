@@ -180,45 +180,34 @@ namespace sjcArchive\EntityManager
                     array_push($records, $v);
                 }
             }
-            foreach ($records as $r) {    
-                if (!isset($this->args[0])) {
+            if (!isset($this->args[0])) {
+                $defs = [];
+                foreach ($records as $r) {
                     $em = New Base();
                     $em->create($r);
-                    
-                    $parents = isset($em->ed['parents']) ? 
-                    $this->_handleParents($em) : [];
-
-                    $children = isset($em->ed['children']) ? 
-                    $this->_handleChildren($em) : [];
-
-                    $siblings = isset($em->ed['siblings']) ? 
-                    $this->_handleAttribs($em) : [];
-
-                    $attribs = isset($em->ed['attribs']) ? 
-                    $this->_handleAttribs($em) : [];
-                   
-                    $indexes = isset($em->ed['indexes']) ? 
-                    $this->_handleAttribs($em) : [];
-
+                    array_push($defs, $em);
                     array_push($this->results, $em->ed);
+                }        
+                foreach ($defs as $edef) {
                     
-                } else {
-                    switch ($this->args[0]) {
-                    case 'parents':
-                                       
-                        break;
-                    case 'children':
-                   
-                        break;
-                    case 'siblings':
-                   
-                        break;
-                    case 'attributes':
-                    
-                        break;
-                    }
                 }
-            }       
+            } else {
+                switch ($this->args[0]) {
+                case 'parents':
+                                       
+                    break;
+                case 'children':
+                   
+                    break;
+                case 'siblings':
+                   
+                    break;
+                case 'attributes':
+                
+                    break;
+                }
+            }
+            
         }
         /**
          * Undocumented function
