@@ -56,8 +56,35 @@ namespace sjcArchive\EntityManager{
          */
         public function create(array $rawdata) 
         {            
-            $name = $this->ed['id'];
+            $name = $this->ed['name'];
+            $parent = $rawdata['name'];
             
+            R::selectDatabase('datadb');
+            R::begin();
+            try{
+                $this->addField(
+                    $name, 
+                    $parent."_id", 
+                    'INT(11) UNSIGNED NOT NULL AFTER'
+                );
+                $this->addIndex(
+                    $name, 
+                    "idx_$name"."_".$parent, 
+                    "INDEX",
+                    "`$parent"."_id` asc" 
+                );
+                $this->addForeignKey(
+                    $name,
+                    "fk_$name"."_".$parent, 
+                    $parent."_id", 
+                    $parent,
+                    'id'
+                );
+                R::commit();
+            }
+            catch(Exception $e){
+                R::rollback();
+            }
             
         }
         /**

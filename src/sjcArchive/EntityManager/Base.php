@@ -67,12 +67,14 @@ namespace sjcArchive\EntityManager{
                         'insert into `entitydefinitions` 
                         (`rawdata`) values (:raw)', [':raw'=>$raw]
                     );
+                    R::selectDatabase('datadb');
                     $this->createTable($rawdata['name']);
                     R::commit();
                 }
                 catch(Exception $e){
                     R::rollback();
                 }
+                R::selectDatabase('default');
                 $this->read($rawdata['name']);
             }
             
@@ -86,7 +88,7 @@ namespace sjcArchive\EntityManager{
          */
         public function read(string $name=null) 
         {  
-            if ($name === null || $name=="") {
+            if ($name === null || $name == "") {
                 $results = R::getAll(
                     'select `id`,`rawdata`,`createdon`,`updatedon` 
                     from `entitydefinitions`'

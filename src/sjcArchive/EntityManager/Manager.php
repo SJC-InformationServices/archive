@@ -168,9 +168,10 @@ namespace sjcArchive\EntityManager
             if (!is_null($this->verb) && $this->verb !== '') {
                     $data = json_decode($this->file) 
                     ? json_decode($this->file, true) : [[]];
-                    $rec = $data['0'];
+                    /*$rec = $data['0'];
                     $rec['name'] = $this->verb;
-                    $records = $rec;
+                    $records = $rec;*/
+                    return [];
             } else {
                 $data = json_decode($this->file) 
                     ? json_decode($this->file, true) : [[]];
@@ -199,7 +200,7 @@ namespace sjcArchive\EntityManager
                     $indexes = isset($em->ed['indexes']) ? 
                     $this->_handleAttribs($em) : [];
 
-                    array_push($results, $em->ed);
+                    array_push($this->results, $em->ed);
                     
                 } else {
                     switch ($this->args[0]) {
@@ -276,6 +277,18 @@ namespace sjcArchive\EntityManager
          * @return void
          */
         private function _handleIndexes($ed) 
+        {
+
+        }
+        /**
+         * Undocumented function
+         *
+         * @param [array] $eda entity definition to update
+         * @param [array] $edb new entity definition
+         * 
+         * @return void
+         */
+        private function _handleReplace($eda, $edb)
         {
 
         }

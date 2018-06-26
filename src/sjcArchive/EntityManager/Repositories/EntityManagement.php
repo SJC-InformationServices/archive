@@ -83,6 +83,9 @@ namespace sjcArchive\EntityManager\Repositories
         values (json_set(old.rawdata,'$.entity_type',
         ':name','$.entity_id',old.id));
         END";
+        private $_addIndex = "ALTER TABLE `:name` 
+        ADD COLUMN `:col` INT(11) UNSIGNED NULL,
+        ADD :idxtype `:idxname` (:fields);";
         /**
          * _CREATETABLE Corresponding Tables
          * 
@@ -93,7 +96,6 @@ namespace sjcArchive\EntityManager\Repositories
         protected function createTable($name)
         {
             $name =strtolower($name);
-            R::selectDatabase('datadb');
             R::begin();
             try{
                 R::exec(
@@ -116,21 +118,55 @@ namespace sjcArchive\EntityManager\Repositories
                 R::rollback();
                 return false;
             }
-            R::selectDatabase('default');
+           
         }
         /**
-         * Undocumented function
+         * ADDFIELD function
          *
-         * @param [string] $tbl
-         * @param [array] $fields
-         * @param [string] $type
+         * @param [type] $tbl
+         * @param [type] $name
+         * @param [type] $type
+         * 
          * @return void
          */
-        protected function addIndex($tbl, $fields, $type)
+        protected function addField($tbl, $name, $type)
         {
+            $sql = "ALTER TABLE `$tbl` 
+                    ADD COLUMN `$name` $type";
+            R::exec($sql);
 
         }
-        
+        /**
+         * ADDINDEX function
+         *
+         * @param [string] $tbl    table name to add index to
+         * @param [string] $name   name of index
+         * @param [string] $type   type of index
+         * @param [array]  $fields list of fields and sorts on index
+         *          
+         * @return void
+         */
+        protected function addIndex($tbl, $name, $type, $fields)
+        {
+            $sql = "ALTER TABLE $tbl 
+            ADD $type $name ($fields)";
+            R::exec($sql);
+        }
+        /**
+         * ADDFOREIGNKEY function
+         *
+         * @return void
+         */
+        protected function addForeignKey($tbl,$name,$col,$reftbl,$refcol)
+        {
+            $sql = "ALTER TABLE `$tbl` 
+            ADD CONSTRAINT $name
+              FOREIGN KEY (`$col`)
+              REFERENCES $reftbl (`$refcol`)
+              ON DELETE NO ACTION
+              ON UPDATE CASCADE";
+            R::exec($sql);
+        }
     
     }
 }
