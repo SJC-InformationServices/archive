@@ -23,7 +23,7 @@
  * @since      File available since Release 1.2.0
  * @deprecated File deprecated in Release 2.0.0
  */ 
-namespace sjcArchive\EntityManager 
+namespace sjcArchive\Modules
 {
     use \sjcArchive\{Modules,Modles}; 
     use \RedBeanPHP\R as R;
@@ -183,13 +183,26 @@ namespace sjcArchive\EntityManager
             if (!isset($this->args[0])) {
                 $defs = [];
                 foreach ($records as $r) {
-                    $em = New Base();
-                    $em->create($r);
-                    array_push($defs, $em);
-                    array_push($this->results, $em->ed);
+                    $edef = New Base();
+                    $edef->create($r);
+                    array_push($defs, $edef);
+                    array_push($this->results, $edef->ed);
                 }        
-                foreach ($defs as $edef) {
-                    
+                foreach ($defs as $em) {
+                    $parents = isset($em->ed['parents']) ? 
+                    $this->_handleParents($em) : [];
+
+                    $children = isset($em->ed['children']) ? 
+                    $this->_handleChildren($em) : [];
+
+                    $siblings = isset($em->ed['siblings']) ? 
+                    $this->_handleAttribs($em) : [];
+
+                    $attribs = isset($em->ed['attribs']) ? 
+                    $this->_handleAttribs($em) : [];
+                   
+                    $indexes = isset($em->ed['indexes']) ? 
+                    $this->_handleAttribs($em) : [];
                 }
             } else {
                 switch ($this->args[0]) {
@@ -204,6 +217,10 @@ namespace sjcArchive\EntityManager
                     break;
                 case 'attributes':
                 
+                    break;
+                case 'indexes':
+                    break;
+                default:
                     break;
                 }
             }

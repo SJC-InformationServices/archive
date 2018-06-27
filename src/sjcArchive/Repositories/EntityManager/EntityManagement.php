@@ -134,7 +134,6 @@ namespace sjcArchive\EntityManager\Repositories
             $sql = "ALTER TABLE `$tbl` 
                     ADD COLUMN `$name` $type";
             R::exec($sql);
-
         }
         /**
          * ADDINDEX function
@@ -151,6 +150,17 @@ namespace sjcArchive\EntityManager\Repositories
             $sql = "ALTER TABLE $tbl 
             ADD $type $name ($fields)";
             R::exec($sql);
+        }
+        /**
+         * Undocumented function
+         *
+         * @param [type] $tbl
+         * @param [type] $name
+         * @return void
+         */
+        protected function dropIndex($tbl,$name)
+        {
+            $sql = "ALTER TABLE $tbl DROP INDEX $idx";
         }
         /**
          * ADDFOREIGNKEY function

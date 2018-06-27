@@ -25,8 +25,8 @@
  */
 
 namespace sjcArchive {
-    use \sjcArchive\EntityManager\Manager as M;
-    use \sjcArchive\Entities\Entity as E;    
+    use \sjcArchive\Modules\Manager as M;
+    use \sjcArchive\Modules\Entity as E;    
     /**
      * This is MainClass for All Requests
      * 
