@@ -24,7 +24,7 @@
  * @deprecated File deprecated in Release 2.0.0
  */ 
 
-namespace sjcArchive\EntityManager\Repositories
+namespace sjcArchive\Repositories\Manager
 {
     use \RedBeanPHP\R as R;
      /**
@@ -123,9 +123,9 @@ namespace sjcArchive\EntityManager\Repositories
         /**
          * ADDFIELD function
          *
-         * @param [type] $tbl
-         * @param [type] $name
-         * @param [type] $type
+         * @param [type] $tbl  tbl name to add fields to
+         * @param [type] $name $name of field
+         * @param [type] $type $type of field
          * 
          * @return void
          */
@@ -154,8 +154,9 @@ namespace sjcArchive\EntityManager\Repositories
         /**
          * Undocumented function
          *
-         * @param [type] $tbl
-         * @param [type] $name
+         * @param [type] $tbl  tbl name
+         * @param [type] $name index name
+         * 
          * @return void
          */
         protected function dropIndex($tbl,$name)
@@ -163,8 +164,14 @@ namespace sjcArchive\EntityManager\Repositories
             $sql = "ALTER TABLE $tbl DROP INDEX $idx";
         }
         /**
-         * ADDFOREIGNKEY function
+         * Undocumented function
          *
+         * @param [type] $tbl    table name
+         * @param [type] $name   key name
+         * @param [type] $col    columns
+         * @param [type] $reftbl reference tbl
+         * @param [type] $refcol reference col
+         * 
          * @return void
          */
         protected function addForeignKey($tbl,$name,$col,$reftbl,$refcol)

@@ -23,29 +23,30 @@
  * @since      File available since Release 1.2.0
  * @deprecated File deprecated in Release 2.0.0
  */ 
-namespace \sjcArchive\EntityManager\Contracts;
-/**
- * EntityManager Interface for API requests
- * 
- * @category Application
- * @package  API
- * @author   Kevin Noseworthy <kevin.noseworthy@stjoseph.com>
- * @license  http://www.php.net/license/3_01.txt  PHP License 3.01
- * @link     http://url.com
- */
-Interface EntityManager
+Namespace \sjcArchive\Repositories\EntityManager\Contracts;
+
+    /**
+     * EntityManager Interface for API requests
+     * 
+     * @category Application
+     * @package  API
+     * @author   Kevin Noseworthy <kevin.noseworthy@stjoseph.com>
+     * @license  http://www.php.net/license/3_01.txt  PHP License 3.01
+     * @link     http://url.com
+     */
+Interface Define
 {
     /**
      * FIND function
      *
      * @param [array] $keyval int of id
-     * 
+     *
      * @return void
      */
     public function find($keyval);
     /**
      * GETALL function
-     * $
+     *
      * @return void
      */
     public function getAll();
@@ -61,6 +62,5 @@ Interface EntityManager
      * @return void
      */
     public function delete();
-   
 }
 ?>

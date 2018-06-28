@@ -24,9 +24,10 @@
  * @deprecated File deprecated in Release 2.0.0
  */ 
 require_once "bootstrap.php";
+
 try {
-    $em = new sjcArchive\Models\Definition("products");
-    var_dump($em);
+    $ed = new \sjcArchive\Models\Manager\Definition("seasons");
+    echo json_encode($ed);
     /*
     $api = new sjcArchive\Router();
     

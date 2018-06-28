@@ -23,9 +23,9 @@
  * @since      File available since Release 1.2.0
  * @deprecated File deprecated in Release 2.0.0
  */ 
-namespace sjcArchive\Models{
+namespace sjcArchive\Models\Manager{
     use \sjcArchive\Modules as Mods;
-    use \sjcArchive\Repositories as Repos;
+    use \sjcArchive\Repositories\Manager as EM;
     use \RedBeanPHP\R as R;
      /**
       * Abstract base class for API requests
@@ -36,8 +36,7 @@ namespace sjcArchive\Models{
       * @license  http://www.php.net/license/3_01.txt  PHP License 3.01
       * @link     http://url.com
       */
-    class Definition extends Repos\EntityManager\Config
-    Implements Repos\EntityManager\Contracts\Manager
+    class Definition Extends EM\Config
     {
         use Mods\Archivedb;   
         private $_rawdata=[
@@ -66,14 +65,14 @@ namespace sjcArchive\Models{
          */
         public function __construct(string $name=null)
         {
-            $this->initdb();
+            $this->initdb(0, 0);
             R::selectDatabase('default');
             if (!is_null($name)) {
                 $rec = $this->find(["name"=>["=","$name"]]);
-                foreach ($rec as $k->$v) {
-                    $this->$k=$v;
-                }
-                return $rec;
+                $this->_id = $rec[0]['id'];
+                $this->_rawdata = $rec[0]['rawdata'];
+                $this->_createdon = $rec[0]['createdon'];
+                $this->_updatedon = $rec[0]['updatedon'];
             }
         }
         /**
@@ -91,7 +90,8 @@ namespace sjcArchive\Models{
             }
             $trace = debug_backtrace();
             trigger_error(
-                'Undefined property  ' . $name . ' in ' . $trace[0]['file'] . ' on line ' . 
+                'Undefined property  ' . $name . ' in ' . $trace[0]['file'] . 
+                ' on line ' . 
                 $trace[0]['line'], 
                 E_USER_NOTICE
             );
@@ -113,7 +113,8 @@ namespace sjcArchive\Models{
             }
             $trace = debug_backtrace();
             trigger_error(
-                'Undefined property  ' . $name . ' in ' . $trace[0]['file'] . ' on line ' . 
+                'Undefined property  ' . $name . ' in ' . $trace[0]['file'] . 
+                ' on line ' . 
                 $trace[0]['line'], 
                 E_USER_NOTICE
             );
@@ -127,25 +128,28 @@ namespace sjcArchive\Models{
          */
         public function find($keyval=[])
         {
-            if (count($keyval > 0)) {
+            if (@count($keyval > 0)) {
                 $stmts = [];
                 $slots = [];
                 foreach ($keyval as $k=>$v) {
-                    array_push($stmts, "upper($k) ".$v[0]." ?");
+                    array_push($stmts, "upper(`$k`) ".$v[0]." upper(?)");
                     array_push($slots, $v[1]);
                 }
                 $sql = "select `id`,`rawdata`,`createdon`,`updatedon` 
                 from `entitydefinitions` where ".implode($stmts, " and ") .
-                " orderby `name`";
-                $results = R::exec($sql, $slots);
+                " order by `name`";
+                $results = R::getAll($sql, $slots);
             } else {
                 $sql = "select `id`,`rawdata`,`createdon`,`updatedon` 
                 from `entitydefinitions` order by `name`";
-                $results = R::exec($sql);
+                $results = R::getAll($sql);
             }
-            array_walk($results, function(&$value, $key)) {
-                $value['rawdata'] = JSON_DECODE['rawdata'];
-            });
+            array_walk(
+                $results, 
+                function (&$value, $key ) {
+                    $value['rawdata'] = JSON_DECODE($value['rawdata']); 
+                }
+            );
             return $results;
         }
         /**
@@ -158,7 +162,8 @@ namespace sjcArchive\Models{
             if ($this->_id > 0) {
                 $this->_update();
             }
-            R::begin();
+            R::selectDatabase('default');
+            R::begin();            
             try {
                 $b = R::exec(
                     'insert into `entitydefinitions` 
@@ -167,12 +172,14 @@ namespace sjcArchive\Models{
                 R::selectDatabase('datadb');
                 $this->createTable($rawdata['name']);
                 R::commit();
+                R::selectDatabase('default');
+                $this->_id = R::getInsertId();
+                return $this->_id;
             }
             catch(Exception $e){
                 R::rollback();
+                return false;
             }
-            R::selectDatabase('default');
-            $this->read($rawdata['name']);
         }
         /**
          * Undocumented function
@@ -191,6 +198,39 @@ namespace sjcArchive\Models{
         private function _update()
         {
             //TODO: Changes to EntityDefinition rename tables and relations
+        }
+        /**
+         * Undocumented function
+         *
+         * @param \sjcArchive\Models\Manager\Definition $ed the 
+         * 
+         * @return void
+         */
+        public function addParent(\sjcArchive\Models\Manager\Definition $ed)
+        {
+
+        }
+        /**
+         * Undocumented function
+         *
+         * @param \sjcArchive\Models\Manager\Definition $ed the
+         * 
+         * @return void
+         */
+        public function addChild(\sjcArchive\Models\Manager\Definition $ed)
+        {
+
+        }
+        /**
+         * Undocumented function
+         *
+         * @param \sjcArchive\Models\Manager\Definition $ed the
+         * 
+         * @return void
+         */
+        public function addSibling(\sjcArchive\Models\Manager\Definition $ed)
+        {
+
         }
         
 

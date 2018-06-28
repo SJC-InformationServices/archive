@@ -27,13 +27,13 @@
 
 $root = $_SERVER["DOCUMENT_ROOT"];
 require_once "$root"."/vendor/autoload.php";
-use \RedBeanPHP\R as R;
+
 define("ARCHIVEDBS", JSON_DECODE(file_get_contents("archivedb.json"), true));
 define("ARCHIVEDB", ARCHIVEDBS['sjcArchiveDemo']);
 define("DATADB", ARCHIVEDBS['sjcArchiveDemo']);
 define("ARCHIVEAPIURL", "/api/");
 define("DEBUG", true);
-define('REDBEAN_MODEL_PREFIX', '\\sjcArchive\\Model\\');
+
 
 if (DEBUG) {
     ini_set('display_errors', 1);
