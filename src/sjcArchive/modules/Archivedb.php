@@ -48,7 +48,7 @@ namespace sjcArchive\Modules{
          *
          * @return void
          */
-        public function initdb(int $cfgfrozen=1, int $datafrozen=1)
+        protected function initdb(int $cfgfrozen=1, int $datafrozen=1)
         {
             
             try {

@@ -25,11 +25,13 @@
  */ 
 require_once "bootstrap.php";
 try {
-    
+    $em = new sjcArchive\Models\Definition("products");
+    var_dump($em);
+    /*
     $api = new sjcArchive\Router();
     
     $r = $api->processRoute();
-    echo $r;
+    echo $r;*/
 }
 catch(exception $e){
     print_r($e);

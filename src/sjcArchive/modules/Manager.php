@@ -25,7 +25,9 @@
  */ 
 namespace sjcArchive\Modules
 {
-    use \sjcArchive\Models; 
+    use \sjcArchive\Models;
+    use \sjcArchive\Repositories as Repos;
+     
     use \RedBeanPHP\R as R;
 
     /**
@@ -48,11 +50,12 @@ namespace sjcArchive\Modules
          */
         public function __construct(string $request)
         {
+            
             parent::__construct($request);
             
             //$em = new \sjcArchive\Models\Entitydefinitions();
             
-            R::setAutoResolve(true);
+            /*R::setAutoResolve(true);
             R::useJSONFeatures(true);
             $db = ARCHIVEDB;
                 
@@ -79,7 +82,7 @@ namespace sjcArchive\Modules
                 $u2,
                 $p2,
                 0
-            );           
+            );    */       
         }
         /**
          * Undocumented function
@@ -119,7 +122,7 @@ namespace sjcArchive\Modules
             $emName = is_null($this->verb) ? null:$this->verb;
             $emAttrib = isset($this->args[0]) ? $this->args[0] : null;
                 
-            $em = New Base();
+            $em = New Repos\EntityManager\Definitions();
             $em->read($emName);
             $emObj = $em->ed;
 

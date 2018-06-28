@@ -36,16 +36,16 @@ namespace \sjcArchive\EntityManager\Contracts;
 Interface EntityManager
 {
     /**
-     * FINDBYID function
+     * FIND function
      *
-     * @param integer $id int of id
+     * @param [array] $keyval int of id
      * 
      * @return void
      */
-    public function findById(int $id);
+    public function find($keyval);
     /**
      * GETALL function
-     * 
+     * $
      * @return void
      */
     public function getAll();
@@ -56,13 +56,11 @@ Interface EntityManager
      */
     public function save();
     /**
-     * EXISTS function find all values by key value pairs of supplied array
+     * Undocumented function
      *
-     * @param array $keyval array of key value pairs to find definitions
-     * 
      * @return void
      */
-    public function exists(array $keyval);    
-    
+    public function delete();
+   
 }
 ?>

@@ -38,11 +38,11 @@ namespace sjcArchive\EntityManager\Contracts{
         /**
          * Create
          *
-         * @param array  $rawdata json records of entitytypes
+         * @param $id json records of entitytypes
          * 
          * @return void
          */
-        public function create(array $rawdata);
+        public function getById(int $id);
         /**
          * Read
          *
@@ -58,7 +58,7 @@ namespace sjcArchive\EntityManager\Contracts{
          * 
          * @return void
          */
-        public function update(array $rawdata );
+        public function save();
         /**
          * DELETE Function
          *

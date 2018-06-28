@@ -36,7 +36,7 @@ namespace sjcArchive\EntityManager\Repositories
       * @license  http://www.php.net/license/3_01.txt  PHP License 3.01
       * @link     http://url.com
       */
-    class Entitymanagement
+    class Config
     {
         protected $tableName;
         
