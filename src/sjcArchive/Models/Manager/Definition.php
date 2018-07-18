@@ -28,7 +28,7 @@ namespace sjcArchive\Models\Manager{
     use \sjcArchive\Repositories\Manager as EM;
     use \RedBeanPHP\R as R;
      /**
-      * Abstract base class for API requests
+      * Definition class for API requests
       * 
       * @category Application
       * @package  APIE
@@ -36,25 +36,19 @@ namespace sjcArchive\Models\Manager{
       * @license  http://www.php.net/license/3_01.txt  PHP License 3.01
       * @link     http://url.com
       */
-    class Definition Extends EM\Config
+    class Definition Extends Base
     {
-        use Mods\Archivedb;   
-        private $_rawdata=[
+           
+        protected $rawdata=[
             "uuid"=>null,
             "name"=>null,
             "type"=>null,
-            "relations"=>[
-            "parents"=>[],
-            "children"=>[],
-            "siblings"=>[]
-            ],
-            "attributes"=>[],
             "indexes"=>[],
             "configs"=>[]
         ];
-        private $_id;
-        private $_createdon;
-        private $_updatedon;
+        protected $id;
+        protected $createdon;
+        protected $updatedon;
 
         /**
          * Undocumented function
@@ -65,14 +59,16 @@ namespace sjcArchive\Models\Manager{
          */
         public function __construct(string $name=null)
         {
-            $this->initdb(0, 0);
+            Parent::__construct();
             R::selectDatabase('default');
+            
             if (!is_null($name)) {
                 $rec = $this->find(["name"=>["=","$name"]]);
-                $this->_id = $rec[0]['id'];
-                $this->_rawdata = $rec[0]['rawdata'];
-                $this->_createdon = $rec[0]['createdon'];
-                $this->_updatedon = $rec[0]['updatedon'];
+                
+                $this->id = @$rec['id'];
+                $this->rawdata = @$rec['rawdata'];
+                $this->createdon = @$rec['createdon'];
+                $this->updatedon = @$rec['updatedon'];
             }
         }
         /**
@@ -85,8 +81,8 @@ namespace sjcArchive\Models\Manager{
          */
         public function __set($name, $value)
         {
-            if (array_key_exists($name, $this->_rawdata)) {
-                $this->_rawdata[$name] = $value;
+            if (array_key_exists($name, $this->rawdata)) {
+                $this->rawdata[$name] = $value;
             }
             $trace = debug_backtrace();
             trigger_error(
@@ -108,8 +104,8 @@ namespace sjcArchive\Models\Manager{
             if (property_exists($this, $name)) {
                 return $this->$name;
             }
-            if (array_key_exists($name, $this->_rawdata)) {
-                return $this->_rawdata[$name];
+            if (array_key_exists($name, $this->rawdata)) {
+                return $this->rawdata[$name];
             }
             $trace = debug_backtrace();
             trigger_error(
@@ -128,13 +124,15 @@ namespace sjcArchive\Models\Manager{
          */
         public function find($keyval=[])
         {
+            
             if (@count($keyval > 0)) {
                 $stmts = [];
                 $slots = [];
-                foreach ($keyval as $k=>$v) {
-                    array_push($stmts, "upper(`$k`) ".$v[0]." upper(?)");
-                    array_push($slots, $v[1]);
+                foreach ($keyval as $k=>$v) {                    
+                    array_push($stmts, "upper(`$k`) ".$v[0]."':$k'");
+                    $slots[":$k"] = strtoupper($v[1]);
                 }
+                $test = R::findAll('entitydefinitions', ' name = ?', [$name]);
                 $sql = "select `id`,`rawdata`,`createdon`,`updatedon` 
                 from `entitydefinitions` where ".implode($stmts, " and ") .
                 " order by `name`";
@@ -144,12 +142,13 @@ namespace sjcArchive\Models\Manager{
                 from `entitydefinitions` order by `name`";
                 $results = R::getAll($sql);
             }
-            array_walk(
+            
+            /*array_walk(
                 $results, 
                 function (&$value, $key ) {
                     $value['rawdata'] = JSON_DECODE($value['rawdata']); 
                 }
-            );
+            );*/
             return $results;
         }
         /**
@@ -159,22 +158,22 @@ namespace sjcArchive\Models\Manager{
          */
         public function save()
         {
-            if ($this->_id > 0) {
-                $this->_update();
+            if ($this->id > 0) {
+                $this->update();
             }
             R::selectDatabase('default');
             R::begin();            
             try {
                 $b = R::exec(
                     'insert into `entitydefinitions` 
-                    (`rawdata`) values (:raw)', [':raw'=>$raw]
+                    (`rawdata`) values (:raw)', [':raw'=>$this->rawdata]
                 );
                 R::selectDatabase('datadb');
                 $this->createTable($rawdata['name']);
                 R::commit();
                 R::selectDatabase('default');
-                $this->_id = R::getInsertId();
-                return $this->_id;
+                $this->id = R::getInsertId();
+                return $this->id;
             }
             catch(Exception $e){
                 R::rollback();
@@ -232,6 +231,7 @@ namespace sjcArchive\Models\Manager{
         {
 
         }
+        
         
 
     }

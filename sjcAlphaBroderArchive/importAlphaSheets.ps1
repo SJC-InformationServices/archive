@@ -81,8 +81,8 @@ function insertAlphaRow($conn,$row,$tbl,$logfile)
     $ka = $_.Name.ToLower() -replace '[^\w]',''
     $k = $ka.Trim() -replace '[^a-z]','_'
     $v = $_.Value
-    if($v -ne $null){
-      $obj[$k] = $v.ToString().Trim() -replace '"','\"' -Replace "`n",'\\n' -Replace "'","\'"
+    if($null -ne $v){
+      $obj[$k] = $v.ToString().Trim() -replace '\\','\\\\' -replace '"','\"' -Replace "`n",'\\n' -Replace "'","\'"
     }
   }
   $ins = $obj | ConvertTo-Json -Depth 50 | ForEach-Object { [System.Text.RegularExpressions.Regex]::Unescape($_) } 

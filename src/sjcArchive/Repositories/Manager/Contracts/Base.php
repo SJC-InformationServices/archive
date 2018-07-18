@@ -23,50 +23,39 @@
  * @since      File available since Release 1.2.0
  * @deprecated File deprecated in Release 2.0.0
  */ 
-namespace sjcArchive\EntityManager\Contracts{
-     /**
-      * Abstract base class for API requests
-      * 
-      * @category Application
-      * @package  API
-      * @author   Kevin Noseworthy <kevin.noseworthy@stjoseph.com>
-      * @license  http://www.php.net/license/3_01.txt  PHP License 3.01
-      * @link     http://url.com
-      */
-    Interface Control 
+namespace sjcArchive\Repositories\Manager\Contracts
+{    
+    /**
+     * EntityManager Interface for API requests
+     * 
+     * @category Application
+     * @package  API
+     * @author   Kevin Noseworthy <kevin.noseworthy@stjoseph.com>
+     * @license  http://www.php.net/license/3_01.txt  PHP License 3.01
+     * @link     http://url.com
+     */
+    Interface Base
     {
         /**
-         * Create
+         * FIND function
          *
-         * @param $id json records of entitytypes
-         * 
+         * @param [array] $keyval int of id
+         *
          * @return void
          */
-        public function getById(int $id);
+        public function find($keyval);
         /**
-         * Read
+         * GETALL function
          *
-         * @param object $et archive entity type
-         * 
-         * @return void
-         */
-        public function read(string $name);
-        /**
-         * Read Function
-         * 
-         * @param object $rawdata archive entity type
-         * 
          * @return void
          */
         public function save();
         /**
-         * DELETE Function
+         * Undocumented function
          *
-         * @param array $rawdata what to delete
-         * 
          * @return void
          */
-        public function delete(array $rawdata);    
+        public function delete();
     }
 }
 ?>

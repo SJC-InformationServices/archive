@@ -9,3 +9,7 @@ archivedb.json
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
+vendor
+sjcAlphaBroderArchive/excelFiles
+sjcAlphaBroderArchive/jsonfiles
+*.xlsx
