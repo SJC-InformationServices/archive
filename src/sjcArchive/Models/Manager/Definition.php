@@ -24,6 +24,7 @@
  * @deprecated File deprecated in Release 2.0.0
  */ 
 namespace sjcArchive\Models\Manager{
+    use \sjcArchive\Models as Models;
     use \sjcArchive\Modules as Mods;
     use \sjcArchive\Repositories\Manager as EM;
     use \RedBeanPHP\R as R;
@@ -36,20 +37,8 @@ namespace sjcArchive\Models\Manager{
       * @license  http://www.php.net/license/3_01.txt  PHP License 3.01
       * @link     http://url.com
       */
-    class Definition Extends Base
+    class Definition Extends Models\Base
     {
-           
-        protected $rawdata=[
-            "uuid"=>null,
-            "name"=>null,
-            "type"=>null,
-            "indexes"=>[],
-            "configs"=>[]
-        ];
-        protected $id;
-        protected $createdon;
-        protected $updatedon;
-
         /**
          * Undocumented function
          *
@@ -59,7 +48,7 @@ namespace sjcArchive\Models\Manager{
          */
         public function __construct(string $name=null)
         {
-            Parent::__construct();
+            Parent::__construct(null, null, null);
             R::selectDatabase('default');
             
             if (!is_null($name)) {
