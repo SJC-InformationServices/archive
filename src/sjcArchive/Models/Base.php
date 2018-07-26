@@ -36,33 +36,65 @@ namespace sjcArchive\Models{
      */
     abstract class Base
     {
+        protected $type;
+
         protected $id;
         protected $attributes=[];
-        protected $oldrawdata=[];
         protected $rawdata=[];
         protected $createdon;
         protected $updatedon;
+        
         /**
-         * Inital Constructor 
+         * Parent Constsructor function
+         *
+         * @param sting $type type or name of models
          * 
-         * @param int   $id         id of model
-         * @param array $attributes list of attributes
-         * @param array $rawdata    array list of key values model properties
+         * @return void
          */
-        public function __construct(
-            int $id=null, 
-            array $attributes=null, 
-            array $rawdata=null
-        ) {
-            if (!is_null($id)) {
-                $r = $this->find(["id"=>$id]);
+        public function __construct(sting $type)
+        {
+            $this->type = $type;
+            try {
+                R::setAutoResolve(true);
+                R::useJSONFeatures(true);
+                $db = ARCHIVEDB;
+
+                $h = $db['server'];
+                $d = $db['db'];
+                $u = $db['uid'];
+                $p = $db['pwd'];
+                $f = $db['frozen'];
+                R::setup(
+                    "mysql:host=$h;dbname=$d",
+                    $u,
+                    $p,
+                    $f
+                );
+                
+                $db2 = DATADB;
+                $h2 = $db2['server'];
+                $d2 = $db2['db'];
+                $u2 = $db2['uid'];
+                $p2 = $db2['pwd'];
+                $f2 = $db2['frozen'];
+                R::addDatabase(
+                    "datadb",
+                    "mysql:host=$h2;dbname=$d2",
+                    $u2,
+                    $p2,
+                    $f2
+                );
+                R::selectDatabase('default');
             }
-            if (!is_null($attributes)) {
-                $this->attributes = $attributes;
-            }
-            if (!is_null($rawdata)) {
-                $this->rawdata = $rawdata;
-            }
+            catch(Exception $e){
+                $trace = debug_backtrace();
+                trigger_error(
+                    'DB Error:  ' . $e.message() . ' in ' . $trace[0]['file'] . 
+                    ' on line ' . 
+                    $trace[0]['line'], 
+                    E_USER_NOTICE
+                );
+            }  
         }
         /**
          * Undocumented function
@@ -114,6 +146,60 @@ namespace sjcArchive\Models{
          * @return void
          */
         abstract public function delete();
+        /**
+         * Undocumented function
+         *
+         * @return void
+         */
+        abstract public function getParent();
+        /**
+         * Undocumented function
+         *
+         * @return void
+         */
+        abstract public function addParent();
+        /**
+         * Undocumented function
+         *
+         * @return void
+         */
+        abstract public function deleteParent();
+        /**
+         * Undocumented function
+         *
+         * @return void
+         */
+        abstract public function getSibling();
+        /**
+         * Undocumented function
+         *
+         * @return void
+         */
+        abstract public function addSibling();
+        /**
+         * Undocumented function
+         *
+         * @return void
+         */
+        abstract public function deleteSibling();
+        /**
+         * Undocumented function
+         *
+         * @return void
+         */
+        abstract public function getChildren();
+        /**
+         * Undocumented function
+         *
+         * @return void
+         */
+        abstract public function addChildren();
+        /**
+         * Undocumented function
+         *
+         * @return void
+         */
+        abstract public function deleteChildren();
         
     }
 }
