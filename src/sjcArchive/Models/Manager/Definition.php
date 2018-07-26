@@ -39,6 +39,7 @@ namespace sjcArchive\Models\Manager{
       */
     class Definition Extends Models\Base
     {
+        protected $attributes =  ['name'];
         /**
          * Undocumented function
          *
@@ -60,50 +61,7 @@ namespace sjcArchive\Models\Manager{
                 $this->updatedon = @$rec['updatedon'];
             }
         }
-        /**
-         * Undocumented function
-         *
-         * @param [type] $name  name of attribute
-         * @param [type] $value value of attribute
-         * 
-         * @return mixed
-         */
-        public function __set($name, $value)
-        {
-            if (array_key_exists($name, $this->rawdata)) {
-                $this->rawdata[$name] = $value;
-            }
-            $trace = debug_backtrace();
-            trigger_error(
-                'Undefined property  ' . $name . ' in ' . $trace[0]['file'] . 
-                ' on line ' . 
-                $trace[0]['line'], 
-                E_USER_NOTICE
-            );
-        }
-        /**
-         * Undocumented function
-         *
-         * @param [type] $name name of attribute to get
-         * 
-         * @return void
-         */
-        public function __get($name)
-        {
-            if (property_exists($this, $name)) {
-                return $this->$name;
-            }
-            if (array_key_exists($name, $this->rawdata)) {
-                return $this->rawdata[$name];
-            }
-            $trace = debug_backtrace();
-            trigger_error(
-                'Undefined property  ' . $name . ' in ' . $trace[0]['file'] . 
-                ' on line ' . 
-                $trace[0]['line'], 
-                E_USER_NOTICE
-            );
-        }
+           
         /**
          * FIND function
          *
@@ -151,7 +109,7 @@ namespace sjcArchive\Models\Manager{
                 $this->update();
             }
             R::selectDatabase('default');
-            R::begin();            
+            R::begin();         
             try {
                 $b = R::exec(
                     'insert into `entitydefinitions` 
@@ -183,40 +141,83 @@ namespace sjcArchive\Models\Manager{
          *
          * @return void
          */
-        private function _update()
+        public function getParents()
         {
-            //TODO: Changes to EntityDefinition rename tables and relations
+            
         }
         /**
          * Undocumented function
          *
-         * @param \sjcArchive\Models\Manager\Definition $ed the 
+         * @param Defintion $parent - add parent defintions
          * 
          * @return void
          */
-        public function addParent(\sjcArchive\Models\Manager\Definition $ed)
+        public function addParent(sjcArchive\Models\Manager\Defintion $parent) 
+        {
+
+        }
+        /**
+         * Undocumented function
+         * 
+         * @param Defintion $parent - add parent defintions
+         *
+         * @return void
+         */
+        public function deleteParent(sjcArchive\Models\Manager\Defintion $parent) 
         {
 
         }
         /**
          * Undocumented function
          *
-         * @param \sjcArchive\Models\Manager\Definition $ed the
-         * 
          * @return void
          */
-        public function addChild(\sjcArchive\Models\Manager\Definition $ed)
+        public function getSiblings() 
         {
 
         }
         /**
          * Undocumented function
          *
-         * @param \sjcArchive\Models\Manager\Definition $ed the
-         * 
          * @return void
          */
-        public function addSibling(\sjcArchive\Models\Manager\Definition $ed)
+        public function addSibling() 
+        {
+
+        }
+        /**
+         * Undocumented function
+         *
+         * @return void
+         */
+        public function deleteSibling() 
+        {
+
+        }
+        /**
+         * Undocumented function
+         *
+         * @return void
+         */
+        public function getChildren() 
+        {
+
+        }
+        /**
+         * Undocumented function
+         *
+         * @return void
+         */
+        public function addChildren() 
+        {
+
+        }
+        /**
+         * Undocumented function
+         *
+         * @return void
+         */
+        public function deleteChildren() 
         {
 
         }

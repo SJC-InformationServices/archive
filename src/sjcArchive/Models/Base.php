@@ -106,9 +106,19 @@ namespace sjcArchive\Models{
          */
         public function __set($k, $v)
         {
+            if (array_key_exists($name, $this->rawdata)) {
+                $this->rawdata[$name] = $value;
+            }
             if (in_array($k, $this->attributes)) {
                 $this->rawdata[$k] = $v;
             }
+            $trace = debug_backtrace();
+            trigger_error(
+                'Undefined property  ' . $name . ' in ' . $trace[0]['file'] . 
+                ' on line ' . 
+                $trace[0]['line'], 
+                E_USER_NOTICE
+            );
         }
         /**
          * Undocumented function
@@ -119,12 +129,19 @@ namespace sjcArchive\Models{
          */
         public function __get($k)
         {
-            if (property_exists($this, $k)) {
-                return $this->$k;
+            if (property_exists($this, $name)) {
+                return $this->$name;
             }
-            if (in_array($k, $this->attributes)) {
-                return $this->rawdata[$k];
+            if (array_key_exists($name, $this->rawdata)) {
+                return $this->rawdata[$name];
             }
+            $trace = debug_backtrace();
+            trigger_error(
+                'Undefined property  ' . $name . ' in ' . $trace[0]['file'] . 
+                ' on line ' . 
+                $trace[0]['line'], 
+                E_USER_NOTICE
+            );
         }
         /**
          * FIND function
