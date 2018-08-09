@@ -1,5 +1,13 @@
 {
-    "sjcArchiveDemo": {
+    "sjcArchiveDemoStructure": {
+        "server": "sjc-archive-dev.cluster-cpi3jpipzm32.us-east-1.rds.amazonaws.com",
+        "uid": "sjcArchiveAdmin",
+        "pwd": "5jcAdmin!",
+        "port": "3306",
+        "db": "sjcArchiveDemo",
+        "frozen":"false"
+    },
+    "sjcArchiveDemoData": {
         "server": "sjc-archive-dev.cluster-cpi3jpipzm32.us-east-1.rds.amazonaws.com",
         "uid": "sjcArchiveAdmin",
         "pwd": "5jcAdmin!",

@@ -34,7 +34,7 @@ namespace sjcArchive\Models{
      * @license  http://www.php.net/license/3_01.txt  PHP License 3.01
      * @link     http://url.com
      */
-    abstract class Base
+    abstract class Base implements \JsonSerializable
     {
         protected $type;
 
@@ -51,7 +51,7 @@ namespace sjcArchive\Models{
          * 
          * @return void
          */
-        public function __construct(sting $type)
+        public function __construct(string $type)
         {
             $this->type = $type;
             try {
@@ -99,6 +99,19 @@ namespace sjcArchive\Models{
         /**
          * Undocumented function
          *
+         * @return void
+         */
+        public function jsonSerialize()
+        {
+            $r = $this->rawdata;
+            $r['id'] = $this->id;
+            $r['createdon']= $this->createdon;
+            $r['updatedon']= $this->updatedon;
+            return $r;
+        }
+        /**
+         * Undocumented function
+         *
          * @param [type] $k name of parm
          * @param [type] $v value of parm
          * 
@@ -106,12 +119,11 @@ namespace sjcArchive\Models{
          */
         public function __set($k, $v)
         {
-            if (array_key_exists($name, $this->rawdata)) {
-                $this->rawdata[$name] = $value;
+            if (array_key_exists($k, $this->rawdata) || in_array($k, $this->attributes) ) {
+                $this->rawdata[$k] = $value;
+                return;
             }
-            if (in_array($k, $this->attributes)) {
-                $this->rawdata[$k] = $v;
-            }
+            
             $trace = debug_backtrace();
             trigger_error(
                 'Undefined property  ' . $name . ' in ' . $trace[0]['file'] . 
@@ -168,25 +180,27 @@ namespace sjcArchive\Models{
          *
          * @return void
          */
-        abstract public function getParent();
+        abstract public function getParents();
+        /**
+         * Undocumented function
+         * 
+         * @param object $parent parent object to assign
+         *
+         * @return void
+         */
+        abstract public function addParent($parent);
         /**
          * Undocumented function
          *
          * @return void
          */
-        abstract public function addParent();
+        abstract public function deleteParent($parent);
         /**
          * Undocumented function
          *
          * @return void
          */
-        abstract public function deleteParent();
-        /**
-         * Undocumented function
-         *
-         * @return void
-         */
-        abstract public function getSibling();
+        abstract public function getSiblings();
         /**
          * Undocumented function
          *
@@ -210,13 +224,13 @@ namespace sjcArchive\Models{
          *
          * @return void
          */
-        abstract public function addChildren();
+        abstract public function addChild($child);
         /**
          * Undocumented function
          *
          * @return void
          */
-        abstract public function deleteChildren();
+        abstract public function deleteChild($child);
         
     }
 }

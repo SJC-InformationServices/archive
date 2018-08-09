@@ -39,7 +39,7 @@ namespace sjcArchive\Models\Manager{
       */
     class Definition Extends Models\Base
     {
-        protected $attributes =  ['name'];
+        protected $attributes = ["name"];
         /**
          * Undocumented function
          *
@@ -47,19 +47,21 @@ namespace sjcArchive\Models\Manager{
          * 
          * @return void
          */
-        public function __construct(string $name=null)
+        public function __construct(string $name)
         {
-            Parent::__construct(null, null, null);
+            Parent::__construct("entitydefinitions");
+            $this->rawdata['name']=$name;
+            array_push($this->attributes, "name");
             R::selectDatabase('default');
             
-            if (!is_null($name)) {
+            /*if (!is_null($name)) {
                 $rec = $this->find(["name"=>["=","$name"]]);
                 
                 $this->id = @$rec['id'];
                 $this->rawdata = @$rec['rawdata'];
                 $this->createdon = @$rec['createdon'];
                 $this->updatedon = @$rec['updatedon'];
-            }
+            }*/
         }
            
         /**
@@ -106,7 +108,7 @@ namespace sjcArchive\Models\Manager{
         public function save()
         {
             if ($this->id > 0) {
-                $this->update();
+                $this->_update();
             }
             R::selectDatabase('default');
             R::begin();         
@@ -126,6 +128,15 @@ namespace sjcArchive\Models\Manager{
                 R::rollback();
                 return false;
             }
+        }
+        /**
+         * Undocumented function
+         *
+         * @return void
+         */
+        private function _update() 
+        {
+
         }
         /**
          * Undocumented function
@@ -152,7 +163,7 @@ namespace sjcArchive\Models\Manager{
          * 
          * @return void
          */
-        public function addParent(sjcArchive\Models\Manager\Defintion $parent) 
+        public function addParent($parent) 
         {
 
         }
@@ -163,7 +174,7 @@ namespace sjcArchive\Models\Manager{
          *
          * @return void
          */
-        public function deleteParent(sjcArchive\Models\Manager\Defintion $parent) 
+        public function deleteParent($parent) 
         {
 
         }
@@ -208,7 +219,7 @@ namespace sjcArchive\Models\Manager{
          *
          * @return void
          */
-        public function addChildren() 
+        public function addChild($child) 
         {
 
         }
@@ -217,7 +228,7 @@ namespace sjcArchive\Models\Manager{
          *
          * @return void
          */
-        public function deleteChildren() 
+        public function deleteChild($child) 
         {
 
         }
