@@ -104,9 +104,15 @@ namespace sjcArchive\Models{
         public function jsonSerialize()
         {
             $r = $this->rawdata;
-            $r['id'] = $this->id;
-            $r['createdon']= $this->createdon;
-            $r['updatedon']= $this->updatedon;
+            if (!is_null($this->id)) {
+                $r['id'] = $this->id;
+            }
+            if (!is_null($this->createdon)) {
+                $r['createdon']= $this->createdon;
+            }
+            if (!is_null($this->updatedon)) {
+                $r['updatedon']= $this->updatedon;
+            }
             return $r;
         }
         /**
@@ -119,7 +125,9 @@ namespace sjcArchive\Models{
          */
         public function __set($k, $v)
         {
-            if (array_key_exists($k, $this->rawdata) || in_array($k, $this->attributes) ) {
+            if (array_key_exists($k, $this->rawdata) 
+                || in_array($k, $this->attributes) 
+            ) {
                 $this->rawdata[$k] = $value;
                 return;
             }
@@ -158,11 +166,50 @@ namespace sjcArchive\Models{
         /**
          * FIND function
          *
-         * @param [array] $keyval int of id
+         * @param [array] $keyval  array of all options
+         * @param [array] $orderby sort order of results
+         * @param [array] $groupby grouping order of results
+         * @param [array] $limit   limit the results
          *
          * @return void
          */
-        abstract public function find($keyval);
+        public function find(
+            array $keyval=[], array $orderby=[],array $groupby=[],array $limit=[]
+        ) {
+            //TODO Add orderby and group options
+            $type = $this->type;
+            if (@count($keyval) > 0) { 
+                $stmts = [];
+                $slots = [];
+
+                foreach ($keyval as $k=>$v) {
+                    switch($k) {
+                    case 'id':
+                    case 'createdon':
+                    case 'updatedon':
+                        array_push($stmts, "`$k` ".$v[0]."':$k'");
+                        $slots[":$k"] = $v[1];
+                        break;
+                    default :
+                        array_push($stmts, "`rawdata`->>'$.$k' ".$v[0]." ':$k' ");
+                        $slots[":$k"] = $v[1];
+                        break;
+                    }
+
+                }
+                $sql = "select 
+                JSON_SET(`rawdata`,
+                '$.id',`id`,
+                '$.createdon',`createdon`,
+                '$.updatedon',`updatedon`) as 'obj'
+                from `$type` where ".implode($stmts, " and ");
+                echo $sql;
+                echo json_encode($slots);
+                $collection = R::getAll($sql, $slots);
+                return $collection;
+            }
+            return []; 
+        }
         /**
          * GETALL function
          *
@@ -191,6 +238,8 @@ namespace sjcArchive\Models{
         abstract public function addParent($parent);
         /**
          * Undocumented function
+         * 
+         * @param object $parent object to unassign
          *
          * @return void
          */
@@ -221,12 +270,16 @@ namespace sjcArchive\Models{
         abstract public function getChildren();
         /**
          * Undocumented function
+         * 
+         * @param object $child to remove
          *
          * @return void
          */
         abstract public function addChild($child);
         /**
          * Undocumented function
+         * 
+         * @param object $child to remove
          *
          * @return void
          */

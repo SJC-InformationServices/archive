@@ -27,7 +27,6 @@ require_once "bootstrap.php";
 
 try {
     $ed = new \sjcArchive\Models\Manager\Definition("seasons");
-    //$ed->save();
     echo json_encode($ed);
     
     /*

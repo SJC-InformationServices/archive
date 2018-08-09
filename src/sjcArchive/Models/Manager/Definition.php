@@ -47,59 +47,24 @@ namespace sjcArchive\Models\Manager{
          * 
          * @return void
          */
-        public function __construct(string $name)
+        public function __construct(string $name=null)
         {
             Parent::__construct("entitydefinitions");
             $this->rawdata['name']=$name;
             array_push($this->attributes, "name");
             R::selectDatabase('default');
             
-            /*if (!is_null($name)) {
+            if (!is_null($name)) {
                 $rec = $this->find(["name"=>["=","$name"]]);
-                
+                print_r($rec);
                 $this->id = @$rec['id'];
                 $this->rawdata = @$rec['rawdata'];
                 $this->createdon = @$rec['createdon'];
                 $this->updatedon = @$rec['updatedon'];
-            }*/
+            }
         }
            
-        /**
-         * FIND function
-         *
-         * @param [array] $keyval array of key value pairs ["name"=>["=","test"],"]
-         * 
-         * @return void
-         */
-        public function find($keyval=[])
-        {
-            
-            if (@count($keyval > 0)) {
-                $stmts = [];
-                $slots = [];
-                foreach ($keyval as $k=>$v) {                    
-                    array_push($stmts, "upper(`$k`) ".$v[0]."':$k'");
-                    $slots[":$k"] = strtoupper($v[1]);
-                }
-                $test = R::findAll('entitydefinitions', ' name = ?', [$name]);
-                $sql = "select `id`,`rawdata`,`createdon`,`updatedon` 
-                from `entitydefinitions` where ".implode($stmts, " and ") .
-                " order by `name`";
-                $results = R::getAll($sql, $slots);
-            } else {
-                $sql = "select `id`,`rawdata`,`createdon`,`updatedon` 
-                from `entitydefinitions` order by `name`";
-                $results = R::getAll($sql);
-            }
-            
-            /*array_walk(
-                $results, 
-                function (&$value, $key ) {
-                    $value['rawdata'] = JSON_DECODE($value['rawdata']); 
-                }
-            );*/
-            return $results;
-        }
+        
         /**
          * Undocumented function
          *
@@ -107,6 +72,8 @@ namespace sjcArchive\Models\Manager{
          */
         public function save()
         {
+            $type = $this->type;
+            $obj = JSON_ENCODE($this);
             if ($this->id > 0) {
                 $this->_update();
             }
@@ -114,11 +81,11 @@ namespace sjcArchive\Models\Manager{
             R::begin();         
             try {
                 $b = R::exec(
-                    'insert into `entitydefinitions` 
-                    (`rawdata`) values (:raw)', [':raw'=>$this->rawdata]
+                    "insert into `$type` 
+                    (`rawdata`) values (:raw)", [':raw'=>$this->rawdata]
                 );
                 R::selectDatabase('datadb');
-                $this->createTable($rawdata['name']);
+                $this->createTable($type);
                 R::commit();
                 R::selectDatabase('default');
                 $this->id = R::getInsertId();
