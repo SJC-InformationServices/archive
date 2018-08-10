@@ -58,6 +58,7 @@ namespace sjcArchive\Models{
                 R::setAutoResolve(true);
                 R::useJSONFeatures(true);
                 $db = ARCHIVEDB;
+                
 
                 $h = $db['server'];
                 $d = $db['db'];
@@ -104,6 +105,7 @@ namespace sjcArchive\Models{
         public function jsonSerialize()
         {
             $r = $this->rawdata;
+            
             if (!is_null($this->id)) {
                 $r['id'] = $this->id;
             }
@@ -113,6 +115,7 @@ namespace sjcArchive\Models{
             if (!is_null($this->updatedon)) {
                 $r['updatedon']= $this->updatedon;
             }
+            //print_r($r);
             return $r;
         }
         /**
@@ -128,9 +131,9 @@ namespace sjcArchive\Models{
             if (array_key_exists($k, $this->rawdata) 
                 || in_array($k, $this->attributes) 
             ) {
-                $this->rawdata[$k] = $value;
+                $this->rawdata[$k] = $v;
                 return;
-            }
+            } 
             
             $trace = debug_backtrace();
             trigger_error(
@@ -149,15 +152,15 @@ namespace sjcArchive\Models{
          */
         public function __get($k)
         {
-            if (property_exists($this, $name)) {
+            if (property_exists($this, $k)) {
                 return $this->$name;
             }
-            if (array_key_exists($name, $this->rawdata)) {
-                return $this->rawdata[$name];
+            if (array_key_exists($k, $this->rawdata)) {
+                return $this->rawdata[$k];
             }
             $trace = debug_backtrace();
             trigger_error(
-                'Undefined property  ' . $name . ' in ' . $trace[0]['file'] . 
+                'Undefined property  ' . $k . ' in ' . $trace[0]['file'] . 
                 ' on line ' . 
                 $trace[0]['line'], 
                 E_USER_NOTICE
@@ -191,7 +194,7 @@ namespace sjcArchive\Models{
                         $slots[":$k"] = $v[1];
                         break;
                     default :
-                        array_push($stmts, "`rawdata`->>'$.$k' ".$v[0]." ':$k' ");
+                        array_push($stmts, "`rawdata`->>'$.$k' ".$v[0]." :$k ");
                         $slots[":$k"] = $v[1];
                         break;
                     }
@@ -203,9 +206,13 @@ namespace sjcArchive\Models{
                 '$.createdon',`createdon`,
                 '$.updatedon',`updatedon`) as 'obj'
                 from `$type` where ".implode($stmts, " and ");
-                echo $sql;
-                echo json_encode($slots);
+                
                 $collection = R::getAll($sql, $slots);
+                array_walk(
+                    $collection, function (&$obj, $k) {
+                        $obj = json_decode($obj['obj'], true);
+                    }
+                );
                 return $collection;
             }
             return []; 

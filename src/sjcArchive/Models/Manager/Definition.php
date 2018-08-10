@@ -39,7 +39,6 @@ namespace sjcArchive\Models\Manager{
       */
     class Definition Extends Models\Base
     {
-        protected $attributes = ["name"];
         /**
          * Undocumented function
          *
@@ -50,18 +49,19 @@ namespace sjcArchive\Models\Manager{
         public function __construct(string $name=null)
         {
             Parent::__construct("entitydefinitions");
-            $this->rawdata['name']=$name;
-            array_push($this->attributes, "name");
-            R::selectDatabase('default');
             
+            array_push($this->attributes, "name");
+            $this->name = $name;
+            //print_r($this->rawdata);
             if (!is_null($name)) {
                 $rec = $this->find(["name"=>["=","$name"]]);
-                print_r($rec);
-                $this->id = @$rec['id'];
-                $this->rawdata = @$rec['rawdata'];
-                $this->createdon = @$rec['createdon'];
-                $this->updatedon = @$rec['updatedon'];
+                $rec = $rec[0];
+                foreach ($rec as $k=>$v) {
+                    $this->$k = $v;
+                }
             }
+            echo $this->name;
+            
         }
            
         
