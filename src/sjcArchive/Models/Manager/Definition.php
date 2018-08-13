@@ -87,10 +87,10 @@ namespace sjcArchive\Models\Manager{
                     "insert into `$type` 
                     (`rawdata`) values (:raw)", [':raw'=>$obj]
                 );
-                R::commit();
-                $this->id = R::getInsertId();
                 $this->createTable($this->name);
-                
+                R::commit();
+                $rec = $this->find(["name"=>$this->name]);
+                $this->id = $rec[0]['id'];
                 return $this->id;
             }
             catch(Exception $e){
