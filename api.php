@@ -28,7 +28,7 @@ require_once "bootstrap.php";
 try {
     $ed = new \sjcArchive\Models\Manager\Definition("kevinitems");
     //var_dump($ed);
-    $ed->save();
+    //$ed->save();
     echo json_encode($ed);
     
     /*

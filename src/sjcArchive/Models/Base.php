@@ -137,7 +137,7 @@ namespace sjcArchive\Models{
             
             $trace = debug_backtrace();
             trigger_error(
-                'Undefined property  ' . $name . ' in ' . $trace[0]['file'] . 
+                'Undefined property  ' . $k . ' in ' . $trace[0]['file'] . 
                 ' on line ' . 
                 $trace[0]['line'], 
                 E_USER_NOTICE

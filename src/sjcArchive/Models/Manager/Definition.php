@@ -51,6 +51,9 @@ namespace sjcArchive\Models\Manager{
             Parent::__construct("entitydefinitions");
             
             array_push($this->attributes, "name");
+            array_push($this->attributes, "type");
+            array_push($this->attributes, "configs");
+            array_push($this->attributes, "uuid");
             //print_r($this->rawdata);
             if (!is_null($name)) {
                 $this->name = $name;
