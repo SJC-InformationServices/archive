@@ -26,7 +26,6 @@
 namespace sjcArchive\Models\Manager{
     use \sjcArchive\Models as Models;
     use \sjcArchive\Modules as Mods;
-    use \sjcArchive\Repositories\Manager as EM;
     use \RedBeanPHP\R as R;
      /**
       * Definition class for API requests
@@ -39,6 +38,7 @@ namespace sjcArchive\Models\Manager{
       */
     class Definition Extends Models\Base
     {
+        use db\Definition;
         /**
          * Undocumented function
          *
@@ -51,16 +51,18 @@ namespace sjcArchive\Models\Manager{
             Parent::__construct("entitydefinitions");
             
             array_push($this->attributes, "name");
-            $this->name = $name;
             //print_r($this->rawdata);
             if (!is_null($name)) {
+                $this->name = $name;
+
                 $rec = $this->find(["name"=>["=","$name"]]);
-                $rec = $rec[0];
-                foreach ($rec as $k=>$v) {
-                    $this->$k = $v;
+                if (count($rec) == 1) {
+                    $rec = $rec[0];
+                    foreach ($rec as $k=>$v) {
+                        $this->$k = $v;
+                    }
                 }
             }
-            echo $this->name;
             
         }
            
@@ -74,6 +76,7 @@ namespace sjcArchive\Models\Manager{
         {
             $type = $this->type;
             $obj = JSON_ENCODE($this);
+            
             if ($this->id > 0) {
                 $this->_update();
             }
@@ -82,13 +85,12 @@ namespace sjcArchive\Models\Manager{
             try {
                 $b = R::exec(
                     "insert into `$type` 
-                    (`rawdata`) values (:raw)", [':raw'=>$this->rawdata]
+                    (`rawdata`) values (:raw)", [':raw'=>$obj]
                 );
-                R::selectDatabase('datadb');
-                $this->createTable($type);
                 R::commit();
-                R::selectDatabase('default');
                 $this->id = R::getInsertId();
+                $this->createTable($this->name);
+                
                 return $this->id;
             }
             catch(Exception $e){

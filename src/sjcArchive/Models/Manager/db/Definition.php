@@ -24,7 +24,7 @@
  * @deprecated File deprecated in Release 2.0.0
  */ 
 
-namespace sjcArchive\Models\db
+namespace sjcArchive\Models\Manager\db
 {
     use \RedBeanPHP\R as R;
     /**
@@ -91,8 +91,9 @@ namespace sjcArchive\Models\db
         protected function createTable($name)
         {
             $name =strtolower($name);
-            R::begin();
+            
             try{
+                
                 R::exec(
                     str_ireplace(':name', $name, $this->_createTableSql)
                 );
@@ -105,12 +106,11 @@ namespace sjcArchive\Models\db
                 R::exec(
                     str_ireplace(':name', $name, $this->_createBeforeDelete) 
                 );
-                R::commit();
+                
             }
             catch(Exception $e)
             {
                 //TODO: LOG
-                R::rollback();
                 return false;
             }
         
