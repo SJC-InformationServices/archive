@@ -54,6 +54,7 @@ namespace sjcArchive\Models\Manager{
             array_push($this->attributes, "type");
             array_push($this->attributes, "configs");
             array_push($this->attributes, "uuid");
+            array_push($this->attributes, "indexes");
             //print_r($this->rawdata);
             if (!is_null($name)) {
                 $this->name = $name;

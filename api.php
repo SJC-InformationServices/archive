@@ -27,10 +27,12 @@ require_once "bootstrap.php";
 
 try {
     $ed = new \sjcArchive\Models\Manager\Definition("kevinitems");
+    $at = new \sjcArchive\Models\Manager\Attribute($ed, "name");
     //var_dump($ed);
     //$ed->save();
     echo json_encode($ed);
-    
+    $at->save();
+    echo json_encode($at);
     /*
     $api = new sjcArchive\Router();
     

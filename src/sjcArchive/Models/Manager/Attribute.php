@@ -24,40 +24,146 @@
  * @deprecated File deprecated in Release 2.0.0
  */ 
 namespace sjcArchive\Models\Manager{
+    use \sjcArchive\Models as Models;
     use \sjcArchive\Modules as Mods;
-    use \sjcArchive\Repositories\Manager as EM;
     use \RedBeanPHP\R as R;
-    /**
-     * Attribute model for API requests
-     * 
-     * @category Application
-     * @package  APIE
-     * @author   Kevin Noseworthy <kevin.noseworthy@stjoseph.com>
-     * @license  http://www.php.net/license/3_01.txt  PHP License 3.01
-     * @link     http://url.com
-     */
-    class Attribute Extends EM\Config Implements EM\Contracts\Define 
+     /**
+      * Definition class for API requests
+      * 
+      * @category Application
+      * @package  APIE
+      * @author   Kevin Noseworthy <kevin.noseworthy@stjoseph.com>
+      * @license  http://www.php.net/license/3_01.txt  PHP License 3.01
+      * @link     http://url.com
+      */
+    class Attribute Extends Models\Base
     {
-        private $_definition;
-        private $_label;
-        public $name;
-        public $type="text";
-        public $default=null;
-        public $index;
-        public $editable=true;
-        public $visible=true;
+        protected $attributes = ["name","uuid","entitydefinitions_id","type","index","label","order","visible"];
+        /**
+         * Undocumented function
+         */
+        public function __construct(Definition $def,string $name=null)
+        {
+            Parent::__construct("entityattributes");
+            if (!is_null($name)) {
+                $this->name = $name;
+                $this->entitydefinitions_id = $def->id;
 
+                $rec = $this->find(
+                    ["name"=>["=","$name"], 
+                    "entitydefintions_id"=>["=",$def->id]]
+                );
+                if (count($rec) == 1) {
+                    $rec = $rec[0];
+                    foreach ($rec as $k=>$v) {
+                        $this->$k = $v;
+                    }
+                }
+            }
+        }
         /**
          * Undocumented function
          *
-         * @param Models\Definitions $def the entity definition to add an attribute 
+         * @return void
          */
-        public function __construct(Models\Definitions $def, string $name=null)
+        public function save() 
         {
-            $this->_definition = $def;
-            if (array_has_key($def)) {
-
+            $type = $this->type;
+            $obj = JSON_ENCODE($this);
+            
+            if ($this->id > 0) {
+                $this->_update();
             }
+            R::selectDatabase('default');
+            R::begin();         
+            try {
+                $b = R::exec(
+                    "insert into `$type` 
+                    (`rawdata`) values (:raw)", [':raw'=>$obj]
+                );
+                //TODO: alter table add columns;
+                //$this->createTable($this->name);
+                R::commit();
+                $rec = $this->find(
+                    ["name"=>["=","$name"], 
+                    "entitydefintions_id"=>["=",$def->id]]
+                );
+                $this->id = $rec[0]['id'];
+                return $this->id;
+            }
+            catch(Exception $e){
+                R::rollback();
+                return false;
+            }
+        }
+        /**
+         * Undocumented function
+         *
+         * @return void
+         */
+        private function _update()
+        {
+
+        }
+        /**
+         * Undocumented function
+         *
+         * @return void
+         */
+        public function delete()
+        {
+
+        }
+        public function getParents() 
+        {
+
+        }
+        public function addParent($p)
+        {
+
+        }
+        public function deleteParent($p)
+        {
+
+        }
+        public function getSiblings()
+        {
+
+        }
+        public function addSibling()
+        {
+
+        }
+        public function deleteSibling()
+        {
+
+        }
+        /**
+         * Undocumented function
+         *
+         * @return void
+         */
+        public function getChildren() 
+        {
+
+        }
+        /**
+         * Undocumented function
+         *
+         * @return void
+         */
+        public function addChild($child) 
+        {
+
+        }
+        /**
+         * Undocumented function
+         *
+         * @return void
+         */
+        public function deleteChild($child) 
+        {
+
         }
 
     }
