@@ -49,13 +49,12 @@ namespace sjcArchive\Models\Manager{
         public function __construct(string $name=null)
         {
             Parent::__construct("entitydefinitions");
+            $this->attributes = array_merge(
+                $this->attributes, [
+                    "name","type","configs","uuid"
+                ]
+            );
             
-            array_push($this->attributes, "name");
-            array_push($this->attributes, "type");
-            array_push($this->attributes, "configs");
-            array_push($this->attributes, "uuid");
-            array_push($this->attributes, "indexes");
-            //print_r($this->rawdata);
             if (!is_null($name)) {
                 $this->name = $name;
 

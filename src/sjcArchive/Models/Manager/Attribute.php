@@ -38,13 +38,13 @@ namespace sjcArchive\Models\Manager{
       */
     class Attribute Extends Models\Base
     {
-        protected $attributes = ["name","uuid","entitydefinitions_id","type","index","label","order","visible"];
         /**
          * Undocumented function
          */
         public function __construct(Definition $def,string $name=null)
         {
             Parent::__construct("entityattributes");
+            $this->attributes = array_merge($this->attributes, ["name","uuid","entitydefinitions_id","type","index","label","order","visible"]);
             if (!is_null($name)) {
                 $this->name = $name;
                 $this->entitydefinitions_id = $def->id;
