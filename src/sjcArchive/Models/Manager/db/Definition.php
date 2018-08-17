@@ -81,6 +81,9 @@ namespace sjcArchive\Models\Manager\db
         private $_addIndex = "ALTER TABLE `:name` 
         ADD COLUMN `:col` INT(11) UNSIGNED NULL,
         ADD :idxtype `:idxname` (:fields);";
+        
+        private $_renameTable = "ALTER TABLE :old 
+        RENAME TO :new ";
         /**
          * _CREATETABLE Corresponding Tables
          * 
@@ -113,7 +116,7 @@ namespace sjcArchive\Models\Manager\db
                 //TODO: LOG
                 return false;
             }
-        
+            return true;
         }
         /**
          * Undocumented function
@@ -127,6 +130,18 @@ namespace sjcArchive\Models\Manager\db
             /**
              * TODO: Create a delete and archive function
              */
+        }
+        /**
+         * Undocumented function
+         *
+         * @param [type] $old table name
+         * @param [type] $new table name
+         * 
+         * @return void
+         */
+        protected function renameTable($old, $new)
+        {
+
         }
 
     }

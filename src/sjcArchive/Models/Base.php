@@ -36,24 +36,27 @@ namespace sjcArchive\Models{
      */
     abstract class Base implements \JsonSerializable
     {
-        protected $type;
+        protected $basetype;
 
         protected $id;
         protected $attributes=[];
         protected $rawdata=[];
+        protected $allowedParents=[];
+        protected $allowedChildren=[];
+        protected $allowedSiblings=[];
         protected $createdon;
         protected $updatedon;
         
         /**
          * Parent Constsructor function
          *
-         * @param sting $type type or name of models
+         * @param sting $basetype type or name of models
          * 
          * @return void
          */
-        public function __construct(string $type)
+        public function __construct(string $basetype)
         {
-            $this->type = $type;
+            $this->basetype = $basetype;
               
         }
         /**
@@ -139,7 +142,7 @@ namespace sjcArchive\Models{
             array $keyval=[], array $orderby=[],array $groupby=[],array $limit=[]
         ) {
             //TODO Add orderby and group options
-            $type = $this->type;
+            $basetype = $this->basetype;
             if (@count($keyval) > 0) { 
                 $stmts = [];
                 $slots = [];
@@ -164,8 +167,8 @@ namespace sjcArchive\Models{
                 '$.id',`id`,
                 '$.createdon',`createdon`,
                 '$.updatedon',`updatedon`) as 'obj'
-                from `$type` where ".implode($stmts, " and ");
-                
+                from `$basetype` where ".implode($stmts, " and ");
+                echo "<br><div>$sql</div><br>";
                 $collection = R::getAll($sql, $slots);
                 array_walk(
                     $collection, function (&$obj, $k) {
@@ -181,7 +184,25 @@ namespace sjcArchive\Models{
          *
          * @return void
          */
-        abstract public function save();
+        protected function save()
+        {
+            R::begin();         
+            try {
+                if ($this->id > 0) {
+                    $bean = R::dispense($this->basetype, $this->id);
+                } else {
+                    $bean = R::dispense($this->basetype);
+                }                
+                $bean->rawdata = $this->rawdata;
+                $this->id = R::store($bean);
+                R::commit();
+            }
+            catch(Exception $e){
+                R::rollback();
+                return false;
+            }
+            return true;
+        }
         /**
          * Undocumented function
          *

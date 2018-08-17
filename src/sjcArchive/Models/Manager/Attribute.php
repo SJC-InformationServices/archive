@@ -68,7 +68,7 @@ namespace sjcArchive\Models\Manager{
          */
         public function save() 
         {
-            $type = $this->type;
+            $basetype = $this->basetype;
             $obj = JSON_ENCODE($this);
             
             if ($this->id > 0) {
@@ -77,19 +77,10 @@ namespace sjcArchive\Models\Manager{
             R::selectDatabase('default');
             R::begin();         
             try {
-                $b = R::exec(
-                    "insert into `$type` 
-                    (`rawdata`) values (:raw)", [':raw'=>$obj]
-                );
-                //TODO: alter table add columns;
-                //$this->createTable($this->name);
+                $bean = R::dispense($this->basetype);
+                $bean->rawdata = json_decode($obj, true);
+                $this->id = R::store($bean);
                 R::commit();
-                $rec = $this->find(
-                    ["name"=>["=","$name"], 
-                    "entitydefintions_id"=>["=",$def->id]]
-                );
-                $this->id = $rec[0]['id'];
-                return $this->id;
             }
             catch(Exception $e){
                 R::rollback();

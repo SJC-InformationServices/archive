@@ -51,7 +51,7 @@ namespace sjcArchive\Models\Manager{
             Parent::__construct("entitydefinitions");
             $this->attributes = array_merge(
                 $this->attributes, [
-                    "name","type","configs","uuid"
+                    "name","type","configs","uuid","indexes"
                 ]
             );
             
@@ -76,30 +76,20 @@ namespace sjcArchive\Models\Manager{
          * @return void
          */
         public function save()
-        {
-            $type = $this->type;
-            $obj = JSON_ENCODE($this);
-            
-            if ($this->id > 0) {
-                $this->_update();
-            }
+        {                   
             R::selectDatabase('default');
-            R::begin();         
+            if ($this->id > 0) {
+                return $this->_update();
+            }           
             try {
-                $b = R::exec(
-                    "insert into `$type` 
-                    (`rawdata`) values (:raw)", [':raw'=>$obj]
-                );
+                Parent::save();
                 $this->createTable($this->name);
-                R::commit();
-                $rec = $this->find(["name"=>$this->name]);
-                $this->id = $rec[0]['id'];
-                return $this->id;
             }
-            catch(Exception $e){
-                R::rollback();
+            catch(Exception $e)
+            {
                 return false;
             }
+            return $this->id;
         }
         /**
          * Undocumented function
@@ -108,7 +98,25 @@ namespace sjcArchive\Models\Manager{
          */
         private function _update() 
         {
-
+            
+            $id = $this->id;
+            $name = $this->name;
+            $from = $this->find(["id"=>["=",$id]]);
+            $rec = $this->find(["name"=>["=",$name]]);
+            //echo json_encode($this);
+            print_r($from);
+            print_r($rec);
+            /*if ($from[0]['name'] == $this->name) { 
+                try{
+                    Parent::save();
+                }
+                catch(Exception $e)
+                {
+                    //TODO:log
+                    return false;
+                }
+            }*/
+            return false;             
         }
         /**
          * Undocumented function
