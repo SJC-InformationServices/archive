@@ -160,7 +160,6 @@ namespace sjcArchive\Models{
                         $slots[":$k"] = $v[1];
                         break;
                     }
-
                 }
                 $sql = "select 
                 JSON_SET(`rawdata`,
@@ -168,7 +167,7 @@ namespace sjcArchive\Models{
                 '$.createdon',`createdon`,
                 '$.updatedon',`updatedon`) as 'obj'
                 from `$basetype` where ".implode($stmts, " and ");
-                echo "<br><div>$sql</div><br>";
+                
                 $collection = R::getAll($sql, $slots);
                 array_walk(
                     $collection, function (&$obj, $k) {
@@ -189,10 +188,11 @@ namespace sjcArchive\Models{
             R::begin();         
             try {
                 if ($this->id > 0) {
-                    $bean = R::dispense($this->basetype, $this->id);
+                    $bean = R::load($this->basetype, $this->id);
                 } else {
                     $bean = R::dispense($this->basetype);
-                }                
+                }
+                                
                 $bean->rawdata = $this->rawdata;
                 $this->id = R::store($bean);
                 R::commit();

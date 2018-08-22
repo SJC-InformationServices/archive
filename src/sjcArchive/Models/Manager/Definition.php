@@ -98,25 +98,15 @@ namespace sjcArchive\Models\Manager{
          */
         private function _update() 
         {
-            
             $id = $this->id;
             $name = $this->name;
-            $from = $this->find(["id"=>["=",$id]]);
-            $rec = $this->find(["name"=>["=",$name]]);
-            //echo json_encode($this);
-            print_r($from);
-            print_r($rec);
-            /*if ($from[0]['name'] == $this->name) { 
-                try{
-                    Parent::save();
-                }
-                catch(Exception $e)
-                {
-                    //TODO:log
-                    return false;
-                }
-            }*/
-            return false;             
+            $fr = R::findOne($this->basetype, ' id = ? ', [$this->id]);
+            $total = R::count($this->basetype, ' name =? ', [$this->name]);   
+            //Parent::save();
+            if ($fr->name != $this->name ) {
+                $this->renameTable($fr->name, $this->name);
+            }
+            echo $total;            
         }
         /**
          * Undocumented function

@@ -26,10 +26,10 @@
 require_once "bootstrap.php";
 
 try {
-    $ed = new \sjcArchive\Models\Manager\Definition("frogsandcats");
+    $ed = new \sjcArchive\Models\Manager\Definition("events");
     //$at = new \sjcArchive\Models\Manager\Attribute($ed, "name");
     //var_dump($ed);
-    $ed->name = 'tryagainahole';
+    $ed->name = "projects";
     $ed->save();
     echo json_encode($ed);
     //$at->save();
@@ -41,6 +41,6 @@ try {
     echo $r;*/
 }
 catch(exception $e){
-    print_r($e);
+    echo $e->message;
 }
 

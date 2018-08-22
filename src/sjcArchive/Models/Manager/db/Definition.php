@@ -82,8 +82,9 @@ namespace sjcArchive\Models\Manager\db
         ADD COLUMN `:col` INT(11) UNSIGNED NULL,
         ADD :idxtype `:idxname` (:fields);";
         
-        private $_renameTable = "ALTER TABLE :old 
-        RENAME TO :new ";
+        private $_renameTable = "ALTER TABLE :old RENAME TO :new ";
+
+        private $_addParent = "insert into `` ";
         /**
          * _CREATETABLE Corresponding Tables
          * 
@@ -94,9 +95,7 @@ namespace sjcArchive\Models\Manager\db
         protected function createTable($name)
         {
             $name =strtolower($name);
-            
-            try{
-                
+            try{       
                 R::exec(
                     str_ireplace(':name', $name, $this->_createTableSql)
                 );
@@ -109,7 +108,6 @@ namespace sjcArchive\Models\Manager\db
                 R::exec(
                     str_ireplace(':name', $name, $this->_createBeforeDelete) 
                 );
-                
             }
             catch(Exception $e)
             {
@@ -141,7 +139,12 @@ namespace sjcArchive\Models\Manager\db
          */
         protected function renameTable($old, $new)
         {
-
+            R::exec(
+                str_ireplace(
+                    [":old", ":new"], [$old, $new], 
+                    $this->_renameTable
+                )
+            );
         }
 
     }
