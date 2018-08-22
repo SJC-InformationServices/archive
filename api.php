@@ -41,6 +41,6 @@ try {
     echo $r;*/
 }
 catch(exception $e){
-    echo $e->message;
+    return false;
 }
 
