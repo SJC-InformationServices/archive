@@ -12,4 +12,6 @@ archivedb.json
 vendor
 sjcAlphaBroderArchive/excelFiles
 sjcAlphaBroderArchive/jsonfiles
+sjcMckessonArchive/excelFiles
+sjcMckessonArchive/jsonfiles
 *.xlsx

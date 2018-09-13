@@ -22,9 +22,9 @@
  * @see        NetOther, Net_Sample::Net_Sample()
  * @since      File available since Release 1.2.0
  * @deprecated File deprecated in Release 2.0.0
- */ 
+ */
 require_once "bootstrap.php";
-
+echo "Test";
 try {
     $ed = new \sjcArchive\Models\Manager\Definition("events");
     //$at = new \sjcArchive\Models\Manager\Attribute($ed, "name");
@@ -36,11 +36,9 @@ try {
     //echo json_encode($at);
     /*
     $api = new sjcArchive\Router();
-    
+
     $r = $api->processRoute();
     echo $r;*/
-}
-catch(exception $e){
+} catch (exception $e) {
     return false;
 }
-
