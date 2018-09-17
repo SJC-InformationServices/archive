@@ -1,0 +1,36 @@
+﻿<div>Exception calling "ExecuteNonQuery" with "0" argument(s): "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'rawdata`=archiveJsonMerge(`rawdata`, '{
+    \"pagefrom\":  \"2\",
+    \"promo_' at line 1"</div><div>{
+    \"pagefrom\":  \"2\",
+    \"promo_reg_retail_including_coupon_west\":  \"0\",
+    \"gtin\":  \"629322078193\",
+    \"promo_reg_retail_including_coupon_ont\":  \"0\",
+    \"ad_shot_upc\":  \"629322078193\",
+    \"page_\":  \"2\",
+    \"grid_size__placement\":  \"Back\",
+    \"advertising_description\":  \"Contour Next One - Vendor Admat\",
+    \"layout_position\":  \"44\",
+    \"head_office_comments\":  \"Grid 44\"
+}</div><div>insert into `offers` (`rawdata`,`project_id) values ('{
+    \"pagefrom\":  \"2\",
+    \"promo_reg_retail_including_coupon_west\":  \"0\",
+    \"gtin\":  \"629322078193\",
+    \"promo_reg_retail_including_coupon_ont\":  \"0\",
+    \"ad_shot_upc\":  \"629322078193\",
+    \"page_\":  \"2\",
+    \"grid_size__placement\":  \"Back\",
+    \"advertising_description\":  \"Contour Next One - Vendor Admat\",
+    \"layout_position\":  \"44\",
+    \"head_office_comments\":  \"Grid 44\"
+}','1') on duplicate key update `rawdata`=archiveJsonMerge(`rawdata`, '{
+    \"pagefrom\":  \"2\",
+    \"promo_reg_retail_including_coupon_west\":  \"0\",
+    \"gtin\":  \"629322078193\",
+    \"promo_reg_retail_including_coupon_ont\":  \"0\",
+    \"ad_shot_upc\":  \"629322078193\",
+    \"page_\":  \"2\",
+    \"grid_size__placement\":  \"Back\",
+    \"advertising_description\":  \"Contour Next One - Vendor Admat\",
+    \"layout_position\":  \"44\",
+    \"head_office_comments\":  \"Grid 44\"
+}')</div><div>
