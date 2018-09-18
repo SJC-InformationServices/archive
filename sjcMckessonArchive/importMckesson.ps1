@@ -125,10 +125,7 @@ ForEach($f in $files)
     {
       $count;
       $offer = $offers[$count];
-      
-      $productlog = "jsonfiles\products\products.log"
-      $offerlog = "jsonfiles\offers\offers.log"
-      
+            
       if ($offer."Advertising Description"){
         #Create New Product
         #Create New Offer
@@ -145,33 +142,33 @@ ForEach($f in $files)
   }
        $itemProp.gtin = $offerProp.ad_shot_upc
        $itemProp.advertising_description = $offerProp["advertising_description"]
-       $offerProp["gtin"] = $offerProp.ad_shot_upc
+       $offerProp["gtin"] = @{}
+       $offerProp["gtin"].Add("0",$offerProp.ad_shot_upc)
        $offerProp["pagefrom"] = $offerProp.page_
-       $offerProp["layout_position"] = [regex]::Matches([regex]::Matches($offerProp.head_office_comments,"[grid].\d+").value,"\d+").value
+       $offerProp["layoutposition"] = [regex]::Matches([regex]::Matches($offerProp.head_office_comments,"[grid].\d+").value,"\d+").value
        $inso = $offerProp | ConvertTo-Json -Depth 50 | ForEach-Object { [System.Text.RegularExpressions.Regex]::Unescape($_) } 
        $insa = $itemProp | ConvertTo-Json -Depth 50 | ForEach-Object { [System.Text.RegularExpressions.Regex]::Unescape($_) } 
 
        $insObj = $inso -replace '"','\"'
        $insObjb = $insa -replace '"','\"'
        $previousObject = $offerProp;
-       $qry = "insert into ``offers`` (``rawdata``,``project_id`) values ('" + $insObj + "','" + $projectid + "') on duplicate key update ``rawdata``=archiveJsonMerge(``rawdata``, '" + $insObj + "')"
+       $qry = "insert into ``offers`` (``rawdata``,``projects_id``) values ('" + $insObj + "','" + $projectid + "') on duplicate key update ``rawdata``=archiveJsonMerge(``rawdata``, '" + $insObj + "')"
        $qryb = "insert into ``products`` (``rawdata``) values ('" + $insObjb + "') on duplicate key update ``rawdata``=archiveJsonMerge(``rawdata``, '" + $insObjb + "')"
        write-host("NEW")
-       #$qry
-       #$qrybd
+       
        
        try{
          Execute-MySQLNonQuery $db $qry
          Execute-MySQLNonQuery $db $qryb
        }catch{
                $ErrorMessage = $_.Exception.Message
-               $of = $logfile + ".log"
-               $oj = $logfile + ".json"
-               $str = "<div>" +$ErrorMessage + "</div><div>"+ $insObj + '</div><div>' + $qry + '</div><div>'         
+               $oj = "jsonfiles\offers\" + $offerProp["gtin"] + ".json"
+               $of = "jsonfiles\offers\" + $offerProp["gtin"] + ".log"
+              
+               $str = "<div>" +$ErrorMessage + "</div><div>"+ $insObj + '</div><div>' + $qry + '</div><div>' + $qryb + '</div><div>'         
                $str | Out-File $of -Encoding utf8    
                $insObj | Out-File $oj -Encoding utf8
-               
-       }
+        }
       }
       elseif(!$offer."Advertising Description" -and $offer."Ad Shot UPC")
       {
@@ -194,8 +191,10 @@ ForEach($f in $files)
         $insa = $itemProp | ConvertTo-Json -Depth 50 | ForEach-Object { [System.Text.RegularExpressions.Regex]::Unescape($_) } 
  
         $insObj = $insa -replace '"','\"'
-
-        $qry = "update ``offers`` set ``rawdata`` = JSON_SET(``rawdata``,'$.gtin', CONCAT(``rawdata``->>'$.gtin',' ','" +  $itemProp["gtin"] + "')) where ``project_id`` = '" + $projectid + "' and ``pagefrom`` = '" + $offerprev["pagefrom"] + "' and ``layout_position`` = '" + $offerprev["layout_position"] + "' limit 1"
+       #JSON_INSERT(``rawdata``,'$.gtin','" + $itemProp["gtin"] +"'))
+        #$newgtin = $offerprev["gtin"] | ConvertTo-Json -Depth 50 | ForEach-Object { [System.Text.RegularExpressions.Regex]::Unescape($_) } 
+        $qry = "update ``offers`` set ``rawdata`` =  JSON_SET(``rawdata``,'$.gtin',JSON_INSERT(``gtin``,CONCAT('$.`"',JSON_LENGTH(``gtin``),'`"'),'" + $itemProp["gtin"] +"'))
+        where ``projects_id`` = '" + $projectid + "' and ``pagefrom`` = '" + $offerprev["pagefrom"] + "' and ``layoutposition`` = '" + $offerprev["layoutposition"] + "' limit 1"
         $qryb = "insert ignore into ``products`` (``rawdata``) values ('" + $insObj + "') "
         #$qry
         #$qryb
@@ -205,14 +204,12 @@ ForEach($f in $files)
           Execute-MySQLNonQuery $db $qryb
         }catch{
                 $ErrorMessage = $_.Exception.Message
-                $of = $logfile + ".log"
-                $oj = $logfile + ".json"
-                $str = "<div>" +$ErrorMessage + "</div><div>"+ $insObj + '</div><div>' + $qry + '</div><div>'         
+                $of = "jsonfiles\products\" + $itemProp["gtin"] + ".log"
+                $oj = "jsonfiles\products\" + $itemProp["gtin"] + ".json"
+                $str = "<div>" +$ErrorMessage + "</div><div>"+ $insObj + '</div><div>' + $qry + '</div><div>' + $qryb + '</div><div>'         
                 $str | Out-File $of -Encoding utf8    
                 $insObj | Out-File $oj -Encoding utf8
-                
-        }
-
+              }
       }
       else{
         #INSF
